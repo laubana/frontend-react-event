@@ -3,7 +3,7 @@ import { ButtonProps } from "./Button.props";
 import { Button, Children } from "./Button.style";
 
 const ButtonComponent = ({
-  _size = "medium",
+  sizing = "medium",
   color = "red",
   block,
   nopadding,
@@ -13,7 +13,7 @@ const ButtonComponent = ({
   return (
     <Button
       type="button"
-      _size={_size}
+      sizing={sizing}
       color={color}
       block={block}
       nopadding={nopadding}

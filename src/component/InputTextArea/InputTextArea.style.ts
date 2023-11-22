@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
-import { SelectStyle } from "./Select.props";
-import { Sizing } from "../Button/Button.props";
+import { InputTextAreaStyles, Sizing } from "./InputTextArea.props";
 
 const sizes: Record<Sizing, string> = {
   small: `
@@ -15,18 +14,21 @@ const sizes: Record<Sizing, string> = {
     `,
 };
 
-export const Select = styled.select<SelectStyle>`
+export const InputTextAreaContainer = styled.div<InputTextAreaStyles>`
   ${({ sizing }) => sizes[sizing]};
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+  display: flex;
   border: 1px solid lightgrey;
   border-radius: 8px;
-  background-color: white;
+  align-items: center;
+  gap: 8px;
+  flex-grow: 1;
+`;
+
+export const InputTextArea = styled.textarea`
+  border: none;
+  flex-grow: 1;
 
   &:focus {
     outline: none;
   }
 `;
-
-export const Option = styled.option``;

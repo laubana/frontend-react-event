@@ -16,12 +16,12 @@ export interface HomeProps {
 
   popup?: Group;
 
-  handleOnScroll: () => void;
-  handleOnOpenPopup: (group: Group) => void;
-  handleOnClosePopup: () => void;
-  handleOnChangePk: (option: Option) => void;
-  handleOnChangeLocation: (place: Place) => void;
-  handleOnChangeDistance: (option: Option) => void;
+  handleScroll: () => void;
+  handleOpenPopup: (group: Group) => void;
+  handleClosePopup: () => void;
+  handleChangePk: (option: Option) => void;
+  handleChangeLocation: (place: Place) => void;
+  handleChangeDistance: (option: Option) => void;
 
   isMobileDevice: boolean;
   isTabletDevice: boolean;

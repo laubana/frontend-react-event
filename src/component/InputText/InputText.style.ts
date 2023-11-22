@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-import { InputTextStyles, Size } from "./InputText.props";
+import { InputTextStyles, Sizing } from "./InputText.props";
 
-const sizes: Record<Size, string> = {
+const sizes: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -15,7 +15,7 @@ const sizes: Record<Size, string> = {
 };
 
 export const InputTextContainer = styled.div<InputTextStyles>`
-  ${({ _size }) => sizes[_size]};
+  ${({ sizing }) => sizes[sizing]};
   display: flex;
   border: 1px solid lightgrey;
   border-radius: 8px;

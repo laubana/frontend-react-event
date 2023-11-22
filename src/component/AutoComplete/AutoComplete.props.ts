@@ -1,14 +1,12 @@
-import { HTMLAttributes } from "react";
-import { Place } from "../../type/Place";
+import { InputHTMLAttributes } from "react";
+import { Option } from "../../type/Option";
 
-export type Size = "small" | "medium" | "large";
+export type Type = "h1" | "h2" | "paragraph";
+export type Color = "black" | "white" | "red";
 
-export interface AutoCompleteProps extends HTMLAttributes<HTMLInputElement> {
-  _size?: Size;
-  address?: string;
-  setPlace: (address: Place) => void;
+export interface AutoCompleteProps
+  extends InputHTMLAttributes<HTMLInputElement> {
+  options: Option[];
+  option?: Option | undefined;
+  setOption: (option: Option | undefined) => void;
 }
-
-export type AutoCompleteStyles = {
-  _size: Size;
-};

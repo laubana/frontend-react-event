@@ -1,35 +1,31 @@
 import React, { ChangeEvent } from "react";
-import { FaRegCircleXmark } from "react-icons/fa6";
 import { InputTextProps } from "./InputText.props";
 import { InputText, InputTextContainer } from "./InputText.style";
+import { FaRegCircleXmark } from "react-icons/fa6";
 
 const InputTextComponent = ({
-  _size = "medium",
+  sizing = "medium",
   placeholder,
   text,
   setText,
 }: InputTextProps): JSX.Element => {
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
 
-  const handleOnReset = () => {
+  const handleReset = () => {
     setText("");
   };
 
   return (
-    <InputTextContainer _size={_size}>
+    <InputTextContainer sizing={sizing}>
       <InputText
         type="text"
         placeholder={placeholder}
         value={text}
-        onChange={handleOnChange}
+        onChange={handleChange}
       />
-      <FaRegCircleXmark
-        color="black"
-        cursor="pointer"
-        onClick={handleOnReset}
-      />
+      <FaRegCircleXmark color="black" cursor="pointer" onClick={handleReset} />
     </InputTextContainer>
   );
 };

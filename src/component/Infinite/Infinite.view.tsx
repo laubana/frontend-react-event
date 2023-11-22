@@ -1,7 +1,7 @@
 import React from "react";
 import { InfiniteProps } from "./Infinite.props";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner, SpinnerContainer } from "./Infinite.style";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const AutoCompleteComponent = ({
   columns,
