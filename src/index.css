@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Montserrat", sans-serif;
 }
 
 code {
@@ -17,7 +16,7 @@ a {
   text-decoration: none;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 12px;
 }
 ::-webkit-scrollbar-track {
@@ -33,4 +32,4 @@ img,
 div,
 button {
   box-sizing: border-box;
-}
+} */
