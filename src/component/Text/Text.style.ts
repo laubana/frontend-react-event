@@ -27,6 +27,7 @@ const colors: Record<Color, string> = {
 };
 
 export const Text = styled.div<TextStyle>`
+  font-family: "Montserrat", sans-serif;
   ${({ type }) => types[type]};
-  ${({ color: color }) => colors[color]};
+  ${({ color }) => colors[color]};
 `;
