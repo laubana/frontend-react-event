@@ -5,6 +5,7 @@ export type Sizing = "small" | "medium" | "large";
 
 export interface PlaceProps extends HTMLAttributes<HTMLInputElement> {
   sizing?: Sizing;
+  address?: string;
   setPlace: (place: Place) => void;
 }
 

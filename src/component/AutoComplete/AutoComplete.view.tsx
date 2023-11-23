@@ -14,6 +14,7 @@ import Text from "../Text";
 
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   const {
+    sizing = "medium",
     name,
     value,
     options,
@@ -22,7 +23,6 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
     placeholder,
     onChange = () => null,
   } = props;
-
   const [inputValue, setInputValue] = useState<string | undefined>(
     options.find((optionItem) => optionItem.value === option?.value || value)
       ?.label || ""
@@ -34,8 +34,12 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
       option.label.toUpperCase().includes(inputValue?.toUpperCase() || "")
     )
     .map((option, index) => (
-      <ItemContainer onClick={() => handleSelect(option)} key={index}>
-        <Text>{option.label}</Text>
+      <ItemContainer
+        sizing={sizing}
+        onClick={() => handleSelect(option)}
+        key={index}
+      >
+        <Text sizing={sizing}>{option.label}</Text>
       </ItemContainer>
     ));
 
@@ -87,7 +91,7 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
 
   return (
     <Container>
-      <InputContainer>
+      <InputContainer visibility={visibility} sizing={sizing}>
         <InputText
           name={name}
           value={inputValue}
@@ -96,7 +100,11 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
           onFocus={handleInput}
         />
         <IconContainer onClick={handleToggle}>
-          {visibility ? <FaChevronUp /> : <FaChevronDown />}
+          {visibility ? (
+            <FaChevronUp color="grey" />
+          ) : (
+            <FaChevronDown color="grey" />
+          )}
         </IconContainer>
       </InputContainer>
       {visibility && 0 < items.length && <ListContainer>{items}</ListContainer>}

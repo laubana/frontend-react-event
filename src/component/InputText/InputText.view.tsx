@@ -25,7 +25,7 @@ const InputTextComponent = ({
         value={text}
         onChange={handleChange}
       />
-      <FaRegCircleXmark color="black" cursor="pointer" onClick={handleReset} />
+      <FaRegCircleXmark color="grey" cursor="pointer" onClick={handleReset} />
     </InputTextContainer>
   );
 };

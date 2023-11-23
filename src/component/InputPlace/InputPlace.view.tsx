@@ -1,20 +1,21 @@
 import React, { ChangeEvent, useState } from "react";
-import { PlaceProps } from "./Place.props";
+import { PlaceProps } from "./InputPlace.props";
 import {
   Container,
   Input,
   InputContainer,
   ItemContainer,
   ListContainer,
-} from "./Place.style";
+} from "./InputPlace.style";
 import useGoogle from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { BiCurrentLocation } from "react-icons/bi";
 import Text from "../Text";
 
-const PlaceComponent = ({
+const InputPlaceComponent = ({
   sizing = "medium",
   placeholder,
+  address,
   setPlace,
 }: PlaceProps): JSX.Element => {
   const { placesService } = useGoogle({
@@ -39,8 +40,8 @@ const PlaceComponent = ({
   const [inputAddress, setInputAddress] = useState<string>("");
 
   const handleFocus = () => {
-    if (placeholder && currentPlacePredictions.length === 0) {
-      getCurrentPlacePredictions({ input: placeholder });
+    if (address && currentPlacePredictions.length === 0) {
+      getCurrentPlacePredictions({ input: address });
     }
     setVisibility(true);
   };
@@ -77,10 +78,10 @@ const PlaceComponent = ({
 
   return (
     <Container>
-      <InputContainer sizing={sizing}>
+      <InputContainer visibility={visibility} sizing={sizing}>
         <Input
           value={inputAddress}
-          placeholder="Address"
+          placeholder={placeholder}
           onChange={handleChange}
           onFocus={handleFocus}
         />
@@ -103,7 +104,7 @@ const PlaceComponent = ({
                 key={index}
               >
                 <BiCurrentLocation color="black" />
-                <Text>{placePrediction.description}</Text>
+                <Text sizing={sizing}>{placePrediction.description}</Text>
               </ItemContainer>
             ))}
             {inputPlacePredictions.map((placePrediction, index) => (
@@ -112,7 +113,7 @@ const PlaceComponent = ({
                 onClick={() => handleClick(placePrediction)}
                 key={index}
               >
-                <Text>{placePrediction.description}</Text>
+                <Text sizing={sizing}>{placePrediction.description}</Text>
               </ItemContainer>
             ))}
           </ListContainer>
@@ -121,4 +122,4 @@ const PlaceComponent = ({
   );
 };
 
-export default React.memo(PlaceComponent);
+export default React.memo(InputPlaceComponent);

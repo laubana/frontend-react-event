@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { InputTextAreaStyles, Sizing } from "./InputTextArea.props";
+import { InputNumberStyles, Sizing } from "./InputNumber.props";
 
 const fontSizing: Record<Sizing, string> = {
   small: `
@@ -26,21 +26,24 @@ const paddingSizing: Record<Sizing, string> = {
     `,
 };
 
-export const InputTextAreaContainer = styled.div<InputTextAreaStyles>`
+export const InputNumberContainer = styled.div<InputNumberStyles>`
   ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+  display: flex;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
+  align-items: center;
+  gap: 8px;
 
   :focus-within {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   }
 `;
 
-export const InputTextArea = styled.textarea`
+export const InputNumber = styled.input`
   border: none;
-  resize: none;
+  width: 100%;
 
-  :focus {
+  &:focus {
     outline: none;
   }
 `;

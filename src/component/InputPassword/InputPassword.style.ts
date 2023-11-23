@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { InputTextAreaStyles, Sizing } from "./InputTextArea.props";
+import { InputTextStyles, Sizing } from "./InputPassword.props";
 
 const fontSizing: Record<Sizing, string> = {
   small: `
@@ -26,19 +26,22 @@ const paddingSizing: Record<Sizing, string> = {
     `,
 };
 
-export const InputTextAreaContainer = styled.div<InputTextAreaStyles>`
+export const InputTextContainer = styled.div<InputTextStyles>`
   ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  display: flex;
   border-radius: 8px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  align-items: center;
+  gap: 8px;
 
   :focus-within {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   }
 `;
 
-export const InputTextArea = styled.textarea`
+export const InputText = styled.input`
   border: none;
-  resize: none;
+  width: 100%;
 
   :focus {
     outline: none;

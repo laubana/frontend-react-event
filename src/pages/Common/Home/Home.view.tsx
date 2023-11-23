@@ -11,7 +11,7 @@ import { FaXmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Select from "../../../component/Select";
-import Place from "../../../component/Place";
+import InputPlace from "../../../component/InputPlace";
 import Columns from "../../../component/Columns";
 import Card from "../../../component/Card";
 import Infinite from "../../../component/Infinite";
@@ -119,8 +119,8 @@ const HomeView = (props: HomeProps) => {
               columns={isMobileDevice ? "1" : "7 3"}
               style={{ justifyItems: "space-between" }}
             >
-              <Place
-                placeholder={currentAddress}
+              <InputPlace
+                address={currentAddress}
                 setPlace={handleChangeLocation}
               />
               <Select
