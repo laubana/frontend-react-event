@@ -1,8 +1,19 @@
 import styled from "@emotion/styled";
+import { InputTextStyles, Sizing } from "./AutoComplete.props";
 
-import { Size, AutoCompleteStyles } from "./AutoComplete.props";
+const fontSizing: Record<Sizing, string> = {
+  small: `
+        font-size: 14px;
+    `,
+  medium: `
+        font-size: 16px;
+    `,
+  large: `
+        font-size: 18px;
+    `,
+};
 
-const sizes: Record<Size, string> = {
+const paddingSizing: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -18,38 +29,61 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const InputContainer = styled.div<AutoCompleteStyles>`
-  ${({ _size }) => sizes[_size]};
+export const InputContainer = styled.div<
+  InputTextStyles & {
+    visibility: boolean;
+  }
+>`
+  box-shadow: ${({ visibility }) =>
+    visibility
+      ? "0px 2px 5px rgba(0, 0, 0, 0.25)"
+      : "0px 0px 2px rgba(0, 0, 0, 0.25)"};
+  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+  border-radius: 4px;
+  background-color: white;
   display: flex;
-  border: 1px solid lightgrey;
-  border-radius: 8px;
-  align-items: center;
   gap: 8px;
+  box-sizing: border-box;
+  justify-content: space-between;
 `;
 
-export const Input = styled.input`
+export const InputText = styled.input`
+  font-family: "Montserrat", sans-serif;
+  width: 100%;
   border: none;
-  flex-grow: 1;
 
-  &:focus {
+  :focus {
     outline: none;
   }
 `;
 
-export const ListContainer = styled.div`
-  width: 100%;
-  position: absolute;
-  border-radius: 8px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  z-index: 5;
+export const IconContainer = styled.div`
   cursor: pointer;
 `;
 
-export const ItemContainer = styled.div<AutoCompleteStyles>`
-  ${({ _size }) => sizes[_size]};
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
+export const ListContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 6px;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  z-index: 5;
+`;
+
+export const ItemContainer = styled.div<InputTextStyles>`
+  ${({ sizing }) => paddingSizing[sizing]}
+  cursor: pointer;
+  box-sizing: border-box;
+
+  :not(:last-child) {
+    border-bottom: 1px solid lightgrey;
+  }
+
+  :hover {
+    background-color: lightgrey;
+  }
 `;

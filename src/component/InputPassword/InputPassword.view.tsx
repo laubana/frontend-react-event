@@ -1,49 +1,52 @@
 import React, { ChangeEvent, useState } from "react";
-import { InputPasswordProps } from "./InputPassword.props";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { Container, Input } from "./InputPassword.style";
+import { InputTextProps } from "./InputPassword.props";
+import { InputText, InputTextContainer } from "./InputPassword.style";
+import { FaEye, FaEyeSlash, FaRegCircleXmark } from "react-icons/fa6";
 
 const InputPasswordComponent = ({
-  _size = "medium",
-  placeholder = "Password",
+  sizing = "medium",
+  placeholder,
   text,
   setText,
-}: InputPasswordProps): JSX.Element => {
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
+}: InputTextProps): JSX.Element => {
+  const [visibility, setVisibility] = useState<boolean>(false);
 
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleToggle = () => {
+    setVisibility((oldValue) => !oldValue);
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
 
-  const handleOnToggle = () => {
-    setPasswordVisibility((oldValue) => !oldValue);
+  const handleReset = () => {
+    setText("");
   };
 
   return (
-    <Container _size={_size}>
-      {passwordVisibility ? (
-        <>
-          <Input
-            type="type"
-            onChange={handleOnChange}
-            value={text}
-            placeholder={placeholder}
-          />
-          <FaEye color="black" cursor="pointer" onClick={handleOnToggle} />
-        </>
+    <InputTextContainer sizing={sizing}>
+      {visibility ? (
+        <FaEye color="grey" cursor="pointer" onClick={handleToggle} />
       ) : (
-        <>
-          <Input
-            type="password"
-            onChange={handleOnChange}
-            value={text}
-            placeholder={placeholder}
-            autoComplete="new-password"
-          />
-          <FaEyeSlash color="black" cursor="pointer" onClick={handleOnToggle} />
-        </>
+        <FaEyeSlash color="grey" cursor="pointer" onClick={handleToggle} />
       )}
-    </Container>
+      {visibility ? (
+        <InputText
+          type="type"
+          placeholder={placeholder}
+          value={text}
+          onChange={handleChange}
+        />
+      ) : (
+        <InputText
+          type="password"
+          placeholder={placeholder}
+          value={text}
+          onChange={handleChange}
+        />
+      )}
+      <FaRegCircleXmark color="grey" cursor="pointer" onClick={handleReset} />
+    </InputTextContainer>
   );
 };
 

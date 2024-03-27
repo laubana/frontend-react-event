@@ -33,11 +33,11 @@ const Home = (): JSX.Element => {
   const isTabletDevice = useMediaQuery({ minWidth: 768, maxWidth: 991 });
   const isDesktopDevice = useMediaQuery({ minWidth: 992 });
 
-  const handleOnScroll = () => {
+  const handleScroll = () => {
     setCurrentGroupPage((oldValue) => oldValue + 1);
   };
 
-  const handleOnOpenPopup = (group: Group) => {
+  const handleOpenPopup = (group: Group) => {
     setPopup({
       groupPk: group.groupPk,
       groupName: group.groupName,
@@ -51,17 +51,17 @@ const Home = (): JSX.Element => {
     });
   };
 
-  const handleOnClosePopup = () => {
+  const handleClosePopup = () => {
     setPopup(undefined);
   };
 
-  const handleOnChangePk = (option: Option) => {
+  const handleChangePk = (option: Option) => {
     setSearchCategoryPk(option.value);
   };
 
-  const handleOnChangeLocation = (place: Place) => {};
+  const handleChangeLocation = (place: Place) => {};
 
-  const handleOnChangeDistance = (option: Option) => {
+  const handleChangeDistance = (option: Option) => {
     setSearchDistance(option.value);
   };
 
@@ -143,26 +143,26 @@ const Home = (): JSX.Element => {
   }, [unpagedGroups, currentGroupPage]);
 
   const props: HomeProps = {
-    mapRef: mapRef,
-    currentAddress: currentAddress,
-    currentLocation: currentLocation,
+    mapRef,
+    currentAddress,
+    currentLocation,
 
-    categories: categories,
-    pagedGroups: pagedGroups,
-    hasMoreGroups: hasMoreGroups,
+    categories,
+    pagedGroups,
+    hasMoreGroups,
 
-    popup: popup,
+    popup,
 
-    handleOnScroll: handleOnScroll,
-    handleOnOpenPopup: handleOnOpenPopup,
-    handleOnClosePopup: handleOnClosePopup,
-    handleOnChangePk: handleOnChangePk,
-    handleOnChangeLocation: handleOnChangeLocation,
-    handleOnChangeDistance: handleOnChangeDistance,
+    handleScroll,
+    handleOpenPopup,
+    handleClosePopup,
+    handleChangePk,
+    handleChangeLocation,
+    handleChangeDistance,
 
-    isMobileDevice: isMobileDevice,
-    isTabletDevice: isTabletDevice,
-    isDesktopDevice: isDesktopDevice,
+    isMobileDevice,
+    isTabletDevice,
+    isDesktopDevice,
   };
   return <HomeView {...props} />;
 };

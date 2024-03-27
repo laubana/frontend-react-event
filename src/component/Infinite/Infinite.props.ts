@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 
-export type Size = "small" | "medium" | "large";
+export type Sizing = "small" | "medium" | "large";
 
 export interface InfiniteProps extends HTMLAttributes<HTMLInputElement> {
   columns: number;

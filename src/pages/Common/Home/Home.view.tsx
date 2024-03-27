@@ -11,7 +11,7 @@ import { FaXmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Select from "../../../component/Select";
-import AutoComplete from "../../../component/AutoComplete";
+import InputPlace from "../../../component/InputPlace";
 import Columns from "../../../component/Columns";
 import Card from "../../../component/Card";
 import Infinite from "../../../component/Infinite";
@@ -28,12 +28,12 @@ const HomeView = (props: HomeProps) => {
 
     popup,
 
-    handleOnScroll,
-    handleOnOpenPopup,
-    handleOnClosePopup,
-    handleOnChangePk,
-    handleOnChangeLocation,
-    handleOnChangeDistance,
+    handleScroll,
+    handleOpenPopup,
+    handleClosePopup,
+    handleChangePk,
+    handleChangeLocation,
+    handleChangeDistance,
 
     isMobileDevice,
     isTabletDevice,
@@ -73,7 +73,7 @@ const HomeView = (props: HomeProps) => {
                   latitude={group.groupLocationLatitude}
                   longitude={group.groupLocationLongitude}
                   color="#dc3545"
-                  onClick={() => handleOnOpenPopup(group)}
+                  onClick={() => handleOpenPopup(group)}
                   style={{ cursor: "pointer" }}
                   key={index}
                 />
@@ -87,13 +87,13 @@ const HomeView = (props: HomeProps) => {
                   focusAfterOpen={false}
                   closeButton={false}
                   closeOnClick={false}
-                  onClose={() => handleOnClosePopup()}
+                  onClose={() => handleClosePopup()}
                 >
                   <Grid style={{ justifyItems: "end" }}>
                     <FaXmark
                       color="black"
                       size={16}
-                      onClick={() => handleOnClosePopup()}
+                      onClick={() => handleClosePopup()}
                       cursor="pointer"
                     />
                     <Link to={`/group/detail/${popup.groupPk}`}>
@@ -113,15 +113,15 @@ const HomeView = (props: HomeProps) => {
                 label: category.groupCategoryValue,
                 value: category.groupCategoryPk.toString(),
               }))}
-              setOption={handleOnChangePk}
+              setOption={handleChangePk}
             />
             <Columns
               columns={isMobileDevice ? "1" : "7 3"}
               style={{ justifyItems: "space-between" }}
             >
-              <AutoComplete
+              <InputPlace
                 address={currentAddress}
-                setPlace={handleOnChangeLocation}
+                setPlace={handleChangeLocation}
               />
               <Select
                 options={[10, 20, 30, 40, 50, 60, 70, 80, 100].map(
@@ -130,7 +130,7 @@ const HomeView = (props: HomeProps) => {
                     label: `${distance} km`,
                   })
                 )}
-                setOption={handleOnChangeDistance}
+                setOption={handleChangeDistance}
                 defaultValue={50}
               />
             </Columns>
@@ -146,7 +146,7 @@ const HomeView = (props: HomeProps) => {
               </Link>
             ))}
             hasMore={hasMoreGroups}
-            onScroll={handleOnScroll}
+            onScroll={handleScroll}
           />
         </>
       ) : (

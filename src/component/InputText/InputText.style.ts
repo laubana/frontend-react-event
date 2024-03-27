@@ -1,8 +1,20 @@
 import styled from "@emotion/styled";
 
-import { InputTextStyles, Size } from "./InputText.props";
+import { InputTextStyles, Sizing } from "./InputText.props";
 
-const sizes: Record<Size, string> = {
+const fontSizing: Record<Sizing, string> = {
+  small: `
+        font-size: 14px;
+    `,
+  medium: `
+        font-size: 16px;
+    `,
+  large: `
+        font-size: 18px;
+    `,
+};
+
+const paddingSizing: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -15,19 +27,23 @@ const sizes: Record<Size, string> = {
 };
 
 export const InputTextContainer = styled.div<InputTextStyles>`
-  ${({ _size }) => sizes[_size]}
+  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
   display: flex;
-  border: 1px solid lightgrey;
   border-radius: 8px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   align-items: center;
   gap: 8px;
+
+  :focus-within {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 export const InputText = styled.input`
   border: none;
-  flex-grow: 1;
+  width: 100%;
 
-  &:focus {
+  :focus {
     outline: none;
   }
 `;

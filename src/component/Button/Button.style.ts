@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-import { Size, Color, ButtonStyles } from "./Button.props";
+import { Sizing, Color, ButtonStyles } from "./Button.props";
 
-const sizes: Record<Size, string> = {
+const sizes: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -36,8 +36,8 @@ const colors: Record<Color, string> = {
 };
 
 export const Button = styled.button<ButtonStyles>`
-  ${({ _size }) => sizes[_size]}
-  ${({ color }) => colors[color]}
+  ${({ sizing }) => sizes[sizing]};
+  ${({ color }) => colors[color]};
   ${({ block }) => block && "display: block; width: 100%;"}
   ${({ nopadding }) => nopadding && "padding: 0;"}
   border-radius: 8px;

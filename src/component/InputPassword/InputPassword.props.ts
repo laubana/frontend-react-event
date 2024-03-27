@@ -1,14 +1,13 @@
-import { HTMLAttributes } from "react";
+import { InputHTMLAttributes } from "react";
 
-export type Size = "small" | "medium" | "large";
+export type Sizing = "small" | "medium" | "large";
 
-export interface InputPasswordProps extends HTMLAttributes<HTMLInputElement> {
-  _size?: Size;
-  placeholder?: string;
-  text?: string;
+export interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
+  sizing?: Sizing;
+  text: string;
   setText: (text: string) => void;
 }
 
-export type InputPasswordStyles = {
-  _size: Size;
+export type InputTextStyles = {
+  sizing: Sizing;
 };
