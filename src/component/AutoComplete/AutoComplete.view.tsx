@@ -54,23 +54,33 @@ const AutoCompleteComponent = ({
     getInputPlacePredictions({ input: inputAddress });
   };
 
-  const handleOnClick = (placePrediction: any) => {
-    placesService.getDetails(
+  const handleOnClick = (
+    placePrediction: google.maps.places.AutocompletePrediction
+  ) => {
+    placesService?.getDetails(
       { placeId: placePrediction.place_id, language: "en" },
-      (detail: any) => {
-        console.log(detail.formatted_address);
-        console.log(
-          `${detail.geometry.location.lat()}, ${detail.geometry.location.lng()}`
-        );
-        setInputAddress(detail.formatted_address);
-        getInputPlacePredictions({ input: detail.formatted_address });
-        setPlace({
-          address: detail.formatted_address,
-          latitude: detail.geometry.location.lat(),
-          longitude: detail.geometry.location.lng(),
-          url: detail.url,
-        });
-        setVisibility(false);
+      (detail: google.maps.places.PlaceResult | null) => {
+        if (
+          detail &&
+          detail.geometry &&
+          detail.geometry.location &&
+          detail.formatted_address &&
+          detail.url
+        ) {
+          console.log(detail?.formatted_address);
+          console.log(
+            `${detail.geometry.location.lat()}, ${detail.geometry.location.lng()}`
+          );
+          setInputAddress(detail.formatted_address);
+          getInputPlacePredictions({ input: detail.formatted_address });
+          setPlace({
+            address: detail.formatted_address,
+            latitude: detail.geometry.location.lat(),
+            longitude: detail.geometry.location.lng(),
+            url: detail.url,
+          });
+          setVisibility(false);
+        }
       }
     );
   };

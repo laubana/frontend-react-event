@@ -18,13 +18,16 @@ const colors: Record<Color, string> = {
   black: `        
         background-color: black;
         color: white;
-    `,
-  white: `
-        color: white;
+        &:hover {
+          background-color: #424649;
+        }
     `,
   red: `        
         background-color: #dc3545;
         color: white;
+        &:hover {
+          background-color: #bb2d3b;
+        }
     `,
   transparent: `  
         background-color: transparent;
@@ -33,8 +36,8 @@ const colors: Record<Color, string> = {
 };
 
 export const Button = styled.button<ButtonStyles>`
-  ${({ _size }) => sizes[_size]};
-  ${({ color }) => colors[color]};
+  ${({ _size }) => sizes[_size]}
+  ${({ color }) => colors[color]}
   ${({ block }) => block && "display: block; width: 100%;"}
   ${({ nopadding }) => nopadding && "padding: 0;"}
   border-radius: 8px;

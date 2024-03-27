@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 
 export type Size = "small" | "medium" | "large";
-export type Color = "black" | "white" | "red" | "transparent";
+export type Color = "black" | "red" | "transparent";
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   _size?: Size;

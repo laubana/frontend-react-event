@@ -2,7 +2,7 @@ import React from "react";
 import { ColumnsProps } from "./Columns.props";
 import { Columns } from "./Columns.style";
 
-const FlexComponent = ({
+const ColumnsComponent = ({
   columns,
   children,
   style,
@@ -22,4 +22,4 @@ const FlexComponent = ({
   );
 };
 
-export default React.memo(FlexComponent);
+export default React.memo(ColumnsComponent);

@@ -27,6 +27,6 @@ const colors: Record<Color, string> = {
 };
 
 export const Text = styled.div<TextStyle>`
-  ${({ type }) => types[type]};
-  ${({ color: color }) => colors[color]};
+  ${({ type }) => types[type]}
+  ${({ color: color }) => colors[color]}
 `;

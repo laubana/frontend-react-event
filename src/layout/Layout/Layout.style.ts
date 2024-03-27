@@ -32,6 +32,8 @@ export const Header = styled.header`
   margin: auto;
 `;
 
+export const Main = styled.main``
+
 export const Footer = styled.footer`
   padding: 64px 16px;
   text-align: center;

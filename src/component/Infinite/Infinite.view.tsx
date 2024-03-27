@@ -3,7 +3,7 @@ import { InfiniteProps } from "./Infinite.props";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner, SpinnerContainer } from "./Infinite.style";
 
-const AutoCompleteComponent = ({
+const InfiniteComponent = ({
   columns,
   items,
   hasMore,
@@ -33,4 +33,4 @@ const AutoCompleteComponent = ({
   );
 };
 
-export default React.memo(AutoCompleteComponent);
+export default React.memo(InfiniteComponent);

@@ -15,13 +15,12 @@ const sizes: Record<Size, string> = {
 };
 
 export const InputTextContainer = styled.div<InputTextStyles>`
-  ${({ _size }) => sizes[_size]};
+  ${({ _size }) => sizes[_size]}
   display: flex;
   border: 1px solid lightgrey;
   border-radius: 8px;
   align-items: center;
   gap: 8px;
-  flex-grow: 1;
 `;
 
 export const InputText = styled.input`

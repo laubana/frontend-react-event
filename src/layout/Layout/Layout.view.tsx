@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Footer, Header } from "./Layout.style";
+import { Footer, Header, Main } from "./Layout.style";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Flex from "../../component/Flex";
 import Button from "../../component/Button";
@@ -10,7 +10,8 @@ import InputText from "../../component/InputText";
 
 const LayoutComponent = ({}): JSX.Element => {
   const navigate = useNavigate();
-  const { sessionUserPk, sessionUserId, signout } = UseUserContext();
+  const { sessionUserPk, sessionUserId, isSignedin, signout } =
+    UseUserContext();
   const { handleOnChangeGroupName } = UseSearchContext();
 
   const [inputGroupName, setInputGroupName] = useState<string>("");
@@ -61,8 +62,8 @@ const LayoutComponent = ({}): JSX.Element => {
               flexGrow: 1,
             }}
           >
-            {sessionUserPk !== undefined &&
-              (sessionUserPk ? (
+            {isSignedin !== undefined &&
+              (isSignedin ? (
                 <Flex
                   style={{
                     flexWrap: "wrap",
@@ -95,9 +96,9 @@ const LayoutComponent = ({}): JSX.Element => {
           </Flex>
         </Flex>
       </Header>
-      <main>
+      <Main>
         <Outlet />
-      </main>
+      </Main>
       <Footer>
         <p>Copyright © 2023 Yuhwan Ban. All rights reserved.</p>
       </Footer>

@@ -3,7 +3,7 @@ import { CardProps } from "./Card.props";
 import { Container, Image, TextContainer } from "./Card.style";
 import Text from "../Text";
 
-const FlexComponent = ({ image, title }: CardProps): JSX.Element => {
+const CardComponent = ({ image, title }: CardProps): JSX.Element => {
   return (
     <Container>
       <Image src={image} alt="card" />
@@ -14,4 +14,4 @@ const FlexComponent = ({ image, title }: CardProps): JSX.Element => {
   );
 };
 
-export default React.memo(FlexComponent);
+export default React.memo(CardComponent);

@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
-import { SelectStyle } from "./Select.props";
-import { Size } from "../Button/Button.props";
+import { InputPasswordStyles, Size } from "./InputPassword.props";
 
 const sizes: Record<Size, string> = {
   small: `
@@ -15,18 +14,20 @@ const sizes: Record<Size, string> = {
     `,
 };
 
-export const Select = styled.select<SelectStyle>`
+export const Container = styled.div<InputPasswordStyles>`
   ${({ _size }) => sizes[_size]}
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+  display: flex;
   border: 1px solid lightgrey;
   border-radius: 8px;
-  background-color: white;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const Input = styled.input`
+  border: none;
+  flex-grow: 1;
 
   &:focus {
     outline: none;
   }
 `;
-
-export const Option = styled.option``;
