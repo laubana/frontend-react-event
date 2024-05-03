@@ -1,15 +1,36 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FocusEvent, useState } from "react";
 import { InputTextProps } from "./InputPassword.props";
-import { InputContainer, InputText } from "./InputPassword.style";
+import {
+  Container,
+  LabelContainer,
+  InputContainer,
+  InputPassword,
+  Component,
+  ErrorContainer,
+} from "./InputPassword.style";
 import { FaEye, FaEyeSlash, FaRegCircleXmark } from "react-icons/fa6";
+import Text from "../Text";
 
 const InputPasswordComponent = ({
+  label,
   placeholder,
   password,
   setPassword = () => null,
+  error,
   sizing = "medium",
 }: InputTextProps): JSX.Element => {
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [visibility, setVisibility] = useState<boolean>(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsFocused(false);
+    }
+  };
 
   const handleToggle = () => {
     setVisibility((oldValue) => !oldValue);
@@ -24,29 +45,49 @@ const InputPasswordComponent = ({
   };
 
   return (
-    <InputContainer sizing={sizing}>
-      {visibility ? (
-        <InputText
-          type="type"
-          placeholder={placeholder}
-          value={password}
-          onChange={handleChange}
-        />
-      ) : (
-        <InputText
-          type="password"
-          placeholder={placeholder}
-          value={password}
-          onChange={handleChange}
-        />
+    <Container>
+      {label && (
+        <LabelContainer sizing={sizing}>
+          <Text>{label}</Text>
+        </LabelContainer>
       )}
-      <FaRegCircleXmark color="grey" cursor="pointer" onClick={handleReset} />
-      {visibility ? (
-        <FaEye color="grey" cursor="pointer" onClick={handleToggle} />
-      ) : (
-        <FaEyeSlash color="grey" cursor="pointer" onClick={handleToggle} />
+      <InputContainer onFocus={handleFocus} onBlur={handleBlur} sizing={sizing}>
+        {visibility ? (
+          <InputPassword
+            type="type"
+            placeholder={placeholder}
+            value={password}
+            onChange={handleChange}
+          />
+        ) : (
+          <InputPassword
+            type="password"
+            placeholder={placeholder}
+            value={password}
+            onChange={handleChange}
+          />
+        )}
+        {isFocused && (
+          <Component onClick={handleReset}>
+            <FaRegCircleXmark color="grey" />
+          </Component>
+        )}
+        {visibility ? (
+          <Component onClick={handleToggle}>
+            <FaEye color="grey" cursor="pointer" />
+          </Component>
+        ) : (
+          <Component onClick={handleToggle}>
+            <FaEyeSlash color="grey" cursor="pointer" />
+          </Component>
+        )}
+      </InputContainer>
+      {error && (
+        <ErrorContainer sizing={sizing}>
+          <Text color="red">{error}</Text>
+        </ErrorContainer>
       )}
-    </InputContainer>
+    </Container>
   );
 };
 

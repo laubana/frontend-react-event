@@ -28,6 +28,10 @@ const paddingSizing: Record<Sizing, string> = {
 
 export const Container = styled.div``;
 
+export const LabelContainer = styled.div<InputTextAreaStyles>`
+  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+`;
+
 export const InputContainer = styled.div<InputTextAreaStyles>`
   ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);

@@ -1,22 +1,36 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FocusEvent, useState } from "react";
 import { InputNumberProps } from "./InputNumber.props";
 import {
   Container,
+  LabelContainer,
   InputContainer,
   InputNumber,
+  Component,
   ErrorContainer,
 } from "./InputNumber.style";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import Text from "../Text";
 
 const InputNumberComponent = ({
+  label,
   placeholder,
   number,
   setNumber = () => null,
   sizing = "medium",
 }: InputNumberProps): JSX.Element => {
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [input, setInput] = useState<string>(number ? number.toString() : "");
   const [error, setError] = useState<string>("");
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsFocused(false);
+    }
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
@@ -37,14 +51,23 @@ const InputNumberComponent = ({
 
   return (
     <Container>
-      <InputContainer sizing={sizing}>
+      {label && (
+        <LabelContainer sizing={sizing}>
+          <Text>{label}</Text>
+        </LabelContainer>
+      )}
+      <InputContainer onFocus={handleFocus} onBlur={handleBlur} sizing={sizing}>
         <InputNumber
           type="text"
           placeholder={placeholder}
           value={input}
           onChange={handleChange}
         />
-        <FaRegCircleXmark color="grey" cursor="pointer" onClick={handleReset} />
+        {isFocused && (
+          <Component onClick={handleReset}>
+            <FaRegCircleXmark color="grey" />
+          </Component>
+        )}{" "}
       </InputContainer>
       {error && (
         <ErrorContainer sizing={sizing}>

@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import InputText from "../../component/InputText";
 import Button from "../../component/Button";
+import InputText from "../../component/InputText";
+import InputPassword from "../../component/InputPassword";
 import InputTextArea from "../../component/InputTextArea";
 
 type Form = {
@@ -72,23 +73,26 @@ const Component = () => {
           }) => (
             <>
               <InputText
+                label="Name"
                 placeholder="Name"
                 text={values.name}
                 setText={(text) => setFieldValue("name", text)}
                 error={touched.name ? errors.name : ""}
               />
               <InputText
+                label="Email"
                 placeholder="Email"
                 text={values.email}
                 setText={(text) => setFieldValue("email", text)}
                 error={touched.email ? errors.email : ""}
               />
-              <InputText
+              <InputPassword
+                label="Password"
                 placeholder="Password"
-                text={values.password}
-                setText={(text) => {
+                password={values.password}
+                setPassword={(password) => {
                   setTouched({ password: true });
-                  setFieldValue("password", text);
+                  setFieldValue("password", password);
                 }}
                 error={
                   touched.password || touched.confirmPassword
@@ -96,12 +100,13 @@ const Component = () => {
                     : ""
                 }
               />
-              <InputText
+              <InputPassword
+                label="Confirm Password"
                 placeholder="Confirm Password"
-                text={values.confirmPassword}
-                setText={(text) => {
+                password={values.confirmPassword}
+                setPassword={(password) => {
                   setTouched({ confirmPassword: true });
-                  setFieldValue("confirmPassword", text);
+                  setFieldValue("confirmPassword", password);
                 }}
                 error={
                   touched.password || touched.confirmPassword
@@ -110,6 +115,7 @@ const Component = () => {
                 }
               />
               <InputTextArea
+                label="Message"
                 placeholder="Message"
                 text={values.message}
                 setText={(text) => setFieldValue("message", text)}

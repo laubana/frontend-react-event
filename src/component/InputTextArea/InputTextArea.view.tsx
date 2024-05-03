@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 import { InputTextAreaProps } from "./InputTextArea.props";
 import {
   Container,
+  LabelContainer,
   InputContainer,
   InputTextArea,
   ErrorContainer,
@@ -9,6 +10,7 @@ import {
 import Text from "../Text";
 
 const InputTextComponent = ({
+  label,
   placeholder,
   text,
   setText,
@@ -21,6 +23,11 @@ const InputTextComponent = ({
 
   return (
     <Container>
+      {label && (
+        <LabelContainer sizing={sizing}>
+          <Text>{label}</Text>
+        </LabelContainer>
+      )}
       <InputContainer sizing={sizing}>
         <InputTextArea
           placeholder={placeholder}

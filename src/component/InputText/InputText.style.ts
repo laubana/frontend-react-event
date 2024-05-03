@@ -28,6 +28,10 @@ const paddingSizing: Record<Sizing, string> = {
 
 export const Container = styled.div``;
 
+export const LabelContainer = styled.div<InputTextStyles>`
+  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+`;
+
 export const InputContainer = styled.div<InputTextStyles>`
   ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
   display: flex;
@@ -48,6 +52,15 @@ export const InputText = styled.input`
   :focus {
     outline: none;
   }
+`;
+
+export const Component = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
 `;
 
 export const ErrorContainer = styled.div<InputTextStyles>`
