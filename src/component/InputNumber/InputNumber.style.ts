@@ -26,7 +26,9 @@ const paddingSizing: Record<Sizing, string> = {
     `,
 };
 
-export const InputNumberContainer = styled.div<InputNumberStyles>`
+export const Container = styled.div``;
+
+export const InputContainer = styled.div<InputNumberStyles>`
   ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
   display: flex;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
@@ -46,4 +48,8 @@ export const InputNumber = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const ErrorContainer = styled.div<InputNumberStyles>`
+  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
 `;

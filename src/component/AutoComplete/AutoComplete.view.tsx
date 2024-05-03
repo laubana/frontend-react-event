@@ -14,18 +14,18 @@ import Text from "../Text";
 
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   const {
-    sizing = "medium",
     name,
-    value,
-    options,
-    option,
-    setOption,
     placeholder,
+    option,
+    options,
+    setOption,
     onChange = () => null,
+    sizing = "medium",
   } = props;
-  const [inputValue, setInputValue] = useState<string | undefined>(
-    options.find((optionItem) => optionItem.value === option?.value || value)
-      ?.label || ""
+
+  const [inputValue, setInputValue] = useState<string>(
+    options.find((optionItem) => optionItem.value === option?.value)?.label ||
+      ""
   );
   const [visibility, setVisibility] = useState<boolean>(false);
 

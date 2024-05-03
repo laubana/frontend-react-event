@@ -26,7 +26,9 @@ const paddingSizing: Record<Sizing, string> = {
     `,
 };
 
-export const InputTextAreaContainer = styled.div<InputTextAreaStyles>`
+export const Container = styled.div``;
+
+export const InputContainer = styled.div<InputTextAreaStyles>`
   ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
@@ -43,4 +45,8 @@ export const InputTextArea = styled.textarea`
   :focus {
     outline: none;
   }
+`;
+
+export const ErrorContainer = styled.div<InputTextAreaStyles>`
+  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
 `;

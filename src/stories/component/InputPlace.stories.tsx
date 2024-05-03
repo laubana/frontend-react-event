@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import InputPlace from "../../component/InputPlace";
 import { useState } from "react";
 import Geocode from "react-geocode";
-import Text from "../../component/Text";
 import { Place } from "../../type/Place";
+import InputPlace from "../../component/InputPlace";
+import Text from "../../component/Text";
 
 const Component = () => {
   const [currentAddress, setCurrentAddress] = useState<string>("");
@@ -26,7 +26,7 @@ const Component = () => {
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputPlace
           sizing="small"
           placeholder="Address"
@@ -40,7 +40,7 @@ const Component = () => {
         />
         <Text>{place?.address}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputPlace
           placeholder="Address"
           address={currentAddress}
@@ -49,7 +49,7 @@ const Component = () => {
         <InputPlace address={currentAddress} setPlace={setPlace} />
         <Text>{place?.address}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputPlace
           sizing="large"
           placeholder="Address"

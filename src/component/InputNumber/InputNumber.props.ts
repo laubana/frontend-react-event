@@ -1,12 +1,10 @@
-import { InputHTMLAttributes } from "react";
-
 export type Sizing = "small" | "medium" | "large";
 
-export interface InputNumberProps
-  extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputNumberProps {
+  placeholder?: string;
+  number?: number;
+  setNumber?: (number: number) => void;
   sizing?: Sizing;
-  number: string;
-  setNumber: (number: string) => void;
 }
 
 export type InputNumberStyles = {

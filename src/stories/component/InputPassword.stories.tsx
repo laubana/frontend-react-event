@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import InputPassword from "../../component/InputPassword";
 import { useState } from "react";
+import InputPassword from "../../component/InputPassword";
 import Text from "../../component/Text";
 
 const Component = () => {
@@ -8,43 +8,43 @@ const Component = () => {
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputPassword
           sizing="small"
           placeholder="Password"
-          text={password}
-          setText={(text: string) => setPassword(text)}
+          password={password}
+          setPassword={(text: string) => setPassword(text)}
         />
         <InputPassword
           sizing="small"
-          text={password}
-          setText={(text: string) => setPassword(text)}
+          password={password}
+          setPassword={(text: string) => setPassword(text)}
         />
         <Text>{password}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputPassword
           placeholder="Password"
-          text={password}
-          setText={(text: string) => setPassword(text)}
+          password={password}
+          setPassword={(text: string) => setPassword(text)}
         />
         <InputPassword
-          text={password}
-          setText={(text: string) => setPassword(text)}
+          password={password}
+          setPassword={(text: string) => setPassword(text)}
         />
         <Text>{password}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputPassword
           sizing="large"
           placeholder="Password"
-          text={password}
-          setText={(text: string) => setPassword(text)}
+          password={password}
+          setPassword={(text: string) => setPassword(text)}
         />
         <InputPassword
           sizing="large"
-          text={password}
-          setText={(text: string) => setPassword(text)}
+          password={password}
+          setPassword={(text: string) => setPassword(text)}
         />
         <Text>{password}</Text>
       </div>

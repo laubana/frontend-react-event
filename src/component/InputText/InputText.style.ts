@@ -26,7 +26,9 @@ const paddingSizing: Record<Sizing, string> = {
     `,
 };
 
-export const InputTextContainer = styled.div<InputTextStyles>`
+export const Container = styled.div``;
+
+export const InputContainer = styled.div<InputTextStyles>`
   ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
   display: flex;
   border-radius: 8px;
@@ -46,4 +48,8 @@ export const InputText = styled.input`
   :focus {
     outline: none;
   }
+`;
+
+export const ErrorContainer = styled.div<InputTextStyles>`
+  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
 `;

@@ -70,8 +70,8 @@ const HomeView = (props: HomeProps) => {
               />
               {pagedGroups?.map((group, index) => (
                 <Marker
-                  latitude={group.groupLocationLatitude}
-                  longitude={group.groupLocationLongitude}
+                  latitude={group.location.latitude}
+                  longitude={group.location.longitude}
                   color="#dc3545"
                   onClick={() => handleOpenPopup(group)}
                   style={{ cursor: "pointer" }}
@@ -81,8 +81,8 @@ const HomeView = (props: HomeProps) => {
               {popup && (
                 <Popup
                   anchor="top"
-                  latitude={Number(popup.groupLocationLatitude)}
-                  longitude={Number(popup.groupLocationLongitude)}
+                  latitude={Number(popup.location.latitude)}
+                  longitude={Number(popup.location.longitude)}
                   maxWidth="150px"
                   focusAfterOpen={false}
                   closeButton={false}
@@ -96,10 +96,10 @@ const HomeView = (props: HomeProps) => {
                       onClick={() => handleClosePopup()}
                       cursor="pointer"
                     />
-                    <Link to={`/group/detail/${popup.groupPk}`}>
+                    <Link to={`/group/detail/${popup.id}`}>
                       <Card
-                        image={`/square/group/get_small_image?groupPk=${popup.groupPk}`}
-                        title={popup.groupName}
+                        image={`/square/group/get_small_image?groupPk=${popup.id}`}
+                        title={popup.name}
                       />
                     </Link>
                   </Grid>
@@ -110,8 +110,8 @@ const HomeView = (props: HomeProps) => {
           <Grid columns={isMobileDevice ? 1 : 2}>
             <Select
               options={categories.map((category, _) => ({
-                label: category.groupCategoryValue,
-                value: category.groupCategoryPk.toString(),
+                label: category.value,
+                value: category.id.toString(),
               }))}
               setOption={handleChangePk}
             />
@@ -138,10 +138,10 @@ const HomeView = (props: HomeProps) => {
           <Infinite
             columns={isDesktopDevice ? 4 : isTabletDevice ? 3 : 2}
             items={pagedGroups.map((group, index) => (
-              <Link to={`/group/detail/${group.groupPk}`} key={index}>
+              <Link to={`/group/detail/${group.id}`} key={index}>
                 <Card
-                  image={`/square/group/get_small_image?groupPk=${group.groupPk}`}
-                  title={group.groupName}
+                  image={`/square/group/get_small_image?groupPk=${group.id}`}
+                  title={group.name}
                 />
               </Link>
             ))}

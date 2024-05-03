@@ -12,28 +12,28 @@ const SigninView = (props: SigninProps) => {
     userId,
     userPassword,
 
-    handleOnChangeInputUserId,
-    handleOnChangeInputUserPassword,
-    handleOnSignin,
-    handleOnGoBack,
-    handleOnSigninWithGoogle,
+    handleChangeUserId: handleOnChangeInputUserId,
+    handleChangeUserPassword: handleOnChangeInputUserPassword,
+    handleSignin: handleOnSignin,
+    handleGoBack: handleOnGoBack,
+    handleSigninWithGoogle: handleOnSigninWithGoogle,
   } = props;
 
   return (
     <Container>
       <Grid style={{ gap: "64px" }}>
-        <Text type="h1">Sign In</Text>
+        <Text>Sign In</Text>
         <Grid>
-          <Text type="h2">ID</Text>
+          <Text>ID</Text>
           <InputText
             text={userId}
             setText={handleOnChangeInputUserId}
             placeholder="ID"
           />
-          <Text type="h2">Password</Text>
+          <Text>Password</Text>
           <InputPassword
-            text={userPassword}
-            setText={handleOnChangeInputUserPassword}
+            password={userPassword}
+            setPassword={handleOnChangeInputUserPassword}
           />
           <Button onClick={handleOnSignin} block>
             Sign In

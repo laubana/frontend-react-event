@@ -22,6 +22,14 @@ const colors: Record<Color, string> = {
           background-color: #424649;
         }
     `,
+  white: `        
+        background-color: white;
+        color: black;
+        &:hover {
+          background-color: #424649;
+          color: white;
+        }
+    `,
   red: `        
         background-color: #dc3545;
         color: white;

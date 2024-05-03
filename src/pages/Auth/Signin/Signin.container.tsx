@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import SigninView from "./Signin.view";
 import { SigninProps as SigninProps } from "./Signin.props";
 import { useNavigate } from "react-router-dom";
@@ -8,39 +8,39 @@ const Signin = (): JSX.Element => {
   const navigate = useNavigate();
   const { signin } = UseUserContext();
 
-  const [inputUserId, setInputUserId] = useState("laubana@gmail.com");
-  const [inputUserPassword, setInputUserPassword] = useState("password");
+  const [userId, setUserId] = useState<string>("laubana@gmail.com");
+  const [userPassword, setUserPassword] = useState<string>("password");
 
-  const handleOnSignin = async () => {
-    signin(inputUserId, inputUserPassword);
+  const handleSignin = async () => {
+    signin(userId, userPassword);
   };
 
-  const handleOnChangeInputUserId = (inputUserId: string) => {
-    setInputUserId(inputUserId);
+  const handleChangeUserId = (inputUserId: string) => {
+    setUserId(inputUserId);
   };
 
-  const handleOnChangeInputUserPassword = (inputUserPassword: string) => {
-    setInputUserPassword(inputUserPassword);
+  const handleChangeUserPassword = (userPassword: string) => {
+    setUserPassword(userPassword);
   };
 
-  const handleOnGoBack = () => {
+  const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleOnSigninWithGoogle = () => {
+  const handleSigninWithGoogle = () => {
     window.location.href =
       "http://localhost/square/oauth2/authorization/google";
   };
 
   const props: SigninProps = {
-    userId: inputUserId,
-    userPassword: inputUserPassword,
+    userId,
+    userPassword,
 
-    handleOnChangeInputUserId: handleOnChangeInputUserId,
-    handleOnChangeInputUserPassword: handleOnChangeInputUserPassword,
-    handleOnSignin: handleOnSignin,
-    handleOnGoBack: handleOnGoBack,
-    handleOnSigninWithGoogle: handleOnSigninWithGoogle,
+    handleChangeUserId,
+    handleChangeUserPassword,
+    handleSignin,
+    handleGoBack,
+    handleSigninWithGoogle,
   };
   return <SigninView {...props} />;
 };

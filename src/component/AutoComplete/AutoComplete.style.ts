@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { InputTextStyles, Sizing } from "./AutoComplete.props";
+import { AutoCompleteStyles, Sizing } from "./AutoComplete.props";
 
 const fontSizing: Record<Sizing, string> = {
   small: `
@@ -30,7 +30,7 @@ export const Container = styled.div`
 `;
 
 export const InputContainer = styled.div<
-  InputTextStyles & {
+  AutoCompleteStyles & {
     visibility: boolean;
   }
 >`
@@ -74,7 +74,7 @@ export const ListContainer = styled.div`
   z-index: 5;
 `;
 
-export const ItemContainer = styled.div<InputTextStyles>`
+export const ItemContainer = styled.div<AutoCompleteStyles>`
   ${({ sizing }) => paddingSizing[sizing]}
   cursor: pointer;
   box-sizing: border-box;

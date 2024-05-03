@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import InputTextArea from "../../component/InputTextArea";
 import { useState } from "react";
+import InputTextArea from "../../component/InputTextArea";
 import Text from "../../component/Text";
 
 const Component = () => {
@@ -8,7 +8,7 @@ const Component = () => {
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputTextArea
           sizing="small"
           placeholder="TextArea"
@@ -22,7 +22,7 @@ const Component = () => {
         />
         <Text>{text}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputTextArea
           placeholder="TextArea"
           text={text}
@@ -31,7 +31,7 @@ const Component = () => {
         <InputTextArea text={text} setText={(text: string) => setText(text)} />
         <Text>{text}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <InputTextArea
           sizing="large"
           placeholder="TextArea"

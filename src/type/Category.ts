@@ -1,4 +1,4 @@
 export type Category = {
-  groupCategoryPk: number;
-  groupCategoryValue: string;
+  id: number;
+  value: string;
 };

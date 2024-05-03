@@ -44,7 +44,7 @@ const LayoutComponent = ({}): JSX.Element => {
             }}
           >
             <Link to="/" reloadDocument={true}>
-              <Text type="h1">Square</Text>
+              <Text>Square</Text>
             </Link>
             <Flex style={{ alignItems: "center", flexGrow: 1 }}>
               <InputText

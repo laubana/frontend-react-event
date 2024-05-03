@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import AutoComplete from "../../component/AutoComplete";
 import { useState } from "react";
 import { Option } from "../../type/Option";
+import AutoComplete from "../../component/AutoComplete";
 import Text from "../../component/Text";
 
 const Component = () => {
@@ -15,7 +15,7 @@ const Component = () => {
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
           sizing="small"
           placeholder="Frults"
@@ -29,7 +29,7 @@ const Component = () => {
         />
         <Text>{option?.value}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
           placeholder="Frults"
           options={options}
@@ -41,7 +41,7 @@ const Component = () => {
         />
         <Text>{option?.value}</Text>
       </div>
-      <div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
           sizing="large"
           placeholder="Frults"

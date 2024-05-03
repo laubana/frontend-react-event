@@ -1,10 +1,10 @@
 export interface SigninProps {
-  userId?: string;
-  userPassword?: string;
+  userId: string;
+  userPassword: string;
 
-  handleOnChangeInputUserId: (inputUserId: string) => void;
-  handleOnChangeInputUserPassword: (inputUserPassword: string) => void;
-  handleOnSignin: () => void;
-  handleOnGoBack: () => void;
-  handleOnSigninWithGoogle: () => void;
+  handleChangeUserId: (userId: string) => void;
+  handleChangeUserPassword: (userPassword: string) => void;
+  handleSignin: () => void;
+  handleGoBack: () => void;
+  handleSigninWithGoogle: () => void;
 }

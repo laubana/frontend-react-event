@@ -1,13 +1,11 @@
-import { HTMLAttributes } from "react";
-
 export type Sizing = "small" | "medium" | "large";
 
-export interface InputTextAreaProps
-  extends HTMLAttributes<HTMLTextAreaElement> {
-  sizing?: Sizing;
+export interface InputTextAreaProps {
   placeholder?: string;
-  text?: string;
+  text: string;
   setText: (text: string) => void;
+  error?: string;
+  sizing?: Sizing;
 }
 
 export type InputTextAreaStyles = {

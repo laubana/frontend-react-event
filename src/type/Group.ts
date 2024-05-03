@@ -1,6 +1,7 @@
+import { Location } from "./Location";
+
 export type Group = {
-  groupPk: number;
-  groupName: string;
-  groupLocationLatitude: number;
-  groupLocationLongitude: number;
+  id: number;
+  name: string;
+  location: Location;
 };

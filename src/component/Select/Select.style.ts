@@ -15,6 +15,8 @@ const sizes: Record<Sizing, string> = {
     `,
 };
 
+export const Container = styled.div``;
+
 export const Select = styled.select<SelectStyle>`
   ${({ sizing }) => sizes[sizing]};
   width: 100%;

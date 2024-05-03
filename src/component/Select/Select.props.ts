@@ -1,13 +1,15 @@
-import { HTMLAttributes } from "react";
+import { CSSProperties } from "react";
 import { Option } from "../../type/Option";
 
 export type Sizing = "small" | "medium" | "large";
 
-export interface SelectProps extends HTMLAttributes<HTMLSelectElement> {
+export interface SelectProps {
+  label?: string;
+  defaultValue?: number;
   options: Option[];
   setOption: (option: Option) => void;
-  label?: string;
   sizing?: Sizing;
+  style?: CSSProperties;
 }
 
 export type SelectStyle = {

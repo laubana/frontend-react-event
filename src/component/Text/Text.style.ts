@@ -1,18 +1,6 @@
 import styled from "@emotion/styled";
 
-import { Type, Color, TextStyle, Sizing } from "./Text.props";
-
-const types: Record<Type, string> = {
-  h1: `
-        font-size: 36px;
-    `,
-  h2: `
-        font-size: 24px;
-    `,
-  paragraph: `
-        font-size: 16px;
-    `,
-};
+import { Color, TextStyle, Sizing } from "./Text.props";
 
 const fontSizing: Record<Sizing, string> = {
   small: `
@@ -40,7 +28,6 @@ const colors: Record<Color, string> = {
 
 export const Text = styled.div<TextStyle>`
   font-family: "Montserrat", sans-serif;
-  ${({ type }) => types[type]}
-  ${({ type, sizing }) => type === "paragraph" && fontSizing[sizing]}
+  ${({ sizing }) => fontSizing[sizing]}
   ${({ color }) => colors[color]}
 `;

@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useState } from "react";
 import { InputTextProps } from "./InputPassword.props";
-import { InputText, InputTextContainer } from "./InputPassword.style";
+import { InputContainer, InputText } from "./InputPassword.style";
 import { FaEye, FaEyeSlash, FaRegCircleXmark } from "react-icons/fa6";
 
 const InputPasswordComponent = ({
-  sizing = "medium",
   placeholder,
-  text,
-  setText,
+  password,
+  setPassword = () => null,
+  sizing = "medium",
 }: InputTextProps): JSX.Element => {
   const [visibility, setVisibility] = useState<boolean>(false);
 
@@ -16,37 +16,37 @@ const InputPasswordComponent = ({
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
+    setPassword(event.target.value);
   };
 
   const handleReset = () => {
-    setText("");
+    setPassword("");
   };
 
   return (
-    <InputTextContainer sizing={sizing}>
-      {visibility ? (
-        <FaEye color="grey" cursor="pointer" onClick={handleToggle} />
-      ) : (
-        <FaEyeSlash color="grey" cursor="pointer" onClick={handleToggle} />
-      )}
+    <InputContainer sizing={sizing}>
       {visibility ? (
         <InputText
           type="type"
           placeholder={placeholder}
-          value={text}
+          value={password}
           onChange={handleChange}
         />
       ) : (
         <InputText
           type="password"
           placeholder={placeholder}
-          value={text}
+          value={password}
           onChange={handleChange}
         />
       )}
       <FaRegCircleXmark color="grey" cursor="pointer" onClick={handleReset} />
-    </InputTextContainer>
+      {visibility ? (
+        <FaEye color="grey" cursor="pointer" onClick={handleToggle} />
+      ) : (
+        <FaEyeSlash color="grey" cursor="pointer" onClick={handleToggle} />
+      )}
+    </InputContainer>
   );
 };
 

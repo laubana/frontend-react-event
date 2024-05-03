@@ -1,11 +1,10 @@
-import { InputHTMLAttributes } from "react";
-
 export type Sizing = "small" | "medium" | "large";
 
-export interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputTextProps {
+  placeholder?: string;
+  password?: string;
+  setPassword?: (text: string) => void;
   sizing?: Sizing;
-  text: string;
-  setText: (text: string) => void;
 }
 
 export type InputTextStyles = {

@@ -1,41 +1,57 @@
 import React, { ChangeEvent, useState } from "react";
 import { InputNumberProps } from "./InputNumber.props";
-import { InputNumber, InputNumberContainer } from "./InputNumber.style";
+import {
+  Container,
+  InputContainer,
+  InputNumber,
+  ErrorContainer,
+} from "./InputNumber.style";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import Text from "../Text";
 
 const InputNumberComponent = ({
-  sizing = "medium",
   placeholder,
   number,
-  setNumber,
+  setNumber = () => null,
+  sizing = "medium",
 }: InputNumberProps): JSX.Element => {
-  const [inputValue, setInputValue] = useState<string>(number || "");
+  const [input, setInput] = useState<string>(number ? number.toString() : "");
+  const [error, setError] = useState<string>("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-
+    setInput(event.target.value);
     if (!isNaN(Number(event.target.value))) {
-      setNumber(event.target.value);
+      setNumber(Number(event.target.value));
+      setError("");
     } else {
-      setNumber("");
+      setNumber(0);
+      setError("Error!");
     }
   };
 
   const handleReset = () => {
-    setInputValue("");
-    setNumber("");
+    setInput("");
+    setNumber(0);
+    setError("");
   };
 
   return (
-    <InputNumberContainer sizing={sizing}>
-      <InputNumber
-        type="text"
-        placeholder={placeholder}
-        value={inputValue}
-        onChange={handleChange}
-      />
-      <FaRegCircleXmark color="grey" cursor="pointer" onClick={handleReset} />
-    </InputNumberContainer>
+    <Container>
+      <InputContainer sizing={sizing}>
+        <InputNumber
+          type="text"
+          placeholder={placeholder}
+          value={input}
+          onChange={handleChange}
+        />
+        <FaRegCircleXmark color="grey" cursor="pointer" onClick={handleReset} />
+      </InputContainer>
+      {error && (
+        <ErrorContainer sizing={sizing}>
+          <Text color="red">{error}</Text>
+        </ErrorContainer>
+      )}
+    </Container>
   );
 };
 

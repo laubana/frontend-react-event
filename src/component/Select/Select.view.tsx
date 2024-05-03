@@ -1,12 +1,12 @@
 import React, { ChangeEvent } from "react";
 import { SelectProps } from "./Select.props";
-import { Select, Option } from "./Select.style";
+import { Select, Option, Container } from "./Select.style";
 
 const SelectComponent = ({
+  label,
+  defaultValue,
   options,
   setOption,
-  defaultValue,
-  label,
   sizing = "medium",
   style,
 }: SelectProps): JSX.Element => {
@@ -16,19 +16,21 @@ const SelectComponent = ({
   };
 
   return (
-    <Select
-      sizing={sizing}
-      style={style}
-      defaultValue={label ? "" : defaultValue}
-      onChange={handleChange}
-    >
-      {label && <Option value="">{label}</Option>}
-      {options.map((option, index) => (
-        <Option value={option.value} key={index}>
-          {option.label}
-        </Option>
-      ))}
-    </Select>
+    <Container>
+      <Select
+        sizing={sizing}
+        style={style}
+        defaultValue={label ? "" : defaultValue}
+        onChange={handleChange}
+      >
+        {label && <Option value="">{label}</Option>}
+        {options.map((option, index) => (
+          <Option value={option.value} key={index}>
+            {option.label}
+          </Option>
+        ))}
+      </Select>
+    </Container>
   );
 };
 

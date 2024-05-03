@@ -1,16 +1,18 @@
-import { InputHTMLAttributes } from "react";
+import { ChangeEvent } from "react";
 import { Option } from "../../type/Option";
 
 export type Sizing = "small" | "medium" | "large";
 
-export interface AutoCompleteProps
-  extends InputHTMLAttributes<HTMLInputElement> {
+export interface AutoCompleteProps {
   sizing?: Sizing;
+  name?: string;
+  placeholder?: string;
   options: Option[];
-  option?: Option | undefined;
+  option?: Option;
   setOption: (option: Option | undefined) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export type InputTextStyles = {
+export type AutoCompleteStyles = {
   sizing: Sizing;
 };

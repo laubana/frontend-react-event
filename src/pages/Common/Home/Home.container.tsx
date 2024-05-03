@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HomeView from "./Home.view";
 import { useMediaQuery } from "react-responsive";
 import Geocode from "react-geocode";
@@ -39,14 +39,13 @@ const Home = (): JSX.Element => {
 
   const handleOpenPopup = (group: Group) => {
     setPopup({
-      groupPk: group.groupPk,
-      groupName: group.groupName,
-      groupLocationLatitude: group.groupLocationLatitude,
-      groupLocationLongitude: group.groupLocationLongitude,
+      id: group.id,
+      name: group.name,
+      location: group.location,
     });
 
     mapRef.current?.flyTo({
-      center: [group.groupLocationLongitude, group.groupLocationLatitude],
+      center: [group.location.latitude, group.location.longitude],
       duration: 500,
     });
   };
