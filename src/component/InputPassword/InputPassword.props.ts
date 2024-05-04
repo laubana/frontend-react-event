@@ -8,7 +8,3 @@ export interface InputTextProps {
   error?: string;
   sizing?: Sizing;
 }
-
-export type InputPasswordStyles = {
-  sizing: Sizing;
-};

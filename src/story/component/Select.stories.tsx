@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Option } from "../../type/Option";
-import AutoComplete from "../../component/AutoComplete";
+import Select from "../../component/Select";
 import Text from "../../component/Text";
+
+import "../../../src/index.css";
 
 const Component = () => {
   const options: Option[] = [
@@ -16,40 +18,37 @@ const Component = () => {
   return (
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
-        <AutoComplete
-          sizing="small"
-          placeholder="Frults"
+        <Select
+          size="small"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
-        <AutoComplete
-          sizing="small"
-          options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
-        />
-        <Text>{option?.value}</Text>
-      </div>
-      <div style={{ display: "grid", gap: "16px" }}>
-        <AutoComplete
-          placeholder="Frults"
-          options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
-        />
-        <AutoComplete
+        <Select
+          size="small"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
         <Text>{option?.value}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
-        <AutoComplete
-          sizing="large"
-          placeholder="Frults"
+        <Select
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
-        <AutoComplete
-          sizing="large"
+        <Select
+          options={options}
+          setOption={(option: Option | undefined) => setOption(option)}
+        />
+        <Text>{option?.value}</Text>
+      </div>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <Select
+          size="large"
+          options={options}
+          setOption={(option: Option | undefined) => setOption(option)}
+        />
+        <Select
+          size="large"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
@@ -59,8 +58,8 @@ const Component = () => {
   );
 };
 
-const meta: Meta<typeof AutoComplete> = {
-  title: "Component/AutoComplete",
+const meta: Meta<typeof Select> = {
+  title: "Component/Select",
   component: Component,
 };
 

@@ -4,12 +4,12 @@ import { Text } from "./Text.style";
 
 const TextComponent = ({
   sizing = "medium",
-  color = "black",
+  coloring = "black",
   children,
   style,
 }: TextProps): JSX.Element => {
   return (
-    <Text sizing={sizing} color={color} style={style}>
+    <Text sizing={sizing} coloring={coloring} style={style}>
       {children}
     </Text>
   );

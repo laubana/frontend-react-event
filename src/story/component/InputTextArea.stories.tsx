@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import InputText from "../../component/InputText";
+import InputTextArea from "../../component/InputTextArea";
 import Text from "../../component/Text";
+
+import "../../../src/index.css";
 
 const Component = () => {
   const [text, setText] = useState<string>("");
@@ -9,39 +11,48 @@ const Component = () => {
   return (
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
-        <InputText
+        <InputTextArea
+          label="TextArea"
+          placeholder="TextArea"
+          text={text}
+          setText={(text: string) => setText(text)}
           sizing="small"
-          placeholder="Text"
+        />
+        <InputTextArea
+          label="TextArea"
+          text={text}
+          setText={(text: string) => setText(text)}
+          sizing="small"
+        />
+        <Text>{text}</Text>
+      </div>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <InputTextArea
+          label="TextArea"
+          placeholder="TextArea"
           text={text}
           setText={(text: string) => setText(text)}
         />
-        <InputText
-          sizing="small"
+        <InputTextArea
+          label="TextArea"
           text={text}
           setText={(text: string) => setText(text)}
         />
         <Text>{text}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
-        <InputText
-          placeholder="Text"
+        <InputTextArea
+          label="TextArea"
+          placeholder="TextArea"
           text={text}
           setText={(text: string) => setText(text)}
-        />
-        <InputText text={text} setText={(text: string) => setText(text)} />
-        <Text>{text}</Text>
-      </div>
-      <div style={{ display: "grid", gap: "16px" }}>
-        <InputText
           sizing="large"
-          placeholder="Text"
-          text={text}
-          setText={(text: string) => setText(text)}
         />
-        <InputText
-          sizing="large"
+        <InputTextArea
+          label="TextArea"
           text={text}
           setText={(text: string) => setText(text)}
+          sizing="large"
         />
         <Text>{text}</Text>
       </div>
@@ -49,8 +60,8 @@ const Component = () => {
   );
 };
 
-const meta: Meta<typeof InputText> = {
-  title: "Component/InputText",
+const meta: Meta<typeof InputTextArea> = {
+  title: "Component/InputTextArea",
   component: Component,
 };
 

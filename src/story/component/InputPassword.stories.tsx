@@ -3,6 +3,8 @@ import { useState } from "react";
 import InputPassword from "../../component/InputPassword";
 import Text from "../../component/Text";
 
+import "../../../src/index.css";
+
 const Component = () => {
   const [password, setPassword] = useState<string>("");
 

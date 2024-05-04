@@ -37,7 +37,7 @@ const InputTextComponent = ({
       </InputContainer>
       {error && (
         <ErrorContainer sizing={sizing}>
-          <Text color="red">{error}</Text>
+          <Text coloring="red">{error}</Text>
         </ErrorContainer>
       )}
     </Container>

@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
+import { Size } from "../Select/Select.props";
 
-import { SelectStyle } from "./Select.props";
-import { Sizing } from "../Button/Button.props";
-
-const sizes: Record<Sizing, string> = {
+const sizes: Record<Size, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -17,7 +15,7 @@ const sizes: Record<Sizing, string> = {
 
 export const Container = styled.div``;
 
-export const Select = styled.select<SelectStyle>`
+export const Select = styled.select<{ sizing: Size }>`
   ${({ sizing }) => sizes[sizing]};
   width: 100%;
   height: 100%;

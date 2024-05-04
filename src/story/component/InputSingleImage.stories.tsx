@@ -3,6 +3,8 @@ import { useState } from "react";
 import { ImageType } from "react-images-uploading";
 import InputSingleImage from "../../component/InputSingleImage";
 
+import "../../../src/index.css";
+
 const Component = () => {
   const [image, setImage] = useState<ImageType | undefined>(undefined);
 

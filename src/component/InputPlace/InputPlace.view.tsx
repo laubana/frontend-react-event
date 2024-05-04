@@ -1,11 +1,14 @@
-import React, { ChangeEvent, useState } from "react";
-import { PlaceProps } from "./InputPlace.props";
+import React, { ChangeEvent, FocusEvent, useState } from "react";
+import { InputPlaceProps } from "./InputPlace.props";
 import {
   Container,
-  Input,
+  LabelContainer,
   InputContainer,
-  ItemContainer,
+  Input,
+  Icon,
   ListContainer,
+  Item,
+  ErrorContainer,
 } from "./InputPlace.style";
 import useGoogle from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
@@ -13,11 +16,13 @@ import { BiCurrentLocation } from "react-icons/bi";
 import Text from "../Text";
 
 const InputPlaceComponent = ({
+  label,
   placeholder,
   address,
   setPlace,
+  error,
   sizing = "medium",
-}: PlaceProps): JSX.Element => {
+}: InputPlaceProps): JSX.Element => {
   const { placesService } = useGoogle({
     apiKey: process.env.REACT_APP_GOOGLE_MAPS,
   });
@@ -39,6 +44,14 @@ const InputPlaceComponent = ({
   const [visibility, setVisibility] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+    if (address && currentPlacePredictions.length === 0) {
+      getCurrentPlacePredictions({ input: address });
+    }
+    getInputPlacePredictions({ input: event.target.value });
+  };
+
   const handleFocus = () => {
     if (address && currentPlacePredictions.length === 0) {
       getCurrentPlacePredictions({ input: address });
@@ -46,19 +59,13 @@ const InputPlaceComponent = ({
     setVisibility(true);
   };
 
-  const handleBlur = () => {
-    setVisibility(false);
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value);
-    if (address && currentPlacePredictions.length === 0) {
-      getCurrentPlacePredictions({ input: address });
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setVisibility(false);
     }
-    getInputPlacePredictions({ input: input });
   };
 
-  const handleClick = (placePrediction: any) => {
+  const handleSelect = (placePrediction: any) => {
     placesService?.getDetails(
       { placeId: placePrediction.place_id, language: "en" },
       (detail: any) => {
@@ -79,51 +86,72 @@ const InputPlaceComponent = ({
     );
   };
 
+  const handleToggle = () => {
+    setVisibility((oldValue) => !oldValue);
+  };
+
   return (
-    <Container>
+    <Container
+      onChange={handleChange}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
+      {label && (
+        <LabelContainer sizing={sizing}>
+          <Text>{label}</Text>
+        </LabelContainer>
+      )}
       <InputContainer visibility={visibility} sizing={sizing}>
-        <Input
-          value={input}
-          placeholder={placeholder}
-          onChange={handleChange}
-          onFocus={handleFocus}
-        />
-        {visibility &&
-        (0 < currentPlacePredictions.length ||
-          0 < inputPlacePredictions.length) ? (
-          <FaChevronUp color="black" cursor="pointer" onClick={handleBlur} />
-        ) : (
-          <FaChevronDown color="black" cursor="pointer" onClick={handleFocus} />
-        )}
+        <Input value={input} placeholder={placeholder} />
+        <Icon onClick={handleToggle}>
+          {visibility ? (
+            <FaChevronUp color="black" />
+          ) : (
+            <FaChevronDown color="black" />
+          )}
+        </Icon>
       </InputContainer>
       {visibility &&
         (0 < currentPlacePredictions.length ||
           0 < inputPlacePredictions.length) && (
           <ListContainer>
             {currentPlacePredictions.map((placePrediction, index) => (
-              <ItemContainer
+              <Item
                 sizing={sizing}
-                onClick={() => handleClick(placePrediction)}
+                onClick={() => handleSelect(placePrediction)}
                 key={index}
               >
-                <BiCurrentLocation
-                  color="black"
-                  size={sizing === "small" ? 28 : sizing === "large" ? 48 : 36}
-                />
-                <Text sizing={sizing}>{placePrediction.description}</Text>
-              </ItemContainer>
+                <BiCurrentLocation color="black" />
+                <Text
+                  sizing={sizing}
+                  style={{ textAlign: "start", wordBreak: "break-all" }}
+                >
+                  {placePrediction.description}
+                </Text>
+              </Item>
             ))}
             {inputPlacePredictions.map((placePrediction, index) => (
-              <ItemContainer
+              <Item
                 sizing={sizing}
-                onClick={() => handleClick(placePrediction)}
+                onClick={() => handleSelect(placePrediction)}
+                style={{ display: "block" }}
                 key={index}
               >
-                <Text sizing={sizing}>{placePrediction.description}</Text>
-              </ItemContainer>
+                <Text
+                  sizing={sizing}
+                  style={{ textAlign: "start", wordBreak: "break-all" }}
+                >
+                  {placePrediction.description}
+                </Text>
+              </Item>
             ))}
           </ListContainer>
         )}
+      {error && (
+        <ErrorContainer sizing={sizing}>
+          <Text coloring="red">{error}</Text>
+        </ErrorContainer>
+      )}
     </Container>
   );
 };

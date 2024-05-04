@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-import { Color, TextStyle, Sizing } from "./Text.props";
+import { Sizing, Coloring } from "./Text.props";
 
-const fontSizing: Record<Sizing, string> = {
+const fontSizes: Record<Sizing, string> = {
   small: `
         font-size: 14px;
     `,
@@ -14,7 +14,7 @@ const fontSizing: Record<Sizing, string> = {
     `,
 };
 
-const colors: Record<Color, string> = {
+const colors: Record<Coloring, string> = {
   black: `
         color: black;
     `,
@@ -26,8 +26,11 @@ const colors: Record<Color, string> = {
     `,
 };
 
-export const Text = styled.div<TextStyle>`
+export const Text = styled.div<{
+  sizing: Sizing;
+  coloring: Coloring;
+}>`
   font-family: "Montserrat", sans-serif;
-  ${({ sizing }) => fontSizing[sizing]}
-  ${({ color }) => colors[color]}
+  ${({ sizing }) => fontSizes[sizing]}
+  ${({ coloring }) => colors[coloring]}
 `;

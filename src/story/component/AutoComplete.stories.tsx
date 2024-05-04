@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Option } from "../../type/Option";
-import Select from "../../component/Select";
+import AutoComplete from "../../component/AutoComplete";
 import Text from "../../component/Text";
+
+import "../../../src/index.css";
 
 const Component = () => {
   const options: Option[] = [
@@ -16,12 +18,13 @@ const Component = () => {
   return (
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
-        <Select
+        <AutoComplete
           sizing="small"
+          placeholder="Frults"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
-        <Select
+        <AutoComplete
           sizing="small"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
@@ -29,23 +32,25 @@ const Component = () => {
         <Text>{option?.value}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
-        <Select
+        <AutoComplete
+          placeholder="Frults"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
-        <Select
+        <AutoComplete
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
         <Text>{option?.value}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
-        <Select
+        <AutoComplete
           sizing="large"
+          placeholder="Frults"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
         />
-        <Select
+        <AutoComplete
           sizing="large"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
@@ -56,8 +61,8 @@ const Component = () => {
   );
 };
 
-const meta: Meta<typeof Select> = {
-  title: "Component/Select",
+const meta: Meta<typeof AutoComplete> = {
+  title: "Component/AutoComplete",
   component: Component,
 };
 

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { AutoCompleteStyles, Sizing } from "./AutoComplete.props";
+import { Sizing } from "./AutoComplete.props";
 
-const fontSizing: Record<Sizing, string> = {
+const fontSizes: Record<Sizing, string> = {
   small: `
         font-size: 14px;
     `,
@@ -13,7 +13,7 @@ const fontSizing: Record<Sizing, string> = {
     `,
 };
 
-const paddingSizing: Record<Sizing, string> = {
+const paddingSizes: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -29,17 +29,16 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const InputContainer = styled.div<
-  AutoCompleteStyles & {
-    visibility: boolean;
-  }
->`
+export const InputContainer = styled.div<{
+  sizing: Sizing;
+  visibility: boolean;
+}>`
   box-shadow: ${({ visibility }) =>
     visibility
-      ? "0px 2px 5px rgba(0, 0, 0, 0.25)"
+      ? "0px 2px 4px rgba(0, 0, 0, 0.25)"
       : "0px 0px 2px rgba(0, 0, 0, 0.25)"};
-  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
-  border-radius: 4px;
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]};
+  border-radius: 8px;
   background-color: white;
   display: flex;
   gap: 8px;
@@ -47,7 +46,7 @@ export const InputContainer = styled.div<
   justify-content: space-between;
 `;
 
-export const InputText = styled.input`
+export const Input = styled.input`
   font-family: "Montserrat", sans-serif;
   width: 100%;
   border: none;
@@ -57,8 +56,12 @@ export const InputText = styled.input`
   }
 `;
 
-export const IconContainer = styled.div`
-  cursor: pointer;
+export const Icon = styled.button`
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: white;
+  border: 0;
 `;
 
 export const ListContainer = styled.div`
@@ -67,17 +70,20 @@ export const ListContainer = styled.div`
   max-height: 150px;
   overflow-y: auto;
   margin-top: 6px;
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: white;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   z-index: 5;
 `;
 
-export const ItemContainer = styled.div<AutoCompleteStyles>`
-  ${({ sizing }) => paddingSizing[sizing]}
-  cursor: pointer;
-  box-sizing: border-box;
+export const Item = styled.button<{ sizing: Sizing }>`
+  ${({ sizing }) => paddingSizes[sizing]};
+  display: grid;
+  justify-items: flex-start;
+  background-color: white;
+  border: 0;
+  width: 100%;
 
   :not(:last-child) {
     border-bottom: 1px solid lightgrey;

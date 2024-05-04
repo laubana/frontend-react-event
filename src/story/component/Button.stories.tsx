@@ -1,33 +1,35 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "../../component/Button";
 
+import "../../../src/index.css";
+
 const Component = () => {
   return (
     <div>
-      <Button sizing="small" onClick={() => null}>
+      <Button size="small" onClick={() => null}>
         Button
       </Button>
       <Button>Button</Button>
-      <Button sizing="large">Button</Button>
-      <Button sizing="small" color="black">
+      <Button size="large">Button</Button>
+      <Button size="small" color="black">
         Button
       </Button>
       <Button color="black">Button</Button>
-      <Button sizing="large" color="black">
+      <Button size="large" color="black">
         Button
       </Button>
-      <Button sizing="small" color="white">
+      <Button size="small" color="white">
         Button
       </Button>
       <Button color="white">Button</Button>
-      <Button sizing="large" color="white">
+      <Button size="large" color="white">
         Button
       </Button>
-      <Button sizing="small" color="transparent">
+      <Button size="small" color="transparent">
         Button
       </Button>
       <Button color="transparent">Button</Button>
-      <Button sizing="large" color="transparent">
+      <Button size="large" color="transparent">
         Button
       </Button>
     </div>

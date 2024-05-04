@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import { AvatarStyles } from "./Avatar.props";
+import { Coloring } from "./Avatar.props";
 
 export const Container = styled.div``;
 
-export const Image = styled.img<AvatarStyles>`
-  ${({ color }) => `border: 3px solid ${color};`}
+export const Image = styled.img<{ coloring: Coloring }>`
+  ${({ coloring }) => `border: 3px solid ${coloring};`}
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;

@@ -7,7 +7,7 @@ const SelectComponent = ({
   defaultValue,
   options,
   setOption,
-  sizing = "medium",
+  size = "medium",
   style,
 }: SelectProps): JSX.Element => {
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -18,10 +18,10 @@ const SelectComponent = ({
   return (
     <Container>
       <Select
-        sizing={sizing}
-        style={style}
+        sizing={size}
         defaultValue={label ? "" : defaultValue}
         onChange={handleChange}
+        style={style}
       >
         {label && <Option value="">{label}</Option>}
         {options.map((option, index) => (

@@ -3,11 +3,11 @@ import { AvatarProps } from "./Avatar.props";
 import { Container, Image } from "./Avatar.style";
 
 const Avatar = (props: AvatarProps): JSX.Element => {
-  const { source, color = "lightgrey" } = props;
+  const { source, coloring = "lightgrey" } = props;
 
   return (
     <Container>
-      <Image src={source} color={color} />
+      <Image src={source} coloring={coloring} />
     </Container>
   );
 };

@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import Modal from "../../component/Modal";
 
+import "../../../src/index.css";
+
 const Component = () => {
   const [visibility, setVisibility] = useState<boolean>(true);
 

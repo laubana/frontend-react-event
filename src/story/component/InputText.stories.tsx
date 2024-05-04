@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import InputTextArea from "../../component/InputTextArea";
+import InputText from "../../component/InputText";
 import Text from "../../component/Text";
+
+import "../../../src/index.css";
 
 const Component = () => {
   const [text, setText] = useState<string>("");
@@ -9,13 +11,13 @@ const Component = () => {
   return (
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
-        <InputTextArea
+        <InputText
           sizing="small"
-          placeholder="TextArea"
+          placeholder="Text"
           text={text}
           setText={(text: string) => setText(text)}
         />
-        <InputTextArea
+        <InputText
           sizing="small"
           text={text}
           setText={(text: string) => setText(text)}
@@ -23,22 +25,22 @@ const Component = () => {
         <Text>{text}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
-        <InputTextArea
-          placeholder="TextArea"
+        <InputText
+          placeholder="Text"
           text={text}
           setText={(text: string) => setText(text)}
         />
-        <InputTextArea text={text} setText={(text: string) => setText(text)} />
+        <InputText text={text} setText={(text: string) => setText(text)} />
         <Text>{text}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
-        <InputTextArea
+        <InputText
           sizing="large"
-          placeholder="TextArea"
+          placeholder="Text"
           text={text}
           setText={(text: string) => setText(text)}
         />
-        <InputTextArea
+        <InputText
           sizing="large"
           text={text}
           setText={(text: string) => setText(text)}
@@ -49,8 +51,8 @@ const Component = () => {
   );
 };
 
-const meta: Meta<typeof InputTextArea> = {
-  title: "Component/InputTextArea",
+const meta: Meta<typeof InputText> = {
+  title: "Component/InputText",
   component: Component,
 };
 

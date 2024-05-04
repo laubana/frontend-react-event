@@ -1,27 +1,19 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { AutoCompleteProps } from "./AutoComplete.props";
 import {
   Container,
-  IconContainer,
+  Icon,
   InputContainer,
-  InputText,
-  ItemContainer,
+  Input,
   ListContainer,
+  Item,
 } from "./AutoComplete.style";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { Option } from "../../type/Option";
 import Text from "../Text";
 
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
-  const {
-    name,
-    placeholder,
-    option,
-    options,
-    setOption,
-    onChange = () => null,
-    sizing = "medium",
-  } = props;
+  const { placeholder, options, option, setOption, sizing = "medium" } = props;
 
   const [inputValue, setInputValue] = useState<string>(
     options.find((optionItem) => optionItem.value === option?.value)?.label ||
@@ -34,78 +26,64 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
       option.label.toUpperCase().includes(inputValue?.toUpperCase() || "")
     )
     .map((option, index) => (
-      <ItemContainer
-        sizing={sizing}
-        onClick={() => handleSelect(option)}
-        key={index}
-      >
+      <Item sizing={sizing} onClick={() => handleSelect(option)} key={index}>
         <Text sizing={sizing}>{option.label}</Text>
-      </ItemContainer>
+      </Item>
     ));
 
-  const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setVisibility(true);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
-    if (
-      options.find(
-        (option) =>
-          option.label.toUpperCase() === event.target.value.toUpperCase()
-      )
-    ) {
-      setOption(
-        options.find(
-          (option) =>
-            option.label.toUpperCase() === event.target.value.toUpperCase()
-        )
-      );
-    } else {
-      setOption(undefined);
+    handleFocus();
+  };
+
+  const handleFocus = () => {
+    setVisibility(true);
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setVisibility(false);
     }
-    onChange({
-      target: {
-        type: "text",
-        value:
-          options.find((option) => option.label === event.target.value)
-            ?.value || "",
-        name: name,
-      },
-    } as React.ChangeEvent<HTMLInputElement>);
   };
 
   const handleSelect = (option: Option) => {
     setVisibility(false);
     setInputValue(option.label);
     setOption(option);
-    onChange({
-      target: {
-        type: "text",
-        value: option.value,
-        name: name,
-      },
-    } as React.ChangeEvent<HTMLInputElement>);
   };
 
   const handleToggle = () => {
     setVisibility((oldValue) => !oldValue);
   };
 
+  useEffect(() => {
+    const option = options.find(
+      (option) => option.label.toUpperCase() === inputValue.toUpperCase()
+    );
+
+    if (option) {
+      setOption(option);
+      setInputValue(option.label);
+    } else {
+      setOption(undefined);
+    }
+  }, [inputValue]);
+
   return (
-    <Container>
+    <Container onFocus={handleFocus} onBlur={handleBlur}>
       <InputContainer visibility={visibility} sizing={sizing}>
-        <InputText
-          name={name}
+        <Input
           value={inputValue}
           placeholder={placeholder}
-          onChange={handleInput}
-          onFocus={handleInput}
+          onChange={handleChange}
         />
-        <IconContainer onClick={handleToggle}>
+        <Icon onClick={handleToggle}>
           {visibility ? (
             <FaChevronUp color="grey" />
           ) : (
             <FaChevronDown color="grey" />
           )}
-        </IconContainer>
+        </Icon>
       </InputContainer>
       {visibility && 0 < items.length && <ListContainer>{items}</ListContainer>}
     </Container>

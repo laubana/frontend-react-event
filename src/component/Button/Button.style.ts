@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-import { Sizing, Color, ButtonStyles } from "./Button.props";
+import { Size, Color } from "./Button.props";
 
-const sizes: Record<Sizing, string> = {
+const paddingSizes: Record<Size, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -43,8 +43,13 @@ const colors: Record<Color, string> = {
     `,
 };
 
-export const Button = styled.button<ButtonStyles>`
-  ${({ sizing }) => sizes[sizing]};
+export const Button = styled.button<{
+  size: Size;
+  color: Color;
+  block?: boolean;
+  nopadding?: boolean;
+}>`
+  ${({ size }) => paddingSizes[size]};
   ${({ color }) => colors[color]};
   ${({ block }) => block && "display: block; width: 100%;"}
   ${({ nopadding }) => nopadding && "padding: 0;"}
@@ -53,7 +58,7 @@ export const Button = styled.button<ButtonStyles>`
   white-space: nowrap;
 `;
 
-export const Children = styled.div`
+export const ChildrenContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

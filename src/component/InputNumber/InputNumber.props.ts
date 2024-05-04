@@ -7,7 +7,3 @@ export interface InputNumberProps {
   setNumber?: (number: number) => void;
   sizing?: Sizing;
 }
-
-export type InputNumberStyles = {
-  sizing: Sizing;
-};

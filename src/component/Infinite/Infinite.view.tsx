@@ -1,10 +1,10 @@
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { InfiniteProps } from "./Infinite.props";
 import { Spinner, SpinnerContainer } from "./Infinite.style";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 const InfiniteComponent = ({
-  columns,
+  columns = 1,
   items,
   hasMore,
   onScroll,

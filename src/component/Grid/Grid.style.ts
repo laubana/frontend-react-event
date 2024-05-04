@@ -1,10 +1,7 @@
 import styled from "@emotion/styled";
 
-import { GridStyle } from "./Grid.props";
-
-export const Grid = styled.div<GridStyle>`
+export const Grid = styled.div<{ columns: number }>`
+  ${({ columns }) => `grid-template-columns: repeat(${columns}, 1fr)`};
   display: grid;
-  width: 100%;
   gap: 16px;
-  align-items: stretch;
 `;

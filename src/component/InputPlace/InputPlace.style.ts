@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-import { Sizing, PlaceStyles } from "./InputPlace.props";
+import { Sizing } from "./InputPlace.props";
 
-const fontSizing: Record<Sizing, string> = {
+const fontSizes: Record<Sizing, string> = {
   small: `
         font-size: 14px;
     `,
@@ -14,7 +14,7 @@ const fontSizing: Record<Sizing, string> = {
     `,
 };
 
-const paddingSizing: Record<Sizing, string> = {
+const paddingSizes: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -30,16 +30,19 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const InputContainer = styled.div<
-  PlaceStyles & {
-    visibility: boolean;
-  }
->`
+export const LabelContainer = styled.div<{ sizing: Sizing }>`
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+`;
+
+export const InputContainer = styled.div<{
+  sizing: Sizing;
+  visibility: boolean;
+}>`
   box-shadow: ${({ visibility }) =>
     visibility
-      ? "0px 2px 5px rgba(0, 0, 0, 0.25)"
+      ? "0px 2px 4px rgba(0, 0, 0, 0.25)"
       : "0px 0px 2px rgba(0, 0, 0, 0.25)"};
-  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
   display: flex;
   border-radius: 8px;
   align-items: center;
@@ -55,23 +58,35 @@ export const Input = styled.input`
   }
 `;
 
-export const ListContainer = styled.div`
-  width: 100%;
-  position: absolute;
-  border-radius: 8px;
-  margin-top: 6px;
+export const Icon = styled.button`
+  display: grid;
+  justify-items: center;
+  align-items: center;
   background-color: white;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-  z-index: 5;
-  cursor: pointer;
+  border: 0;
 `;
 
-export const ItemContainer = styled.div<PlaceStyles>`
-  ${({ sizing }) => paddingSizing[sizing]};
-  display: flex;
+export const ListContainer = styled.div`
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  margin-top: 6px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+`;
+
+export const Item = styled.button<{ sizing: Sizing }>`
+  ${({ sizing }) => paddingSizes[sizing]};
+  display: grid;
+  grid-template-columns: 1fr 9fr;
   align-items: center;
-  justify-content: flex-start;
   gap: 8px;
+  background-color: white;
+  border: 0;
+  width: 100%;
 
   :not(:last-child) {
     border-bottom: 1px solid lightgrey;
@@ -80,4 +95,8 @@ export const ItemContainer = styled.div<PlaceStyles>`
   :hover {
     background-color: lightgrey;
   }
+`;
+
+export const ErrorContainer = styled.div<{ sizing: Sizing }>`
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
 `;

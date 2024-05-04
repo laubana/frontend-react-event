@@ -1,7 +1,7 @@
-import { HTMLAttributes } from "react";
+import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 
-export interface ColumnsProps extends HTMLAttributes<HTMLDivElement> {
+export interface ColumnsProps {
   columns: string;
+  children: ReactNode;
+  style?: CSSProperties;
 }
-
-export type ColumnsStyle = {};

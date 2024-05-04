@@ -5,6 +5,8 @@ import { Place } from "../../type/Place";
 import InputPlace from "../../component/InputPlace";
 import Text from "../../component/Text";
 
+import "../../../src/index.css";
+
 const Component = () => {
   const [currentAddress, setCurrentAddress] = useState<string>("");
   const [place, setPlace] = useState<Place | undefined>(undefined);
@@ -28,13 +30,29 @@ const Component = () => {
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputPlace
+          label="Place"
+          placeholder="Address"
+          address={currentAddress}
+          setPlace={setPlace}
           sizing="small"
+        />
+        <InputPlace
+          label="Place"
+          address={currentAddress}
+          setPlace={setPlace}
+          sizing="small"
+        />
+        <Text>{place?.address}</Text>
+      </div>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <InputPlace
+          label="Place"
           placeholder="Address"
           address={currentAddress}
           setPlace={setPlace}
         />
         <InputPlace
-          sizing="small"
+          label="Place"
           address={currentAddress}
           setPlace={setPlace}
         />
@@ -42,24 +60,17 @@ const Component = () => {
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputPlace
+          label="Place"
           placeholder="Address"
           address={currentAddress}
           setPlace={setPlace}
-        />
-        <InputPlace address={currentAddress} setPlace={setPlace} />
-        <Text>{place?.address}</Text>
-      </div>
-      <div style={{ display: "grid", gap: "16px" }}>
-        <InputPlace
           sizing="large"
-          placeholder="Address"
-          address={currentAddress}
-          setPlace={setPlace}
         />
         <InputPlace
-          sizing="large"
+          label="Place"
           address={currentAddress}
           setPlace={setPlace}
+          sizing="large"
         />
         <Text>{place?.address}</Text>
       </div>

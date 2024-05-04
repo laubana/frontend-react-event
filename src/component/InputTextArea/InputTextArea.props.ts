@@ -8,7 +8,3 @@ export interface InputTextAreaProps {
   error?: string;
   sizing?: Sizing;
 }
-
-export type InputTextAreaStyles = {
-  sizing: Sizing;
-};

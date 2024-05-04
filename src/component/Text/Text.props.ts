@@ -1,14 +1,11 @@
-import { HTMLAttributes } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export type Sizing = "small" | "medium" | "large";
-export type Color = "black" | "white" | "red";
+export type Coloring = "black" | "white" | "red";
 
-export interface TextProps extends HTMLAttributes<HTMLDivElement> {
+export interface TextProps {
   sizing?: Sizing;
-  color?: Color;
+  coloring?: Coloring;
+  children: ReactNode;
+  style?: CSSProperties;
 }
-
-export type TextStyle = {
-  sizing: Sizing;
-  color: Color;
-};

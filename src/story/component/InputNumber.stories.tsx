@@ -3,6 +3,8 @@ import { useState } from "react";
 import InputNumber from "../../component/InputNumber";
 import Text from "../../component/Text";
 
+import "../../../src/index.css";
+
 const Component = () => {
   const [number, setNumber] = useState<number | undefined>(undefined);
 
@@ -10,43 +12,49 @@ const Component = () => {
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputNumber
-          sizing="small"
+          label="Number"
           placeholder="Number"
           number={number}
           setNumber={(number: number | undefined) => setNumber(number)}
+          sizing="small"
         />
         <InputNumber
-          sizing="small"
+          label="Number"
           number={number}
           setNumber={(number: number | undefined) => setNumber(number)}
+          sizing="small"
         />
         <Text>{number}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputNumber
-          sizing="medium"
+          label="Number"
           placeholder="Number"
           number={number}
           setNumber={(number: number | undefined) => setNumber(number)}
+          sizing="medium"
         />
         <InputNumber
-          sizing="medium"
+          label="Number"
           number={number}
           setNumber={(number: number | undefined) => setNumber(number)}
+          sizing="medium"
         />
         <Text>{number}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputNumber
-          sizing="large"
+          label="Number"
           placeholder="Number"
           number={number}
           setNumber={(number: number | undefined) => setNumber(number)}
+          sizing="large"
         />
         <InputNumber
-          sizing="large"
+          label="Number"
           number={number}
           setNumber={(number: number | undefined) => setNumber(number)}
+          sizing="large"
         />
         <Text>{number}</Text>
       </div>

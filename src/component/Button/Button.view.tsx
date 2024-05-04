@@ -1,9 +1,9 @@
 import React from "react";
 import { ButtonProps } from "./Button.props";
-import { Button, Children } from "./Button.style";
+import { Button, ChildrenContainer } from "./Button.style";
 
 const ButtonComponent = ({
-  sizing = "medium",
+  size = "medium",
   color = "red",
   block,
   nopadding,
@@ -13,13 +13,13 @@ const ButtonComponent = ({
   return (
     <Button
       type="button"
-      sizing={sizing}
+      size={size}
       color={color}
       block={block}
       nopadding={nopadding}
       onClick={onClick}
     >
-      <Children>{children}</Children>
+      <ChildrenContainer>{children}</ChildrenContainer>
     </Button>
   );
 };

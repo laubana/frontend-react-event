@@ -1,5 +1,6 @@
-import { HTMLAttributes } from "react";
+import { CSSProperties, ReactNode } from "react";
 
-export interface FlexProps extends HTMLAttributes<HTMLDivElement> {}
-
-export type FlexStyle = {};
+export interface FlexProps {
+  children: ReactNode;
+  style?: CSSProperties;
+}

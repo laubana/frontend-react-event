@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Card from "../../component/Card";
 
+import "../../../src/index.css";
+
 const Component = () => {
   return (
     <div style={{ display: "flex", gap: "16px" }}>

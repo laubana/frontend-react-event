@@ -6,6 +6,8 @@ import InputText from "../../component/InputText";
 import InputPassword from "../../component/InputPassword";
 import InputTextArea from "../../component/InputTextArea";
 
+import "../../../src/index.css";
+
 type Form = {
   name: string;
   email: string;

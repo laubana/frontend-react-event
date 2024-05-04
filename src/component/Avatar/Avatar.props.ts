@@ -1,10 +1,6 @@
-export type Color = "lightgrey" | "red";
+export type Coloring = "lightgrey" | "red";
 
 export interface AvatarProps {
   source: string;
-  color?: Color;
+  coloring?: Coloring;
 }
-
-export type AvatarStyles = {
-  color: Color;
-};

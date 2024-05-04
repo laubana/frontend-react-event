@@ -8,15 +8,7 @@ const ColumnsComponent = ({
   style,
 }: ColumnsProps): JSX.Element => {
   return (
-    <Columns
-      style={{
-        gridTemplateColumns: columns
-          .split(" ")
-          .map((column) => `${column}fr`)
-          .join(" "),
-        ...style,
-      }}
-    >
+    <Columns columns={columns} style={style}>
       {children}
     </Columns>
   );

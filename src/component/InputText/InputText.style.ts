@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-import { InputTextStyles, Sizing } from "./InputText.props";
+import { Sizing } from "./InputText.props";
 
-const fontSizing: Record<Sizing, string> = {
+const fontSizes: Record<Sizing, string> = {
   small: `
         font-size: 14px;
     `,
@@ -14,7 +14,7 @@ const fontSizing: Record<Sizing, string> = {
     `,
 };
 
-const paddingSizing: Record<Sizing, string> = {
+const paddingSizes: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -28,12 +28,12 @@ const paddingSizing: Record<Sizing, string> = {
 
 export const Container = styled.div``;
 
-export const LabelContainer = styled.div<InputTextStyles>`
-  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+export const LabelContainer = styled.div<{ sizing: Sizing }>`
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
 `;
 
-export const InputContainer = styled.div<InputTextStyles>`
-  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+export const InputContainer = styled.div<{ sizing: Sizing }>`
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
   display: flex;
   border-radius: 8px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
@@ -41,7 +41,7 @@ export const InputContainer = styled.div<InputTextStyles>`
   gap: 8px;
 
   :focus-within {
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   }
 `;
 
@@ -63,6 +63,6 @@ export const Component = styled.button`
   background: none;
 `;
 
-export const ErrorContainer = styled.div<InputTextStyles>`
-  ${({ sizing }) => fontSizing[sizing] + paddingSizing[sizing]}
+export const ErrorContainer = styled.div<{ sizing: Sizing }>`
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
 `;
