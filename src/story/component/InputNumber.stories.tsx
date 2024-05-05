@@ -6,7 +6,7 @@ import Text from "../../component/Text";
 import "../../../src/index.css";
 
 const Component = () => {
-  const [number, setNumber] = useState<number | undefined>(undefined);
+  const [number, setNumber] = useState<number>(0);
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
@@ -15,13 +15,13 @@ const Component = () => {
           label="Number"
           placeholder="Number"
           number={number}
-          setNumber={(number: number | undefined) => setNumber(number)}
+          setNumber={(number) => setNumber(number)}
           sizing="small"
         />
         <InputNumber
           label="Number"
           number={number}
-          setNumber={(number: number | undefined) => setNumber(number)}
+          setNumber={(number) => setNumber(number)}
           sizing="small"
         />
         <Text>{number}</Text>
@@ -31,13 +31,13 @@ const Component = () => {
           label="Number"
           placeholder="Number"
           number={number}
-          setNumber={(number: number | undefined) => setNumber(number)}
+          setNumber={(number) => setNumber(number)}
           sizing="medium"
         />
         <InputNumber
           label="Number"
           number={number}
-          setNumber={(number: number | undefined) => setNumber(number)}
+          setNumber={(number) => setNumber(number)}
           sizing="medium"
         />
         <Text>{number}</Text>
@@ -47,13 +47,13 @@ const Component = () => {
           label="Number"
           placeholder="Number"
           number={number}
-          setNumber={(number: number | undefined) => setNumber(number)}
+          setNumber={(number) => setNumber(number)}
           sizing="large"
         />
         <InputNumber
           label="Number"
           number={number}
-          setNumber={(number: number | undefined) => setNumber(number)}
+          setNumber={(number) => setNumber(number)}
           sizing="large"
         />
         <Text>{number}</Text>

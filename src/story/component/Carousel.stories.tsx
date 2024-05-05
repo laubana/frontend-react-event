@@ -9,7 +9,12 @@ const Component = () => {
     images.push(
       <img
         src={`https://picsum.photos/360?random=${i + 1}`}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          borderRadius: "8px",
+          objectFit: "cover",
+        }}
       />
     );
   }

@@ -1,4 +1,8 @@
-import React, { ChangeEvent, FocusEvent, useState } from "react";
+import React, { ChangeEvent, FocusEvent, useEffect, useState } from "react";
+import useGoogle from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+import Geocode from "react-geocode";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import { BiCurrentLocation } from "react-icons/bi";
 import { InputPlaceProps } from "./InputPlace.props";
 import {
   Container,
@@ -10,9 +14,6 @@ import {
   Item,
   ErrorContainer,
 } from "./InputPlace.style";
-import useGoogle from "react-google-autocomplete/lib/usePlacesAutocompleteService";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
-import { BiCurrentLocation } from "react-icons/bi";
 import Text from "../Text";
 
 const InputPlaceComponent = ({
@@ -41,31 +42,25 @@ const InputPlaceComponent = ({
     apiKey: process.env.REACT_APP_GOOGLE_MAPS,
   });
 
-  const [visibility, setVisibility] = useState<boolean>(false);
-  const [input, setInput] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>(address || "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value);
-    if (address && currentPlacePredictions.length === 0) {
-      getCurrentPlacePredictions({ input: address });
-    }
-    getInputPlacePredictions({ input: event.target.value });
+    setInputValue(event.target.value);
   };
 
   const handleFocus = () => {
-    if (address && currentPlacePredictions.length === 0) {
-      getCurrentPlacePredictions({ input: address });
-    }
-    setVisibility(true);
+    setIsVisible(true);
   };
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
-      setVisibility(false);
+      setIsVisible(false);
     }
   };
 
   const handleSelect = (placePrediction: any) => {
+    setIsVisible(false);
     placesService?.getDetails(
       { placeId: placePrediction.place_id, language: "en" },
       (detail: any) => {
@@ -73,45 +68,63 @@ const InputPlaceComponent = ({
         console.log(
           `${detail.geometry.location.lat()}, ${detail.geometry.location.lng()}`
         );
-        setInput(detail.formatted_address);
-        getInputPlacePredictions({ input: detail.formatted_address });
+        setInputValue(detail.formatted_address);
         setPlace({
           address: detail.formatted_address,
           latitude: detail.geometry.location.lat(),
           longitude: detail.geometry.location.lng(),
           url: detail.url,
         });
-        setVisibility(false);
       }
     );
   };
 
   const handleToggle = () => {
-    setVisibility((oldValue) => !oldValue);
+    setIsVisible((oldValue) => !oldValue);
   };
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      if (process.env.REACT_APP_GOOGLE_MAPS) {
+        Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS);
+        Geocode.setLanguage("en");
+        const addressResponse = await Geocode.fromLatLng(
+          position.coords.latitude.toString(),
+          position.coords.longitude.toString()
+        );
+        getCurrentPlacePredictions({
+          input: addressResponse.results[0].formatted_address,
+        });
+      }
+    });
+  }, [navigator.geolocation.getCurrentPosition((position) => position)]);
+
+  useEffect(() => {
+    getInputPlacePredictions({ input: inputValue });
+  }, [inputValue]);
+
   return (
-    <Container
-      onChange={handleChange}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-    >
+    <Container onFocus={handleFocus} onBlur={handleBlur}>
       {label && (
         <LabelContainer sizing={sizing}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
-      <InputContainer visibility={visibility} sizing={sizing}>
-        <Input value={input} placeholder={placeholder} />
+      <InputContainer isVisible={isVisible} sizing={sizing}>
+        <Input
+          value={inputValue}
+          onChange={handleChange}
+          placeholder={placeholder}
+        />
         <Icon onClick={handleToggle}>
-          {visibility ? (
+          {isVisible ? (
             <FaChevronUp color="black" />
           ) : (
             <FaChevronDown color="black" />
           )}
         </Icon>
       </InputContainer>
-      {visibility &&
+      {isVisible &&
         (0 < currentPlacePredictions.length ||
           0 < inputPlacePredictions.length) && (
           <ListContainer>

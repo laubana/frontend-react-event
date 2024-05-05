@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import SearchContextProvider from "./context/SearchContext";
 import UserContextProvider from "./context/UserContext";
+import { toolkitStore } from "./store/toolkitStore";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,9 +17,11 @@ root.render(
     <Router>
       <UserContextProvider>
         <SearchContextProvider>
-          <Routes>
-            <Route path="/*" element={<App />} />
-          </Routes>
+          <Provider store={toolkitStore}>
+            <Routes>
+              <Route path="/*" element={<App />} />
+            </Routes>
+          </Provider>
         </SearchContextProvider>
       </UserContextProvider>
     </Router>

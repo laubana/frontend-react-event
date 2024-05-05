@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { Sizing, Coloring } from "./Text.props";
+import { Sizing, Coloring, Alignment } from "./Text.props";
 
 const fontSizes: Record<Sizing, string> = {
   small: `
@@ -26,11 +26,25 @@ const colors: Record<Coloring, string> = {
     `,
 };
 
+const alignments: Record<Alignment, string> = {
+  left: `
+        text-align: left;
+    `,
+  center: `
+        text-align: center;
+    `,
+  right: `
+        text-align: right;
+    `,
+};
+
 export const Text = styled.div<{
   sizing: Sizing;
   coloring: Coloring;
+  alignment: Alignment;
 }>`
   font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]}
   ${({ coloring }) => colors[coloring]}
+  ${({ alignment }) => alignments[alignment]}
 `;

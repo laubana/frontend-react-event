@@ -19,7 +19,9 @@ const InputNumberComponent = ({
   sizing = "medium",
 }: InputNumberProps): JSX.Element => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [input, setInput] = useState<string>(number ? number.toString() : "");
+  const [inputValue, setInputValue] = useState<string>(
+    number ? number.toString() : ""
+  );
   const [error, setError] = useState<string>("");
 
   const handleFocus = () => {
@@ -33,7 +35,7 @@ const InputNumberComponent = ({
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value);
+    setInputValue(event.target.value);
     if (!isNaN(Number(event.target.value))) {
       setNumber(Number(event.target.value));
       setError("");
@@ -44,7 +46,7 @@ const InputNumberComponent = ({
   };
 
   const handleReset = () => {
-    setInput("");
+    setInputValue("");
     setNumber(0);
     setError("");
   };
@@ -60,7 +62,7 @@ const InputNumberComponent = ({
         <InputNumber
           type="text"
           placeholder={placeholder}
-          value={input}
+          value={inputValue}
           onChange={handleChange}
         />
         {isFocused && (

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import { Sizing } from "./InputSingleImage.props";
+
+import { Sizing } from "./InputMultipleImage.props";
 
 const fontSizes: Record<Sizing, string> = {
   small: `
@@ -25,10 +26,14 @@ const paddingSizes: Record<Sizing, string> = {
     `,
 };
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+`;
 
 export const LabelContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;
 
 export const InputContainer = styled.div``;
@@ -37,8 +42,6 @@ export const Input = styled.button`
   width: 100%;
   border-radius: 8px;
   border: 0;
-  aspect-ratio: 1;
-  cursor: pointer;
   background-color: lightgrey;
   display: grid;
   align-items: center;
@@ -46,7 +49,6 @@ export const Input = styled.button`
 `;
 
 export const Item = styled.button`
-  width: 100%;
   padding: 0;
   border: 0;
   border-radius: 8px;
@@ -61,5 +63,5 @@ export const Image = styled.img`
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;

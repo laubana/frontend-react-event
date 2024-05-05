@@ -1,9 +1,11 @@
 import { ImageType } from "react-images-uploading";
 
-export type Sizing = "mobile" | "desktop";
+export type Sizing = "small" | "medium" | "large";
 
 export interface InputSingleImageProps {
-  sizing?: Sizing;
+  label?: string;
   image?: ImageType;
-  setImage?: (image: ImageType) => void;
+  setImage: (image: ImageType) => void;
+  error?: string;
+  sizing?: Sizing;
 }

@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { ImageType } from "react-images-uploading";
-import InputSingleImage from "../../component/InputSingleImage";
+import InputMultipleImage from "../../component/InputMultipleImage";
 
 import "../../../src/index.css";
 
 const Component = () => {
-  const [image, setImage] = useState<ImageType | undefined>(undefined);
+  const [images, setImages] = useState<ImageType[]>([]);
 
   return (
-    <div style={{ width: "30%" }}>
-      <InputSingleImage image={image} setImage={setImage} />
+    <div style={{ width: "100%" }}>
+      <InputMultipleImage images={images} setImages={setImages} />
     </div>
   );
 };
 
-const meta: Meta<typeof InputSingleImage> = {
-  title: "Component/InputSingleImage",
+const meta: Meta<typeof InputMultipleImage> = {
+  title: "Component/InputMultipleImage",
   component: Component,
 };
 

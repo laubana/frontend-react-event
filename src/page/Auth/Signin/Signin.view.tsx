@@ -3,11 +3,11 @@ import Button from "../../../component/Button";
 import Grid from "../../../component/Grid";
 import Text from "../../../component/Text";
 import InputText from "../../../component/InputText";
-import { SigninProps } from "./Signin.props";
+import { SignInProps } from "./Signin.props";
 import { Container } from "./Signin.style";
 import InputPassword from "../../../component/InputPassword";
 
-const SigninView = (props: SigninProps) => {
+const SigninView = (props: SignInProps) => {
   const {
     userId,
     userPassword,

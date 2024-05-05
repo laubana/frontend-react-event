@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FocusEvent, useEffect, useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { AutoCompleteProps } from "./AutoComplete.props";
 import {
   Container,
@@ -8,7 +9,6 @@ import {
   ListContainer,
   Item,
 } from "./AutoComplete.style";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { Option } from "../../type/Option";
 import Text from "../Text";
 
@@ -19,7 +19,7 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
     options.find((optionItem) => optionItem.value === option?.value)?.label ||
       ""
   );
-  const [visibility, setVisibility] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const items = options
     .filter((option) =>
@@ -37,23 +37,23 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   };
 
   const handleFocus = () => {
-    setVisibility(true);
+    setIsVisible(true);
   };
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
-      setVisibility(false);
+      setIsVisible(false);
     }
   };
 
   const handleSelect = (option: Option) => {
-    setVisibility(false);
+    setIsVisible(false);
     setInputValue(option.label);
     setOption(option);
   };
 
   const handleToggle = () => {
-    setVisibility((oldValue) => !oldValue);
+    setIsVisible((oldValue) => !oldValue);
   };
 
   useEffect(() => {
@@ -71,21 +71,21 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
 
   return (
     <Container onFocus={handleFocus} onBlur={handleBlur}>
-      <InputContainer visibility={visibility} sizing={sizing}>
+      <InputContainer isVisible={isVisible} sizing={sizing}>
         <Input
           value={inputValue}
           placeholder={placeholder}
           onChange={handleChange}
         />
         <Icon onClick={handleToggle}>
-          {visibility ? (
+          {isVisible ? (
             <FaChevronUp color="grey" />
           ) : (
             <FaChevronDown color="grey" />
           )}
         </Icon>
       </InputContainer>
-      {visibility && 0 < items.length && <ListContainer>{items}</ListContainer>}
+      {isVisible && 0 < items.length && <ListContainer>{items}</ListContainer>}
     </Container>
   );
 };

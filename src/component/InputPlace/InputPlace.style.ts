@@ -36,9 +36,9 @@ export const LabelContainer = styled.div<{ sizing: Sizing }>`
 
 export const InputContainer = styled.div<{
   sizing: Sizing;
-  visibility: boolean;
+  isVisible: boolean;
 }>`
-  box-shadow: ${({ visibility }) =>
+  box-shadow: ${({ isVisible: visibility }) =>
     visibility
       ? "0px 2px 4px rgba(0, 0, 0, 0.25)"
       : "0px 0px 2px rgba(0, 0, 0, 0.25)"};

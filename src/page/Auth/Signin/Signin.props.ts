@@ -1,4 +1,4 @@
-export interface SigninProps {
+export interface SignInProps {
   userId: string;
   userPassword: string;
 

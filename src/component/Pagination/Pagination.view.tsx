@@ -40,16 +40,25 @@ const Pagination = (props: PaginationProps): JSX.Element => {
         </ItemContainer>
       )}
       <ItemContainer>
-        {pageIndexs.map((pageIndex, index) => {
-          if (pageIndex === currentPageIndex) {
+        {pageIndexs.map((pageIndexMapItem, pageIndexMapIndex) => {
+          if (pageIndexMapItem === currentPageIndex) {
             return (
-              <Item onClick={() => handleClick(pageIndex)} selected>
-                {pageIndex}
+              <Item
+                onClick={() => handleClick(pageIndexMapItem)}
+                selected
+                key={pageIndexMapIndex}
+              >
+                {pageIndexMapItem}
               </Item>
             );
           } else {
             return (
-              <Item onClick={() => handleClick(pageIndex)}>{pageIndex}</Item>
+              <Item
+                onClick={() => handleClick(pageIndexMapItem)}
+                key={pageIndexMapIndex}
+              >
+                {pageIndexMapItem}
+              </Item>
             );
           }
         })}

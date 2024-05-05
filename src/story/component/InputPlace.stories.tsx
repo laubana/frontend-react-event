@@ -8,23 +8,9 @@ import Text from "../../component/Text";
 import "../../../src/index.css";
 
 const Component = () => {
-  const [currentAddress, setCurrentAddress] = useState<string>("");
+  const [currentAddress, setCurrentAddress] =
+    useState<string>("Langara College");
   const [place, setPlace] = useState<Place | undefined>(undefined);
-
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS || "");
-      Geocode.setLanguage("en");
-      const addressResponse = await Geocode.fromLatLng(
-        position.coords.latitude.toString(),
-        position.coords.longitude.toString()
-      );
-      setCurrentAddress(addressResponse.results[0].formatted_address);
-    },
-    (_) => {
-      setCurrentAddress("");
-    }
-  );
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>

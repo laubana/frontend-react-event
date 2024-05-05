@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SigninView from "./Signin.view";
-import { SigninProps as SigninProps } from "./Signin.props";
+import { SignInProps as SignInProps } from "./Signin.props";
 import { useNavigate } from "react-router-dom";
 import { UseUserContext } from "../../../context/UserContext";
 
@@ -32,7 +32,7 @@ const Signin = (): JSX.Element => {
       "http://localhost/square/oauth2/authorization/google";
   };
 
-  const props: SigninProps = {
+  const props = {
     userId,
     userPassword,
 
