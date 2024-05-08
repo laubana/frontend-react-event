@@ -32,7 +32,11 @@ export const Header = styled.header`
   margin: auto;
 `;
 
-export const Main = styled.main``
+export const SearchContainer = styled.div`
+  flex-grow: 1;
+`;
+
+export const Main = styled.main``;
 
 export const Footer = styled.footer`
   padding: 64px 16px;

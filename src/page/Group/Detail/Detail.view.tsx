@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { DetailProps } from "./Detail.props";
-import { Container } from "./Detail.style";
+import { Container, Image, MapContainer, Thumbnail } from "./Detail.style";
 import Button from "../../../component/Button";
 import Card from "../../../component/Card";
 import Carousel from "../../../component/Carousel";
@@ -14,6 +14,7 @@ import Pagination from "../../../component/Pagination";
 import Select from "../../../component/Select";
 import Text from "../../../component/Text";
 import TextArea from "../../../component/InputTextArea";
+import Map from "../../../component/Map";
 
 const Detail = (props: DetailProps) => {
   const { group, isMobileDevice, isTabletDevice, isDesktopDevice } = props;
@@ -23,8 +24,27 @@ const Detail = (props: DetailProps) => {
       {group ? (
         <Container>
           <Columns columns={isDesktopDevice || isTabletDevice ? "1 3" : "1"}>
-            <Grid>e</Grid>
-            <Grid>e</Grid>
+            <Grid>
+              <Image src={group.imageUrl} />
+              <Text>{group.name}</Text>
+              <Text>{group.address}</Text>
+              <MapContainer>
+                <Map
+                  location={{
+                    latitude: group.latitude,
+                    longitude: group.longitude,
+                  }}
+                  markers={[
+                    { latitude: group.latitude, longitude: group.longitude },
+                  ]}
+                />
+              </MapContainer>
+              <Text>{group.description}</Text>
+            </Grid>
+            <Grid>
+              <Thumbnail src={group.imageUrl} />
+              <Text sizing="large">Member</Text>
+            </Grid>
           </Columns>
         </Container>
       ) : (

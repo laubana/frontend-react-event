@@ -2,9 +2,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { MapRef } from "react-map-gl";
 import { FaCheck, FaChevronLeft } from "react-icons/fa6";
-
 import InputText from "../../../component/InputText";
-
 import { CreateProps } from "./Create.props";
 import { useRef } from "react";
 import Map from "../../../component/Map";
@@ -27,6 +25,7 @@ const Create = (props: CreateProps) => {
   const validationSchema = Yup.object().shape({
     category: Yup.object().required("Category is required"),
     image: Yup.object().required("Image is required"),
+    thumbnail: Yup.object().required("Thumbnail is required"),
     name: Yup.string().required("Name is required"),
     place: Yup.object().required("Place is required"),
     address: Yup.string().required("Address is required"),
@@ -45,14 +44,7 @@ const Create = (props: CreateProps) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({
-              handleSubmit,
-              values,
-              setFieldValue,
-              touched,
-              setTouched,
-              errors,
-            }) => (
+            {({ handleSubmit, values, setFieldValue, touched, errors }) => (
               <Grid style={{ gap: "32px" }}>
                 <Grid>
                   <AutoComplete
@@ -69,12 +61,21 @@ const Create = (props: CreateProps) => {
                     error={touched.category ? errors.category : ""}
                   />
                   <InputSingleImage
+                    label="Thumbnail"
+                    image={values.thumbnail}
+                    setImage={(image) => {
+                      setFieldValue("thumbnail", image);
+                    }}
+                    error={touched.thumbnail ? errors.thumbnail : ""}
+                  />
+                  <InputSingleImage
                     label="Image"
                     image={values.image}
                     setImage={(image) => {
                       setFieldValue("image", image);
                     }}
                     error={touched.image ? errors.image : ""}
+                    style={{ aspectRatio: 2 }}
                   />
                   <InputText
                     label="Name"

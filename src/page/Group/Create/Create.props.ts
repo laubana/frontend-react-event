@@ -5,6 +5,7 @@ import { Option } from "../../../type/Option";
 
 export type Form = {
   category: Option | undefined;
+  thumbnail: ImageType | undefined;
   image: ImageType | undefined;
   name: string;
   place: Place | undefined;

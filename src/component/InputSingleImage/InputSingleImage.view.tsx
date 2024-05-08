@@ -19,15 +19,11 @@ import Text from "../Text";
 const InputSingleImageComponent = (
   props: InputSingleImageProps
 ): JSX.Element => {
-  const { label, image, setImage, error, sizing = "medium" } = props;
+  const { label, image, setImage, error, sizing = "medium", style } = props;
 
   const [inputValues, setInputValues] = useState<ImageListType>(
     image ? [image] : []
   );
-
-  // useEffect(() => {
-  //   setInputValues(image ? [image] : []);
-  // }, [image]);
 
   const handleChange = (values: ImageListType) => {
     setInputValues(values);
@@ -64,7 +60,7 @@ const InputSingleImageComponent = (
           {({ imageList, onImageUpload, onImageUpdate, dragProps }) => (
             <>
               {inputValues.length === 0 && (
-                <Input onClick={onImageUpload} {...dragProps}>
+                <Input onClick={onImageUpload} {...dragProps} style={style}>
                   <FaImage size={48} color="grey" />
                 </Input>
               )}

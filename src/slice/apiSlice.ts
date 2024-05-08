@@ -7,7 +7,7 @@ import { RootState } from "../store/store";
 import { setAuth, signOut } from "./authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3500",
+  baseUrl: process.env.REACT_APP_BACKEND_URL,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
@@ -29,8 +29,6 @@ const baseQueryWithRefresh = async (
   const response = await baseQuery(args, api, extraOptions);
 
   if (response.error?.status === 401) {
-    console.log("refresh");
-
     const refreshResponse = await baseQuery("/auth/refresh", api, extraOptions);
 
     if (refreshResponse && refreshResponse.data) {

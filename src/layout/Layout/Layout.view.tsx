@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Footer, Header, Main } from "./Layout.style";
+import { useMediaQuery } from "react-responsive";
+import { Footer, Header, Main, SearchContainer } from "./Layout.style";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { store } from "../../store/store";
 import { UseSearchContext } from "../../context/SearchContext";
 import { selectAccessToken, selectEmail, signOut } from "../../slice/authSlice";
+import Grid from "../../component/Grid";
 import Flex from "../../component/Flex";
 import Button from "../../component/Button";
 import Text from "../../component/Text";
@@ -17,25 +19,27 @@ const LayoutComponent = ({}): JSX.Element => {
   const email = useSelector(selectEmail);
 
   const dispatch = useDispatch<typeof store.dispatch>();
-  const { handleChangeGroupName: handleOnChangeGroupName } = UseSearchContext();
+  const { handleChangeGroupName } = UseSearchContext();
 
   const [inputGroupName, setInputGroupName] = useState<string>("");
+
+  const isMobileDevice = useMediaQuery({ maxWidth: 767 });
 
   const handleChangeInputGroupName = (inputGroupName: string) => {
     setInputGroupName(inputGroupName);
   };
 
   const handleSearch = () => {
-    handleOnChangeGroupName(inputGroupName);
+    handleChangeGroupName(inputGroupName);
     navigate("/");
   };
 
   return (
     <>
       <Header>
-        <Flex
+        <Grid
+          columns={isMobileDevice ? 1 : 2}
           style={{
-            flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "space-between",
           }}
@@ -49,14 +53,16 @@ const LayoutComponent = ({}): JSX.Element => {
             }}
           >
             <Link to="/" reloadDocument={true}>
-              <Text>Square</Text>
+              <Text>Group</Text>
             </Link>
             <Flex style={{ alignItems: "center", flexGrow: 1 }}>
-              <InputText
-                placeholder="Search"
-                text={inputGroupName}
-                setText={handleChangeInputGroupName}
-              />
+              <SearchContainer>
+                <InputText
+                  placeholder="Search"
+                  text={inputGroupName}
+                  setText={handleChangeInputGroupName}
+                />
+              </SearchContainer>
               <Button onClick={handleSearch}>Search</Button>
             </Flex>
           </Flex>
@@ -103,7 +109,7 @@ const LayoutComponent = ({}): JSX.Element => {
               </>
             )}
           </Flex>
-        </Flex>
+        </Grid>
       </Header>
       <Main>
         <Outlet />

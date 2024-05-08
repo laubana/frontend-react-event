@@ -24,6 +24,7 @@ export const authSlice = createSlice({
     signOut: (state) => {
       state.accessToken = undefined;
       state.email = undefined;
+      document.cookie = `refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
     },
   },
 });

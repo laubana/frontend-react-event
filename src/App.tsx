@@ -17,9 +17,9 @@ function App() {
           <Route path="group">
             <Route element={<Protect allowedRoles={[]} />}>
               <Route path="create" element={<Create />} />
-              <Route path="detail">
-                <Route path=":groupId" element={<Detail />} />
-              </Route>
+            </Route>
+            <Route path="detail">
+              <Route path=":groupId" element={<Detail />} />
             </Route>
           </Route>
         </Route>

@@ -12,6 +12,7 @@ const Create = () => {
 
   const initialValues: Form = {
     category: undefined,
+    thumbnail: undefined,
     image: undefined,
     name: "",
     place: undefined,

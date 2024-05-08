@@ -14,18 +14,14 @@ import AutoComplete from "../../../component/AutoComplete";
 const HomeView = (props: HomeProps) => {
   const {
     mapForwardedRef,
-
     categorys,
     pagedGroups,
     hasMoreGroups,
-
     popup,
-
     handleScroll,
     setSearchCategory,
     setSearchPlace,
     setSearchDistance,
-
     isMobileDevice,
     isTabletDevice,
     isDesktopDevice,
@@ -36,7 +32,13 @@ const HomeView = (props: HomeProps) => {
       {pagedGroups && categorys ? (
         <>
           <MapContainer>
-            <Map forwardedRef={mapForwardedRef} />
+            <Map
+              forwardedRef={mapForwardedRef}
+              markers={pagedGroups.map((pagedGroup) => ({
+                latitude: pagedGroup.latitude,
+                longitude: pagedGroup.longitude,
+              }))}
+            />
           </MapContainer>
           <Grid columns={isMobileDevice ? 1 : 2}>
             <AutoComplete
@@ -69,7 +71,7 @@ const HomeView = (props: HomeProps) => {
             columns={isDesktopDevice ? 4 : isTabletDevice ? 3 : 2}
             items={pagedGroups.map((group, index) => (
               <Link to={`/group/detail/${group._id}`} key={index}>
-                <Card image={group.imageUrl} title={group.name} />
+                <Card image={group.thumbnailUrl} title={group.name} />
               </Link>
             ))}
             hasMore={hasMoreGroups}

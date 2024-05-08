@@ -9,7 +9,7 @@ import { useGetGroupQuery } from "../../../slice/groupApiSlice";
 const Detail = () => {
   const { groupId } = useParams();
 
-  const { data: group } = useGetGroupQuery("6639798bcabee9697dd89e8a");
+  const { data: group } = useGetGroupQuery(groupId);
 
   const isMobileDevice = useMediaQuery({ maxWidth: 767 });
   const isTabletDevice = useMediaQuery({ minWidth: 768, maxWidth: 991 });
