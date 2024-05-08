@@ -126,6 +126,9 @@ const Create = (props: CreateProps) => {
               </Grid>
             )}
           </Formik>
+          <Button color="black" onClick={handleGoBack} block>
+            Go Back
+          </Button>
         </Container>
       ) : (
         <div style={{ padding: "32px", textAlign: "center" }}>

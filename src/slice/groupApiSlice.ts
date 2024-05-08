@@ -1,5 +1,6 @@
 import { apiSlice } from "./apiSlice";
 import { Group } from "../type/Group";
+import { queries } from "@testing-library/react";
 
 type AddGroupRequest = {
   categoryId: string;
@@ -16,7 +17,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getGroups: builder.query<Group[], void>({
       query: () => ({
-        url: "/api/groups",
+        url: `/api/groups`,
         method: "GET",
       }),
       providesTags: (result) =>
@@ -30,9 +31,23 @@ export const authApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: "Group" as const, id: "LIST" }],
     }),
+    getGroup: builder.query<Group, string | undefined>({
+      query: (groupId) =>
+        groupId
+          ? {
+              url: `/api/group`,
+              method: "GET",
+              params: { groupId },
+            }
+          : null,
+      providesTags: (result) =>
+        result
+          ? [{ type: "Group" as const, id: result._id }]
+          : [{ type: "Group" as const }],
+    }),
     addGroup: builder.mutation<null, AddGroupRequest>({
       query: (body) => ({
-        url: "/api/group",
+        url: `/api/group`,
         method: "POST",
         body,
       }),
@@ -40,4 +55,5 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetGroupsQuery, useAddGroupMutation } = authApiSlice;
+export const { useGetGroupsQuery, useGetGroupQuery, useAddGroupMutation } =
+  authApiSlice;

@@ -2,7 +2,7 @@ import { FC, ReactNode, createContext, useContext, useState } from "react";
 
 interface ContextProps {
   searchGroupName?: string;
-  handleOnChangeGroupName: (groupName: string | undefined) => void;
+  handleChangeGroupName: (groupName: string | undefined) => void;
 }
 
 interface ProviderProps {
@@ -14,7 +14,7 @@ const SearchContext = createContext<ContextProps | undefined>(undefined);
 const SearchContextProvider: FC<ProviderProps> = ({ children }) => {
   const [searchGroupName, setSearchGroupName] = useState<string>();
 
-  const handleOnChangeGroupName = (groupName: string | undefined) => {
+  const handleChangeGroupName = (groupName: string | undefined) => {
     setSearchGroupName(groupName);
   };
 
@@ -22,7 +22,7 @@ const SearchContextProvider: FC<ProviderProps> = ({ children }) => {
     <SearchContext.Provider
       value={{
         searchGroupName,
-        handleOnChangeGroupName,
+        handleChangeGroupName,
       }}
     >
       {children}

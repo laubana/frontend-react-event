@@ -12,18 +12,20 @@ import InputText from "../../component/InputText";
 
 const LayoutComponent = ({}): JSX.Element => {
   const navigate = useNavigate();
+
   const accessToken = useSelector(selectAccessToken);
   const email = useSelector(selectEmail);
+
   const dispatch = useDispatch<typeof store.dispatch>();
-  const { handleOnChangeGroupName } = UseSearchContext();
+  const { handleChangeGroupName: handleOnChangeGroupName } = UseSearchContext();
 
   const [inputGroupName, setInputGroupName] = useState<string>("");
 
-  const handleOnChangeInputGroupName = (inputGroupName: string) => {
+  const handleChangeInputGroupName = (inputGroupName: string) => {
     setInputGroupName(inputGroupName);
   };
 
-  const handleOnSearch = () => {
+  const handleSearch = () => {
     handleOnChangeGroupName(inputGroupName);
     navigate("/");
   };
@@ -53,9 +55,9 @@ const LayoutComponent = ({}): JSX.Element => {
               <InputText
                 placeholder="Search"
                 text={inputGroupName}
-                setText={handleOnChangeInputGroupName}
+                setText={handleChangeInputGroupName}
               />
-              <Button onClick={handleOnSearch}>Search</Button>
+              <Button onClick={handleSearch}>Search</Button>
             </Flex>
           </Flex>
           <Flex

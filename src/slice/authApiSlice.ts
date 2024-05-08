@@ -25,27 +25,27 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     signUp: builder.mutation<null, SignUpRequest>({
       query: (body) => ({
-        url: "/auth/sign-up",
+        url: `/auth/sign-up`,
         method: "POST",
         body,
       }),
     }),
     signIn: builder.mutation<SignInResponse, SignInRequest>({
       query: (body) => ({
-        url: "/auth/sign-in",
+        url: `/auth/sign-in`,
         method: "POST",
         body,
       }),
     }),
     refresh: builder.mutation<SignInResponse, void>({
       query: () => ({
-        url: "/auth/refresh",
+        url: `/auth/refresh`,
         method: "GET",
       }),
     }),
     signOut: builder.mutation({
       query: () => ({
-        url: "/auth/sign-out",
+        url: `/auth/sign-out`,
         method: "POST",
       }),
     }),

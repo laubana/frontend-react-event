@@ -16,6 +16,7 @@ const Home = (): JSX.Element => {
 
   const mapForwardedRef = useRef<MapRef>(null);
 
+  const [filteredGroups, setFilteredroups] = useState<Group[]>([]);
   const [pagedGroups, setPagedGroups] = useState<Group[]>([]);
   const [currentGroupPage, setCurrentGroupPage] = useState<number>(1);
   const [hasMoreGroups, setHasMoreGroups] = useState<boolean>(true);
@@ -41,41 +42,43 @@ const Home = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const main = async () => {
-      setCurrentGroupPage(1);
-    };
-    main();
-  }, [searchCategory, searchGroupName, searchPlace, searchDistance]);
+    setFilteredroups(
+      groups
+        .filter((group) =>
+          searchCategory ? group.category._id === searchCategory.value : true
+        )
+        .filter((group) =>
+          searchGroupName
+            ? group.name.toUpperCase().includes(searchGroupName.toUpperCase())
+            : true
+        )
+    );
+    setCurrentGroupPage(1);
+  }, [groups, searchCategory, searchGroupName, searchPlace, searchDistance]);
 
   useEffect(() => {
     const main = async () => {
-      if (groups) {
-        setPagedGroups(groups.slice(0, 4 * currentGroupPage));
+      setPagedGroups(filteredGroups.slice(0, 4 * currentGroupPage));
 
-        if (Math.ceil(groups.length / 4) <= currentGroupPage) {
-          setHasMoreGroups(false);
-        } else {
-          setHasMoreGroups(true);
-        }
+      if (Math.ceil(filteredGroups.length / 4) <= currentGroupPage) {
+        setHasMoreGroups(false);
+      } else {
+        setHasMoreGroups(true);
       }
     };
     main();
-  }, [groups, currentGroupPage]);
+  }, [filteredGroups, currentGroupPage]);
 
   const props: HomeProps = {
     mapForwardedRef,
-
     categorys,
     pagedGroups,
     hasMoreGroups,
-
     popup,
-
     handleScroll,
     setSearchCategory,
     setSearchPlace,
     setSearchDistance,
-
     isMobileDevice,
     isTabletDevice,
     isDesktopDevice,

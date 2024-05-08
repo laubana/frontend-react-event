@@ -4,6 +4,7 @@ import Protect from "./layout/Protect";
 import Layout from "./layout/Layout";
 import Home from "./page/Common/Home";
 import Create from "./page/Group/Create";
+import Detail from "./page/Group/Detail";
 import SignIn from "./page/Auth/SignIn";
 import SignUp from "./page/Auth/SignUp";
 
@@ -16,6 +17,9 @@ function App() {
           <Route path="group">
             <Route element={<Protect allowedRoles={[]} />}>
               <Route path="create" element={<Create />} />
+              <Route path="detail">
+                <Route path=":groupId" element={<Detail />} />
+              </Route>
             </Route>
           </Route>
         </Route>
