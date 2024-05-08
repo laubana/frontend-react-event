@@ -1,22 +1,43 @@
 import { apiSlice } from "./apiSlice";
 
+type SignUpRequest = {
+  email: string;
+  password: string;
+  imageUrl: string;
+  name: string;
+  address: string;
+  latitude: string;
+  longitude: string;
+  description: string;
+};
+
+type SignInRequest = {
+  email: string;
+  password: string;
+};
+
+type SignInResponse = {
+  accessToken: string;
+  email: string;
+};
+
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    signUp: builder.mutation({
-      query: ({ email, password }) => ({
+    signUp: builder.mutation<null, SignUpRequest>({
+      query: (body) => ({
         url: "/auth/sign-up",
         method: "POST",
-        body: { email, password },
+        body,
       }),
     }),
-    signIn: builder.mutation({
-      query: ({ email, password }) => ({
+    signIn: builder.mutation<SignInResponse, SignInRequest>({
+      query: (body) => ({
         url: "/auth/sign-in",
         method: "POST",
-        body: { email, password },
+        body,
       }),
     }),
-    refresh: builder.mutation({
+    refresh: builder.mutation<SignInResponse, void>({
       query: () => ({
         url: "/auth/refresh",
         method: "GET",
@@ -31,4 +52,5 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation } = authApiSlice;
+export const { useSignUpMutation, useSignInMutation, useRefreshMutation } =
+  authApiSlice;

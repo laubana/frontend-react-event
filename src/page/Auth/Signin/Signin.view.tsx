@@ -1,53 +1,70 @@
+import * as Yup from "yup";
+import { Formik } from "formik";
 import { FaGoogle } from "react-icons/fa6";
+import { SignInProps } from "./SignIn.props";
+import { Container } from "./SignIn.style";
 import Button from "../../../component/Button";
 import Grid from "../../../component/Grid";
 import Text from "../../../component/Text";
 import InputText from "../../../component/InputText";
-import { SignInProps } from "./Signin.props";
-import { Container } from "./Signin.style";
 import InputPassword from "../../../component/InputPassword";
 
 const SigninView = (props: SignInProps) => {
-  const {
-    userId,
-    userPassword,
+  const { initialValues, handleSubmit, handleGoBack, handleSigninWithGoogle } =
+    props;
 
-    handleChangeUserId: handleOnChangeInputUserId,
-    handleChangeUserPassword: handleOnChangeInputUserPassword,
-    handleSignin: handleOnSignin,
-    handleGoBack: handleOnGoBack,
-    handleSigninWithGoogle: handleOnSigninWithGoogle,
-  } = props;
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
+  });
 
   return (
     <Container>
-      <Grid style={{ gap: "64px" }}>
-        <Text>Sign In</Text>
-        <Grid>
-          <Text>ID</Text>
-          <InputText
-            text={userId}
-            setText={handleOnChangeInputUserId}
-            placeholder="ID"
-          />
-          <Text>Password</Text>
-          <InputPassword
-            password={userPassword}
-            setPassword={handleOnChangeInputUserPassword}
-          />
-          <Button onClick={handleOnSignin} block>
-            Sign In
-          </Button>
-          <Button color="black" onClick={handleOnGoBack} block>
-            Go Back
-          </Button>
-        </Grid>
-        <Grid>
-          <Button block onClick={handleOnSigninWithGoogle}>
-            <FaGoogle /> Sign In with Google
-          </Button>
-        </Grid>
-      </Grid>
+      <Text sizing="large">Sign In</Text>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({
+          handleSubmit,
+          values,
+          setFieldValue,
+          touched,
+          setTouched,
+          errors,
+        }) => (
+          <Grid style={{ gap: "32px" }}>
+            <Grid>
+              <InputText
+                label="Email"
+                placeholder="Email"
+                text={values.email}
+                setText={(text) => setFieldValue("email", text)}
+                error={touched.email ? errors.email : ""}
+              />
+              <InputPassword
+                label="Password"
+                placeholder="Password"
+                password={values.password}
+                setPassword={(password) => {
+                  setTouched({ password: true });
+                  setFieldValue("password", password);
+                }}
+                error={touched.password ? errors.password : ""}
+              />
+            </Grid>
+            <Button onClick={handleSubmit} block>
+              Sign In
+            </Button>
+          </Grid>
+        )}
+      </Formik>
+      <Button color="black" onClick={handleGoBack} block>
+        Go Back
+      </Button>
     </Container>
   );
 };

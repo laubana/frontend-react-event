@@ -3,11 +3,11 @@ import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../store/toolkitStore";
-import { setAccessToken, signout } from "./authSlice";
+import { RootState } from "../store/store";
+import { setAuth, signOut } from "./authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3500/",
+  baseUrl: "http://localhost:3500",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
@@ -34,13 +34,13 @@ const baseQueryWithRefresh = async (
     const refreshResponse = await baseQuery("/auth/refresh", api, extraOptions);
 
     if (refreshResponse && refreshResponse.data) {
-      api.dispatch(setAccessToken({ ...refreshResponse.data }));
+      api.dispatch(setAuth({ ...refreshResponse.data }));
 
       const newResponse = await baseQuery(args, api, extraOptions);
 
       return newResponse;
     } else {
-      api.dispatch(signout());
+      api.dispatch(signOut());
 
       return refreshResponse;
     }
@@ -50,8 +50,8 @@ const baseQueryWithRefresh = async (
 };
 
 export const apiSlice = createApi({
-  reducerPath: "backendApi",
+  reducerPath: "api",
   baseQuery: baseQueryWithRefresh,
   endpoints: (builder) => ({}),
-  tagTypes: ["Auth"],
+  tagTypes: ["Auth", "Category", "Group"],
 });

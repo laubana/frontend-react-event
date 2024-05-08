@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { Form } from "./SignUp.props";
-import SignUpView from "./SignUp.view";
-import { useSignUpMutation } from "../../../slice/authApiSlice";
+import { Form } from "./Create.props";
+import CreateView from "./Create.view";
+import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
 import { uploadImage } from "../../../service/s3";
+import { useAddGroupMutation } from "../../../slice/groupApiSlice";
 
-const SignUp = (): JSX.Element => {
+const Create = () => {
   const navigate = useNavigate();
-  const [signUp] = useSignUpMutation();
+  const { data: categorys } = useGetCategorysQuery();
+  const [addGroup] = useAddGroupMutation();
 
   const initialValues: Form = {
-    email: "",
-    password: "",
-    confirmPassword: "",
+    category: undefined,
     image: undefined,
     name: "",
     place: undefined,
@@ -22,11 +22,11 @@ const SignUp = (): JSX.Element => {
   };
 
   const handleSubmit = async (values: Form) => {
-    const imageUrl = await uploadImage("user", values.image);
-    if (imageUrl) {
-      const response = await signUp({
-        email: values.email,
-        password: values.password,
+    const imageUrl = await uploadImage("group", values.image);
+    if (values.category && imageUrl) {
+      const response = await addGroup({
+        categoryId: values.category?.value,
+        userId: "663977b7b29b34723e563118",
         imageUrl: imageUrl,
         name: values.name,
         address: values.address,
@@ -44,11 +44,13 @@ const SignUp = (): JSX.Element => {
 
   const props = {
     initialValues,
+
+    categorys,
+
     handleSubmit,
     handleGoBack,
   };
-
-  return <SignUpView {...props} />;
+  return <CreateView {...props} />;
 };
 
-export default SignUp;
+export default Create;

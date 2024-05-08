@@ -1,17 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Footer, Header, Main } from "./Layout.style";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { store } from "../../store/store";
+import { UseSearchContext } from "../../context/SearchContext";
+import { selectAccessToken, selectEmail, signOut } from "../../slice/authSlice";
 import Flex from "../../component/Flex";
 import Button from "../../component/Button";
 import Text from "../../component/Text";
-import { UseUserContext } from "../../context/UserContext";
-import { UseSearchContext } from "../../context/SearchContext";
 import InputText from "../../component/InputText";
 
 const LayoutComponent = ({}): JSX.Element => {
   const navigate = useNavigate();
-  const { sessionUserPk, sessionUserId, isSignedin, signout } =
-    UseUserContext();
+  const accessToken = useSelector(selectAccessToken);
+  const email = useSelector(selectEmail);
+  const dispatch = useDispatch<typeof store.dispatch>();
   const { handleOnChangeGroupName } = UseSearchContext();
 
   const [inputGroupName, setInputGroupName] = useState<string>("");
@@ -62,37 +65,41 @@ const LayoutComponent = ({}): JSX.Element => {
               flexGrow: 1,
             }}
           >
-            {isSignedin !== undefined &&
-              (isSignedin ? (
-                <Flex
-                  style={{
-                    flexWrap: "wrap",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Link to={`/user/detail/${sessionUserPk}`}>
-                    <Button color="transparent">{sessionUserId}</Button>
+            {accessToken ? (
+              <Flex
+                style={{
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Link to={`/user/detail/`}>
+                  <Button color="transparent">{email}</Button>
+                </Link>
+                <Flex style={{ alignItems: "center" }}>
+                  <Link to={`/group/create`}>
+                    <Button>Create Group</Button>
                   </Link>
-                  <Flex style={{ alignItems: "center" }}>
-                    <Link to={`/group/create`}>
-                      <Button>Create Group</Button>
-                    </Link>
-                    <Button color="black" onClick={signout}>
-                      Sign Out
-                    </Button>
-                  </Flex>
+                  <Button
+                    color="black"
+                    onClick={() => {
+                      dispatch(signOut());
+                    }}
+                  >
+                    Sign Out
+                  </Button>
                 </Flex>
-              ) : (
-                <>
-                  <Link to="/auth/signin">
-                    <Button color="black">Sign In</Button>
-                  </Link>
-                  <Link to="/auth/signup">
-                    <Button>Sign Up</Button>
-                  </Link>
-                </>
-              ))}
+              </Flex>
+            ) : (
+              <>
+                <Link to="/auth/sign-in">
+                  <Button color="black">Sign In</Button>
+                </Link>
+                <Link to="/auth/sign-up">
+                  <Button>Sign Up</Button>
+                </Link>
+              </>
+            )}
           </Flex>
         </Flex>
       </Header>

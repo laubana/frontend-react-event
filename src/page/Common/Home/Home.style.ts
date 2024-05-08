@@ -7,3 +7,8 @@ export const Container = styled.div`
   display: grid;
   gap: 16px;
 `;
+
+export const MapContainer = styled.div`
+  width: 100%;
+  aspect-ratio: 2;
+`;

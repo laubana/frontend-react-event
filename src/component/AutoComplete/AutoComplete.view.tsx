@@ -3,18 +3,27 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { AutoCompleteProps } from "./AutoComplete.props";
 import {
   Container,
-  Icon,
+  LabelContainer,
   InputContainer,
   Input,
+  Icon,
   ListContainer,
   Item,
+  ErrorContainer,
 } from "./AutoComplete.style";
 import { Option } from "../../type/Option";
 import Text from "../Text";
 
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
-  const { placeholder, options, option, setOption, sizing = "medium" } = props;
-
+  const {
+    label,
+    placeholder,
+    options,
+    option,
+    setOption,
+    error,
+    sizing = "medium",
+  } = props;
   const [inputValue, setInputValue] = useState<string>(
     options.find((optionItem) => optionItem.value === option?.value)?.label ||
       ""
@@ -71,6 +80,11 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
 
   return (
     <Container onFocus={handleFocus} onBlur={handleBlur}>
+      {label && (
+        <LabelContainer sizing={sizing}>
+          <Text>{label}</Text>
+        </LabelContainer>
+      )}
       <InputContainer isVisible={isVisible} sizing={sizing}>
         <Input
           value={inputValue}
@@ -79,13 +93,18 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
         />
         <Icon onClick={handleToggle}>
           {isVisible ? (
-            <FaChevronUp color="grey" />
+            <FaChevronUp color="black" />
           ) : (
-            <FaChevronDown color="grey" />
+            <FaChevronDown color="black" />
           )}
         </Icon>
       </InputContainer>
       {isVisible && 0 < items.length && <ListContainer>{items}</ListContainer>}
+      {error && (
+        <ErrorContainer sizing={sizing}>
+          <Text coloring="red">{error}</Text>
+        </ErrorContainer>
+      )}
     </Container>
   );
 };

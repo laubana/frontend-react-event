@@ -13,6 +13,8 @@ import {
   ListContainer,
   Item,
   ErrorContainer,
+  IconContainer,
+  AddressContainer,
 } from "./InputPlace.style";
 import Text from "../Text";
 
@@ -134,28 +136,33 @@ const InputPlaceComponent = ({
                 onClick={() => handleSelect(placePrediction)}
                 key={index}
               >
-                <BiCurrentLocation color="black" />
-                <Text
-                  sizing={sizing}
-                  style={{ textAlign: "start", wordBreak: "break-all" }}
-                >
-                  {placePrediction.description}
-                </Text>
+                <IconContainer>
+                  <BiCurrentLocation color="black" />
+                </IconContainer>
+                <AddressContainer>
+                  <Text
+                    sizing={sizing}
+                    style={{ textAlign: "start", wordBreak: "break-all" }}
+                  >
+                    {placePrediction.description}
+                  </Text>
+                </AddressContainer>
               </Item>
             ))}
             {inputPlacePredictions.map((placePrediction, index) => (
               <Item
                 sizing={sizing}
                 onClick={() => handleSelect(placePrediction)}
-                style={{ display: "block" }}
                 key={index}
               >
-                <Text
-                  sizing={sizing}
-                  style={{ textAlign: "start", wordBreak: "break-all" }}
-                >
-                  {placePrediction.description}
-                </Text>
+                <AddressContainer>
+                  <Text
+                    sizing={sizing}
+                    style={{ textAlign: "start", wordBreak: "break-all" }}
+                  >
+                    {placePrediction.description}
+                  </Text>
+                </AddressContainer>
               </Item>
             ))}
           </ListContainer>

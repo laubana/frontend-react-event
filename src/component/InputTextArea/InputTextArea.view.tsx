@@ -33,6 +33,7 @@ const InputTextComponent = ({
           placeholder={placeholder}
           value={text}
           onChange={handleChange}
+          rows={5}
         />
       </InputContainer>
       {error && (

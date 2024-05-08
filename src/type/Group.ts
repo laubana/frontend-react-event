@@ -1,7 +1,15 @@
 import { Location } from "./Location";
+import { Category } from "./Category";
+import { User } from "./User";
 
 export type Group = {
-  id: number;
+  _id: string;
+  category: Category;
+  user: User;
+  imageUrl: string;
   name: string;
-  location: Location;
+  address: Location;
+  latitude: number;
+  longitude: number;
+  description: string;
 };

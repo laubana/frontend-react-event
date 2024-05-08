@@ -1,10 +1,10 @@
 import { ImageType } from "react-images-uploading";
 import { Place } from "../../../type/Place";
+import { Category } from "../../../type/Category";
+import { Option } from "../../../type/Option";
 
 export type Form = {
-  email: string;
-  password: string;
-  confirmPassword: string;
+  category: Option | undefined;
   image: ImageType | undefined;
   name: string;
   place: Place | undefined;
@@ -14,7 +14,8 @@ export type Form = {
   description: string;
 };
 
-export interface SignUpProps {
+export interface CreateProps {
+  categorys: Category[] | undefined;
   initialValues: Form;
   handleSubmit: (values: Form) => void;
   handleGoBack: () => void;

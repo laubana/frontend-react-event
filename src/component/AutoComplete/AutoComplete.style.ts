@@ -26,7 +26,12 @@ const paddingSizes: Record<Sizing, string> = {
 };
 
 export const Container = styled.div`
+  width: 100%;
   position: relative;
+`;
+
+export const LabelContainer = styled.div<{ sizing: Sizing }>`
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
 `;
 
 export const InputContainer = styled.div<{
@@ -92,4 +97,8 @@ export const Item = styled.button<{ sizing: Sizing }>`
   :hover {
     background-color: lightgrey;
   }
+`;
+
+export const ErrorContainer = styled.div<{ sizing: Sizing }>`
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
 `;

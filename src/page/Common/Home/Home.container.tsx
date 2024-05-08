@@ -1,31 +1,34 @@
 import { useEffect, useRef, useState } from "react";
-import HomeView from "./Home.view";
 import { useMediaQuery } from "react-responsive";
-import Geocode from "react-geocode";
-import { UseSearchContext } from "../../../context/SearchContext";
-import { Location } from "../../../type/Location";
-import { Group } from "../../../type/Group";
-import { HomeProps } from "./Home.props";
 import { MapRef } from "react-map-gl";
+import { HomeProps } from "./Home.props";
+import HomeView from "./Home.view";
+import { Group } from "../../../type/Group";
+import { UseSearchContext } from "../../../context/SearchContext";
 import { Place } from "../../../type/Place";
 import { Option } from "../../../type/Option";
-import { Category } from "../../../type/Category";
+import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
+import { useGetGroupsQuery } from "../../../slice/groupApiSlice";
 
 const Home = (): JSX.Element => {
-  const mapRef = useRef<MapRef | null>(null);
-  const [currentAddress, setCurrentAddress] = useState<string>();
-  const [currentLocation, setCurrentLocation] = useState<Location>();
+  const { data: categorys = [] } = useGetCategorysQuery();
+  const { data: groups = [] } = useGetGroupsQuery();
 
-  const [categories, setCategories] = useState<Category[]>();
-  const [unpagedGroups, setUnpagedGroups] = useState<Group[]>();
-  const [pagedGroups, setPagedGroups] = useState<Group[]>();
+  const mapForwardedRef = useRef<MapRef>(null);
+
+  const [pagedGroups, setPagedGroups] = useState<Group[]>([]);
   const [currentGroupPage, setCurrentGroupPage] = useState<number>(1);
   const [hasMoreGroups, setHasMoreGroups] = useState<boolean>(true);
 
-  const [searchCategoryPk, setSearchCategoryPk] = useState<string>();
   const { searchGroupName } = UseSearchContext();
-  const [searchLocation, setSearchLocation] = useState<Location>();
-  const [searchDistance, setSearchDistance] = useState<string>("50");
+  const [searchCategory, setSearchCategory] = useState<Option | undefined>(
+    undefined
+  );
+  const [searchPlace, setSearchPlace] = useState<Place | undefined>(undefined);
+  const [searchDistance, setSearchDistance] = useState<Option | undefined>({
+    value: "50",
+    label: "50 km",
+  });
 
   const [popup, setPopup] = useState<Group>();
 
@@ -37,101 +40,19 @@ const Home = (): JSX.Element => {
     setCurrentGroupPage((oldValue) => oldValue + 1);
   };
 
-  const handleOpenPopup = (group: Group) => {
-    setPopup({
-      id: group.id,
-      name: group.name,
-      location: group.location,
-    });
-
-    mapRef.current?.flyTo({
-      center: [group.location.latitude, group.location.longitude],
-      duration: 500,
-    });
-  };
-
-  const handleClosePopup = () => {
-    setPopup(undefined);
-  };
-
-  const handleChangePk = (option: Option) => {
-    setSearchCategoryPk(option.value);
-  };
-
-  const handleChangeLocation = (place: Place) => {};
-
-  const handleChangeDistance = (option: Option) => {
-    setSearchDistance(option.value);
-  };
-
   useEffect(() => {
     const main = async () => {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS || "");
-          Geocode.setLanguage("en");
-          const addressResponse = await Geocode.fromLatLng(
-            position.coords.latitude.toString(),
-            position.coords.longitude.toString()
-          );
-          const currentAddress = addressResponse.results[0].formatted_address;
-          setCurrentAddress(currentAddress);
-          setCurrentLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (_) => {
-          setCurrentAddress("");
-          setCurrentLocation({
-            latitude: 49.2827291,
-            longitude: -123.1207375,
-          });
-        }
-      );
-
-      const categoriesResponse = await fetch("/square/group/get_category_list");
-      const categoryItems = await categoriesResponse.json();
-      setCategories(categoryItems);
-    };
-    main();
-  }, []);
-
-  useEffect(() => {
-    const main = async () => {
-      const groupsResponse = await fetch(
-        `/square/group/get_group_list?groupCategoryPk=${
-          searchCategoryPk ? searchCategoryPk : ""
-        }&groupName=${
-          searchGroupName ? searchGroupName : ""
-        }&groupLocationLatitude=${
-          searchLocation ? searchLocation.latitude : ""
-        }&groupLocationLongitude=${
-          searchLocation ? searchLocation.longitude : ""
-        }&distance=${searchDistance}`
-      );
-      const groupItems = await groupsResponse.json();
-      setUnpagedGroups(groupItems);
-
       setCurrentGroupPage(1);
-
-      // setHasMore(true);
-
-      // if (groupItems.length === 0) {
-      //   setHasMore(false);
-      // } else {
-      //   setHasMore(true);
-      // }
     };
     main();
-  }, [searchCategoryPk, searchGroupName, searchLocation, searchDistance]);
+  }, [searchCategory, searchGroupName, searchPlace, searchDistance]);
 
   useEffect(() => {
     const main = async () => {
-      if (unpagedGroups) {
-        setPagedGroups(unpagedGroups.slice(0, 4 * currentGroupPage));
+      if (groups) {
+        setPagedGroups(groups.slice(0, 4 * currentGroupPage));
 
-        if (Math.ceil(unpagedGroups.length / 4) <= currentGroupPage) {
+        if (Math.ceil(groups.length / 4) <= currentGroupPage) {
           setHasMoreGroups(false);
         } else {
           setHasMoreGroups(true);
@@ -139,25 +60,21 @@ const Home = (): JSX.Element => {
       }
     };
     main();
-  }, [unpagedGroups, currentGroupPage]);
+  }, [groups, currentGroupPage]);
 
   const props: HomeProps = {
-    mapRef,
-    currentAddress,
-    currentLocation,
+    mapForwardedRef,
 
-    categories,
+    categorys,
     pagedGroups,
     hasMoreGroups,
 
     popup,
 
     handleScroll,
-    handleOpenPopup,
-    handleClosePopup,
-    handleChangePk,
-    handleChangeLocation,
-    handleChangeDistance,
+    setSearchCategory,
+    setSearchPlace,
+    setSearchDistance,
 
     isMobileDevice,
     isTabletDevice,

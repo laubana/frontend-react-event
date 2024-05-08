@@ -1,27 +1,23 @@
 import { Group } from "../../../type/Group";
-import { Location } from "../../../type/Location";
 import { MapRef } from "react-map-gl";
 import { Place } from "../../../type/Place";
 import { Option } from "../../../type/Option";
 import { Category } from "../../../type/Category";
+import { RefObject } from "react";
 
 export interface HomeProps {
-  mapRef: React.RefObject<MapRef>;
-  currentAddress?: string;
-  currentLocation?: Location;
+  mapForwardedRef: RefObject<MapRef>;
 
-  categories?: Category[];
+  categorys: Category[] | undefined;
   pagedGroups?: Group[];
   hasMoreGroups: boolean;
 
   popup?: Group;
 
   handleScroll: () => void;
-  handleOpenPopup: (group: Group) => void;
-  handleClosePopup: () => void;
-  handleChangePk: (option: Option) => void;
-  handleChangeLocation: (place: Place) => void;
-  handleChangeDistance: (option: Option) => void;
+  setSearchCategory: (option: Option | undefined) => void;
+  setSearchPlace: (place: Place) => void;
+  setSearchDistance: (option: Option | undefined) => void;
 
   isMobileDevice: boolean;
   isTabletDevice: boolean;

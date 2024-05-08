@@ -1,22 +1,27 @@
+import { useRef } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { MapRef } from "react-map-gl";
 import { SignUpProps } from "./SignUp.props";
-import { Container } from "./SignUp.style";
+import { Container, MapContainer } from "./SignUp.style";
 import Grid from "../../../component/Grid";
 import Text from "../../../component/Text";
-import Button from "../../../component/Button";
 import InputText from "../../../component/InputText";
 import InputPassword from "../../../component/InputPassword";
 import InputSingleImage from "../../../component/InputSingleImage";
+import InputPlace from "../../../component/InputPlace";
 import InputTextArea from "../../../component/InputTextArea";
+import Button from "../../../component/Button";
+import Map from "../../../component/Map";
 
 import "mapbox-gl/dist/mapbox-gl.css";
-import InputPlace from "../../../component/InputPlace";
 
 const SignUpView = (props: SignUpProps) => {
-  const { initialValues, handleSubmit } = props;
+  const { initialValues, handleSubmit, handleGoBack } = props;
 
-  const validationSchema = Yup.object({
+  const mapRef = useRef<MapRef>(null);
+
+  const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required"),
     password: Yup.string()
       .required("Password is required")
@@ -28,6 +33,9 @@ const SignUpView = (props: SignUpProps) => {
     image: Yup.object().required("Image is required"),
     name: Yup.string().required("Name is required"),
     place: Yup.object().required("Place is required"),
+    address: Yup.string().required("Address is required"),
+    latitude: Yup.string().required("Latitude is required"),
+    longitude: Yup.string().required("Longitude is required"),
     description: Yup.string().required("Description is required"),
   });
 
@@ -61,7 +69,7 @@ const SignUpView = (props: SignUpProps) => {
                 placeholder="Password"
                 password={values.password}
                 setPassword={(password) => {
-                  setTouched({ password: true });
+                  setTouched({ password: true, ...touched });
                   setFieldValue("password", password);
                 }}
                 error={
@@ -75,7 +83,7 @@ const SignUpView = (props: SignUpProps) => {
                 placeholder="Confirm Password"
                 password={values.confirmPassword}
                 setPassword={(password) => {
-                  setTouched({ confirmPassword: true });
+                  setTouched({ confirmPassword: true, ...touched });
                   setFieldValue("confirmPassword", password);
                 }}
                 error={
@@ -100,11 +108,34 @@ const SignUpView = (props: SignUpProps) => {
                 error={touched.name ? errors.name : ""}
               />
               <InputPlace
-                label="Place"
-                placeholder="Place"
-                setPlace={(place) => setFieldValue("place", place)}
-                error={touched.place ? errors.place : ""}
+                label="Address"
+                placeholder="Address"
+                setPlace={(place) => {
+                  setFieldValue("place", place);
+                  setFieldValue("address", place.address);
+                  setFieldValue("latitude", place.latitude.toString());
+                  setFieldValue("longitude", place.longitude.toString());
+
+                  mapRef.current?.flyTo({
+                    center: [place.longitude, place.latitude],
+                    duration: 500,
+                  });
+                }}
+                error={touched.address ? errors.address : ""}
               />
+              <MapContainer>
+                <Map
+                  forwardedRef={mapRef}
+                  markers={
+                    values.place && [
+                      {
+                        latitude: values.place.latitude,
+                        longitude: values.place.longitude,
+                      },
+                    ]
+                  }
+                />
+              </MapContainer>
               <InputTextArea
                 label="Description"
                 placeholder="Description"
@@ -119,6 +150,9 @@ const SignUpView = (props: SignUpProps) => {
           </Grid>
         )}
       </Formik>
+      <Button color="black" onClick={handleGoBack} block>
+        Go Back
+      </Button>
     </Container>
   );
 };

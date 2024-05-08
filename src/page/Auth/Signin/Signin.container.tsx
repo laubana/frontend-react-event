@@ -1,26 +1,30 @@
-import { useState } from "react";
-import SigninView from "./Signin.view";
-import { SignInProps as SignInProps } from "./Signin.props";
 import { useNavigate } from "react-router-dom";
-import { UseUserContext } from "../../../context/UserContext";
+import { Form } from "./SignIn.props";
+import SigninView from "./SignIn.view";
+import { useSignInMutation } from "../../../slice/authApiSlice";
+import { useDispatch } from "react-redux";
+import { store } from "../../../store/store";
+import { setAuth } from "../../../slice/authSlice";
 
-const Signin = (): JSX.Element => {
+const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
-  const { signin } = UseUserContext();
+  const [signIn] = useSignInMutation();
+  const dispatch = useDispatch<typeof store.dispatch>();
 
-  const [userId, setUserId] = useState<string>("laubana@gmail.com");
-  const [userPassword, setUserPassword] = useState<string>("password");
-
-  const handleSignin = async () => {
-    signin(userId, userPassword);
+  const initialValues: Form = {
+    email: "e@t.c",
+    password: "123123",
   };
 
-  const handleChangeUserId = (inputUserId: string) => {
-    setUserId(inputUserId);
-  };
-
-  const handleChangeUserPassword = (userPassword: string) => {
-    setUserPassword(userPassword);
+  const handleSubmit = async (values: Form) => {
+    try {
+      const response = await signIn({
+        email: values.email,
+        password: values.password,
+      }).unwrap();
+      dispatch(setAuth(response));
+      navigate("/");
+    } catch (error) {}
   };
 
   const handleGoBack = () => {
@@ -33,16 +37,12 @@ const Signin = (): JSX.Element => {
   };
 
   const props = {
-    userId,
-    userPassword,
-
-    handleChangeUserId,
-    handleChangeUserPassword,
-    handleSignin,
+    initialValues,
+    handleSubmit,
     handleGoBack,
     handleSigninWithGoogle,
   };
   return <SigninView {...props} />;
 };
 
-export default Signin;
+export default SignIn;

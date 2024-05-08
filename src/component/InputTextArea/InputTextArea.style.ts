@@ -44,6 +44,7 @@ export const InputContainer = styled.div<{ sizing: Sizing }>`
 
 export const InputTextArea = styled.textarea`
   border: none;
+  width: 100%;
   resize: none;
 
   :focus {

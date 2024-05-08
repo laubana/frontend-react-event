@@ -1,10 +1,13 @@
-export interface SignInProps {
-  userId: string;
-  userPassword: string;
+import { FormikHelpers } from "formik";
 
-  handleChangeUserId: (userId: string) => void;
-  handleChangeUserPassword: (userPassword: string) => void;
-  handleSignin: () => void;
+export type Form = {
+  email: string;
+  password: string;
+};
+
+export interface SignInProps {
+  initialValues: Form;
+  handleSubmit: (values: Form) => void;
   handleGoBack: () => void;
   handleSigninWithGoogle: () => void;
 }

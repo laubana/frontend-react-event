@@ -27,6 +27,7 @@ const paddingSizes: Record<Sizing, string> = {
 };
 
 export const Container = styled.div`
+  width: 100%;
   position: relative;
 `;
 
@@ -80,8 +81,7 @@ export const ListContainer = styled.div`
 
 export const Item = styled.button<{ sizing: Sizing }>`
   ${({ sizing }) => paddingSizes[sizing]};
-  display: grid;
-  grid-template-columns: 1fr 9fr;
+  display: flex;
   align-items: center;
   gap: 8px;
   background-color: white;
@@ -95,6 +95,14 @@ export const Item = styled.button<{ sizing: Sizing }>`
   :hover {
     background-color: lightgrey;
   }
+`;
+
+export const IconContainer = styled.div`
+  width: 16px;
+`;
+
+export const AddressContainer = styled.div`
+  flex-grow: 1;
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`

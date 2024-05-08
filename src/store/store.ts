@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../slice/authSlice";
 import { apiSlice } from "../slice/apiSlice";
 
-export const toolkitStore = configureStore({
+export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
@@ -12,4 +12,4 @@ export const toolkitStore = configureStore({
   devTools: false,
 });
 
-export type RootState = ReturnType<typeof toolkitStore.getState>;
+export type RootState = ReturnType<typeof store.getState>;
