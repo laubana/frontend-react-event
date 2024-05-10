@@ -1,6 +1,5 @@
 import { apiSlice } from "./apiSlice";
 import { Group } from "../type/Group";
-import { queries } from "@testing-library/react";
 
 type AddGroupRequest = {
   categoryId: string;

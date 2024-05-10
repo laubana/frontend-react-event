@@ -15,15 +15,25 @@ import Select from "../../../component/Select";
 import Text from "../../../component/Text";
 import TextArea from "../../../component/InputTextArea";
 import Map from "../../../component/Map";
+import Avatar from "../../../component/Avatar";
 
 const Detail = (props: DetailProps) => {
-  const { group, isMobileDevice, isTabletDevice, isDesktopDevice } = props;
+  const {
+    group,
+    registrations,
+    registration,
+    isMobileDevice,
+    isTabletDevice,
+    isDesktopDevice,
+    handleJoin,
+    handleLeave,
+  } = props;
 
   return (
     <>
       {group ? (
         <Container>
-          <Columns columns={isDesktopDevice || isTabletDevice ? "1 3" : "1"}>
+          <Columns columns={isMobileDevice ? "1" : "1 3"}>
             <Grid>
               <Image src={group.imageUrl} />
               <Text>{group.name}</Text>
@@ -40,10 +50,28 @@ const Detail = (props: DetailProps) => {
                 />
               </MapContainer>
               <Text>{group.description}</Text>
+              {group.user._id !== registration?.user._id &&
+                (registration ? (
+                  <Button onClick={handleLeave}>Leave</Button>
+                ) : (
+                  <Button onClick={handleJoin}>Join</Button>
+                ))}
             </Grid>
             <Grid>
               <Thumbnail src={group.imageUrl} />
               <Text sizing="large">Member</Text>
+              {0 < registrations.length && (
+                <Grid columns={isDesktopDevice ? 8 : isTabletDevice ? 6 : 4}>
+                  {registrations.map(
+                    (registrationMapItem, registrationMapIndex) => (
+                      <Avatar
+                        source={registrationMapItem.user.imageUrl}
+                        key={registrationMapIndex}
+                      />
+                    )
+                  )}
+                </Grid>
+              )}
             </Grid>
           </Columns>
         </Container>

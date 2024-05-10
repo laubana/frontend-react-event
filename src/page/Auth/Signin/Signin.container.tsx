@@ -12,7 +12,7 @@ const SignIn = (): JSX.Element => {
   const dispatch = useDispatch<typeof store.dispatch>();
 
   const initialValues: Form = {
-    email: "e@t.c",
+    email: "u@e.c",
     password: "123123",
   };
 

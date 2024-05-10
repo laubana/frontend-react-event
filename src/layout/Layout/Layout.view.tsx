@@ -115,7 +115,7 @@ const LayoutComponent = ({}): JSX.Element => {
         <Outlet />
       </Main>
       <Footer>
-        <p>Copyright © 2023 Yuhwan Ban. All rights reserved.</p>
+        <p>© 2024, Yuhwan Ban</p>
       </Footer>
     </>
   );

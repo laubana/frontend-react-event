@@ -3,11 +3,13 @@ import { RootState } from "../store/store";
 
 interface StateProps {
   accessToken: string | undefined;
+  id: string | undefined;
   email: string | undefined;
 }
 
 const initialState: StateProps = {
   accessToken: undefined,
+  id: undefined,
   email: undefined,
 };
 
@@ -16,9 +18,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth: (state, action) => {
-      const { accessToken, email } = action.payload;
+      const { accessToken, email, id } = action.payload;
 
       state.accessToken = accessToken;
+      state.id = id;
       state.email = email;
     },
     signOut: (state) => {

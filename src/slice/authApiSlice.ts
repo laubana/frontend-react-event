@@ -18,6 +18,7 @@ type SignInRequest = {
 
 type SignInResponse = {
   accessToken: string;
+  id: string;
   email: string;
 };
 

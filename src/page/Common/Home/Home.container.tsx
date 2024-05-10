@@ -12,7 +12,7 @@ import { useGetGroupsQuery } from "../../../slice/groupApiSlice";
 
 const Home = (): JSX.Element => {
   const { data: categorys = [] } = useGetCategorysQuery();
-  const { data: groups = [] } = useGetGroupsQuery();
+  const { data: groups = [], isSuccess } = useGetGroupsQuery();
 
   const mapForwardedRef = useRef<MapRef>(null);
 
@@ -54,7 +54,7 @@ const Home = (): JSX.Element => {
         )
     );
     setCurrentGroupPage(1);
-  }, [groups, searchCategory, searchGroupName, searchPlace, searchDistance]);
+  }, [isSuccess, searchCategory, searchGroupName, searchPlace, searchDistance]);
 
   useEffect(() => {
     const main = async () => {
