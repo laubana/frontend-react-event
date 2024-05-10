@@ -32,26 +32,30 @@ export const Container = styled.div`
 `;
 
 export const LabelContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;
 
 export const InputContainer = styled.div<{
   sizing: Sizing;
-  isVisible: boolean;
 }>`
-  box-shadow: ${({ isVisible: visibility }) =>
-    visibility
-      ? "0px 2px 4px rgba(0, 0, 0, 0.25)"
-      : "0px 0px 2px rgba(0, 0, 0, 0.25)"};
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
-  display: flex;
-  border-radius: 8px;
   align-items: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  display: flex;
   gap: 8px;
+  justify-content: space-between;
+  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+
+  :focus-within {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{ sizing: Sizing }>`
   border: none;
+  ${({ sizing }) => fontSizes[sizing]};
   width: 100%;
 
   :focus {
@@ -59,33 +63,35 @@ export const Input = styled.input`
   }
 `;
 
-export const Icon = styled.button`
-  display: grid;
-  justify-items: center;
+export const Component = styled.button`
   align-items: center;
   background-color: white;
   border: 0;
+  display: flex;
+  margin: 0;
+  padding: 0;
 `;
 
 export const ListContainer = styled.div`
-  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  margin-top: 6px;
   max-height: 150px;
   overflow-y: auto;
   position: absolute;
-  margin-top: 6px;
-  border-radius: 8px;
-  background-color: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
   z-index: 5;
 `;
 
 export const Item = styled.button<{ sizing: Sizing }>`
-  ${({ sizing }) => paddingSizes[sizing]};
-  display: flex;
   align-items: center;
-  gap: 8px;
   background-color: white;
   border: 0;
+  display: flex;
+  gap: 8px;
+  ${({ sizing }) => paddingSizes[sizing]};
   width: 100%;
 
   :not(:last-child) {
@@ -97,7 +103,7 @@ export const Item = styled.button<{ sizing: Sizing }>`
   }
 `;
 
-export const IconContainer = styled.div`
+export const ComponentContainer = styled.div`
   width: 16px;
 `;
 
@@ -106,5 +112,5 @@ export const AddressContainer = styled.div`
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;

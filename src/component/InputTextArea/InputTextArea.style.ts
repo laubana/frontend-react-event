@@ -26,26 +26,30 @@ const paddingSizes: Record<Sizing, string> = {
     `,
 };
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  width: 100%;
+`;
 
 export const LabelContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing: sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing: sizing }) => paddingSizes[sizing]}
 `;
 
 export const InputContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  ${({ sizing }) => paddingSizes[sizing]}
 
   :focus-within {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   }
 `;
 
-export const InputTextArea = styled.textarea`
+export const InputTextArea = styled.textarea<{ sizing: Sizing }>`
   border: none;
-  width: 100%;
+  ${({ sizing }) => fontSizes[sizing]};
   resize: none;
+  width: 100%;
 
   :focus {
     outline: none;
@@ -53,5 +57,5 @@ export const InputTextArea = styled.textarea`
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;

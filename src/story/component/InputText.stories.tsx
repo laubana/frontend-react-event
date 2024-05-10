@@ -12,13 +12,29 @@ const Component = () => {
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputText
+          label="Text"
+          placeholder="Text"
+          text={text}
+          setText={(text: string) => setText(text)}
           sizing="small"
+        />
+        <InputText
+          label="Text"
+          text={text}
+          setText={(text: string) => setText(text)}
+          sizing="small"
+        />
+        <Text>{text}</Text>
+      </div>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <InputText
+          label="Text"
           placeholder="Text"
           text={text}
           setText={(text: string) => setText(text)}
         />
         <InputText
-          sizing="small"
+          label="Text"
           text={text}
           setText={(text: string) => setText(text)}
         />
@@ -26,24 +42,17 @@ const Component = () => {
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputText
+          label="Text"
           placeholder="Text"
           text={text}
           setText={(text: string) => setText(text)}
-        />
-        <InputText text={text} setText={(text: string) => setText(text)} />
-        <Text>{text}</Text>
-      </div>
-      <div style={{ display: "grid", gap: "16px" }}>
-        <InputText
           sizing="large"
-          placeholder="Text"
-          text={text}
-          setText={(text: string) => setText(text)}
         />
         <InputText
-          sizing="large"
+          label="Text"
           text={text}
           setText={(text: string) => setText(text)}
+          sizing="large"
         />
         <Text>{text}</Text>
       </div>

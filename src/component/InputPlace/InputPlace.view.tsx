@@ -9,11 +9,11 @@ import {
   LabelContainer,
   InputContainer,
   Input,
-  Icon,
+  Component,
   ListContainer,
   Item,
   ErrorContainer,
-  IconContainer,
+  ComponentContainer,
   AddressContainer,
 } from "./InputPlace.style";
 import Text from "../Text";
@@ -49,9 +49,11 @@ const InputPlaceComponent = ({
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+    setIsVisible(true);
   };
 
   const handleFocus = () => {
+    setInputValue("");
     setIsVisible(true);
   };
 
@@ -62,7 +64,6 @@ const InputPlaceComponent = ({
   };
 
   const handleSelect = (placePrediction: any) => {
-    setIsVisible(false);
     placesService?.getDetails(
       { placeId: placePrediction.place_id, language: "en" },
       (detail: any) => {
@@ -79,10 +80,7 @@ const InputPlaceComponent = ({
         });
       }
     );
-  };
-
-  const handleToggle = () => {
-    setIsVisible((oldValue) => !oldValue);
+    setIsVisible(false);
   };
 
   useEffect(() => {
@@ -112,19 +110,20 @@ const InputPlaceComponent = ({
           <Text>{label}</Text>
         </LabelContainer>
       )}
-      <InputContainer isVisible={isVisible} sizing={sizing}>
+      <InputContainer sizing={sizing}>
         <Input
           value={inputValue}
           onChange={handleChange}
           placeholder={placeholder}
+          sizing={sizing}
         />
-        <Icon onClick={handleToggle}>
+        <Component>
           {isVisible ? (
             <FaChevronUp color="black" />
           ) : (
             <FaChevronDown color="black" />
           )}
-        </Icon>
+        </Component>
       </InputContainer>
       {isVisible &&
         (0 < currentPlacePredictions.length ||
@@ -136,9 +135,9 @@ const InputPlaceComponent = ({
                 onClick={() => handleSelect(placePrediction)}
                 key={index}
               >
-                <IconContainer>
+                <ComponentContainer>
                   <BiCurrentLocation color="black" />
-                </IconContainer>
+                </ComponentContainer>
                 <AddressContainer>
                   <Text
                     sizing={sizing}

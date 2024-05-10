@@ -26,68 +26,70 @@ const paddingSizes: Record<Sizing, string> = {
 };
 
 export const Container = styled.div`
-  width: 100%;
   position: relative;
+  width: 100%;
 `;
 
 export const LabelContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;
 
 export const InputContainer = styled.div<{
   sizing: Sizing;
-  isVisible: boolean;
 }>`
-  box-shadow: ${({ isVisible: visibility }) =>
-    visibility
-      ? "0px 2px 4px rgba(0, 0, 0, 0.25)"
-      : "0px 0px 2px rgba(0, 0, 0, 0.25)"};
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]};
-  border-radius: 8px;
+  align-items: center;
   background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
   display: flex;
   gap: 8px;
-  box-sizing: border-box;
   justify-content: space-between;
+  ${({ sizing }) => paddingSizes[sizing]};
+
+  :focus-within {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
-export const Input = styled.input`
-  font-family: "Montserrat", sans-serif;
-  width: 100%;
+export const Input = styled.input<{ sizing: Sizing }>`
   border: none;
+  ${({ sizing }) => fontSizes[sizing]};
+  width: 100%;
 
   :focus {
     outline: none;
   }
 `;
 
-export const Icon = styled.button`
-  display: grid;
-  justify-items: center;
+export const Component = styled.button`
   align-items: center;
   background-color: white;
   border: 0;
+  display: flex;
+  margin: 0;
+  padding: 0;
 `;
 
 export const ListContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  max-height: 150px;
-  overflow-y: auto;
-  margin-top: 6px;
-  border-radius: 8px;
   background-color: white;
+  border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
+  margin-top: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
   z-index: 5;
 `;
 
 export const Item = styled.button<{ sizing: Sizing }>`
-  ${({ sizing }) => paddingSizes[sizing]};
-  display: grid;
-  justify-items: flex-start;
   background-color: white;
   border: 0;
+  display: grid;
+  justify-items: flex-start;
+  ${({ sizing }) => paddingSizes[sizing]};
   width: 100%;
 
   :not(:last-child) {
@@ -100,5 +102,5 @@ export const Item = styled.button<{ sizing: Sizing }>`
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;

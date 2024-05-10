@@ -26,27 +26,31 @@ const paddingSizes: Record<Sizing, string> = {
     `,
 };
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  width: 100%;
+`;
 
 export const LabelContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;
 
 export const InputContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
-  display: flex;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
   align-items: center;
+  border-radius: 8px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  display: flex;
   gap: 8px;
+  ${({ sizing }) => paddingSizes[sizing]}
 
   :focus-within {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   }
 `;
 
-export const InputNumber = styled.input`
+export const InputNumber = styled.input<{ sizing: Sizing }>`
   border: none;
+  ${({ sizing }) => fontSizes[sizing]};
   width: 100%;
 
   &:focus {
@@ -55,14 +59,14 @@ export const InputNumber = styled.input`
 `;
 
 export const Component = styled.button`
-  display: flex;
   align-items: center;
-  padding: 0;
-  margin: 0;
-  border: 0;
   background: none;
+  border: 0;
+  display: flex;
+  margin: 0;
+  padding: 0;
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  ${({ sizing }) => paddingSizes[sizing]}
 `;

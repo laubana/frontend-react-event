@@ -52,6 +52,7 @@ const InputTextComponent = ({
           placeholder={placeholder}
           value={text}
           onChange={handleChange}
+          sizing={sizing}
         />
         {isFocused && (
           <Component onClick={handleReset}>

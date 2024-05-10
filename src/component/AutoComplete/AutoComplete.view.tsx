@@ -6,7 +6,7 @@ import {
   LabelContainer,
   InputContainer,
   Input,
-  Icon,
+  Component,
   ListContainer,
   Item,
   ErrorContainer,
@@ -42,10 +42,11 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
-    handleFocus();
+    setIsVisible(true);
   };
 
   const handleFocus = () => {
+    setInputValue("");
     setIsVisible(true);
   };
 
@@ -56,13 +57,9 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   };
 
   const handleSelect = (option: Option) => {
-    setIsVisible(false);
     setInputValue(option.label);
+    setIsVisible(false);
     setOption(option);
-  };
-
-  const handleToggle = () => {
-    setIsVisible((oldValue) => !oldValue);
   };
 
   useEffect(() => {
@@ -85,19 +82,20 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
           <Text>{label}</Text>
         </LabelContainer>
       )}
-      <InputContainer isVisible={isVisible} sizing={sizing}>
+      <InputContainer sizing={sizing}>
         <Input
           value={inputValue}
           placeholder={placeholder}
           onChange={handleChange}
+          sizing={sizing}
         />
-        <Icon onClick={handleToggle}>
+        <Component>
           {isVisible ? (
-            <FaChevronUp color="black" />
+            <FaChevronUp color="grey" />
           ) : (
-            <FaChevronDown color="black" />
+            <FaChevronDown color="grey" />
           )}
-        </Icon>
+        </Component>
       </InputContainer>
       {isVisible && 0 < items.length && <ListContainer>{items}</ListContainer>}
       {error && (

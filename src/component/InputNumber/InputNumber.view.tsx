@@ -64,6 +64,7 @@ const InputNumberComponent = ({
           placeholder={placeholder}
           value={inputValue}
           onChange={handleChange}
+          sizing={sizing}
         />
         {isFocused && (
           <Component onClick={handleReset}>

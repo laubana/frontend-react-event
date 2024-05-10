@@ -33,6 +33,7 @@ const InputTextComponent = ({
           placeholder={placeholder}
           value={text}
           onChange={handleChange}
+          sizing={sizing}
           rows={5}
         />
       </InputContainer>

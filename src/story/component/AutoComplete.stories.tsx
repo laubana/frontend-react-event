@@ -19,41 +19,52 @@ const Component = () => {
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
-          sizing="small"
+          label="Fruits"
           placeholder="Frults"
           options={options}
+          option={option}
+          setOption={(option: Option | undefined) => setOption(option)}
+          sizing="small"
+        />
+        <AutoComplete
+          label="Fruits"
+          options={options}
+          option={option}
+          setOption={(option: Option | undefined) => setOption(option)}
+          sizing="small"
+        />
+        <Text>{option?.value}</Text>
+      </div>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <AutoComplete
+          label="Fruits"
+          placeholder="Frults"
+          options={options}
+          option={option}
           setOption={(option: Option | undefined) => setOption(option)}
         />
         <AutoComplete
-          sizing="small"
+          label="Fruits"
           options={options}
+          option={option}
           setOption={(option: Option | undefined) => setOption(option)}
         />
         <Text>{option?.value}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
+          label="Fruits"
           placeholder="Frults"
           options={options}
+          option={option}
           setOption={(option: Option | undefined) => setOption(option)}
-        />
-        <AutoComplete
-          options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
-        />
-        <Text>{option?.value}</Text>
-      </div>
-      <div style={{ display: "grid", gap: "16px" }}>
-        <AutoComplete
           sizing="large"
-          placeholder="Frults"
-          options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
         />
         <AutoComplete
-          sizing="large"
+          label="Fruits"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
+          sizing="large"
         />
         <Text>{option?.value}</Text>
       </div>

@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-
-import { Sizing } from "./InputPassword.props";
+import { Sizing } from "./InputDate.props";
 
 const fontSizes: Record<Sizing, string> = {
   small: `
@@ -27,7 +26,18 @@ const paddingSizes: Record<Sizing, string> = {
 };
 
 export const Container = styled.div`
+  position: relative;
   width: 100%;
+
+  .react-datepicker__day {
+    :hover {
+      background-color: lightgrey;
+    }
+  }
+
+  .react-datepicker__day.react-datepicker__day--selected {
+    background-color: tomato;
+  }
 `;
 
 export const LabelContainer = styled.div<{ sizing: Sizing }>`
@@ -36,21 +46,25 @@ export const LabelContainer = styled.div<{ sizing: Sizing }>`
 
 export const InputContainer = styled.div<{ sizing: Sizing }>`
   align-items: center;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   display: flex;
   gap: 8px;
-  ${({ sizing }) => paddingSizes[sizing]}
+  justify-content: space-between;
+  ${({ sizing }) => paddingSizes[sizing]};
 
   :focus-within {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   }
 `;
 
-export const InputPassword = styled.input<{ sizing: Sizing }>`
+export const InputDate = styled.button<{ sizing: Sizing }>`
+  background-color: transparent;
   border: none;
   ${({ sizing }) => fontSizes[sizing]};
+  text-align: left;
   width: 100%;
 
   :focus {
@@ -60,11 +74,19 @@ export const InputPassword = styled.input<{ sizing: Sizing }>`
 
 export const Component = styled.button`
   align-items: center;
-  background: none;
+  background-color: white;
   border: 0;
   display: flex;
   margin: 0;
   padding: 0;
+`;
+
+export const ListContainer = styled.div`
+  box-sizing: border-box;
+  margin-top: 6px;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`

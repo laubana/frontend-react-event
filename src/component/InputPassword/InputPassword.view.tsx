@@ -58,6 +58,7 @@ const InputPasswordComponent = ({
             placeholder={placeholder}
             value={password}
             onChange={handleChange}
+            sizing={sizing}
           />
         ) : (
           <InputPassword
@@ -65,6 +66,7 @@ const InputPasswordComponent = ({
             placeholder={placeholder}
             value={password}
             onChange={handleChange}
+            sizing={sizing}
           />
         )}
         {isFocused && (
