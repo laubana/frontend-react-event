@@ -58,7 +58,7 @@ const DateField = (props: DateFieldProps): JSX.Element => {
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
-      // setIsVisible(false);
+      setIsVisible(false);
     }
   };
 
