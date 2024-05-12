@@ -15,6 +15,7 @@ import {
   ErrorContainer,
   ComponentContainer,
   AddressContainer,
+  Wrapper,
 } from "./InputPlace.style";
 import Text from "../Text";
 
@@ -52,8 +53,10 @@ const InputPlaceComponent = ({
     setIsVisible(true);
   };
 
-  const handleFocus = () => {
-    setInputValue("");
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setInputValue("");
+    }
     setIsVisible(true);
   };
 
@@ -104,68 +107,73 @@ const InputPlaceComponent = ({
   }, [inputValue]);
 
   return (
-    <Container onFocus={handleFocus} onBlur={handleBlur}>
+    <Container>
       {label && (
         <LabelContainer sizing={sizing}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
-      <InputContainer sizing={sizing}>
-        <Input
-          value={inputValue}
-          onChange={handleChange}
-          placeholder={placeholder}
-          sizing={sizing}
-        />
-        <Component>
-          {isVisible ? (
-            <FaChevronUp color="black" />
-          ) : (
-            <FaChevronDown color="black" />
+      <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
+        <InputContainer sizing={sizing}>
+          <Input
+            tabIndex={0}
+            value={inputValue}
+            onChange={handleChange}
+            placeholder={placeholder}
+            sizing={sizing}
+          />
+          <Component tabIndex={1}>
+            {isVisible ? (
+              <FaChevronUp color="black" />
+            ) : (
+              <FaChevronDown color="black" />
+            )}
+          </Component>
+        </InputContainer>
+        {isVisible &&
+          (0 < currentPlacePredictions.length ||
+            0 < inputPlacePredictions.length) && (
+            <ListContainer>
+              {currentPlacePredictions.map((placePrediction, index) => (
+                <Item
+                  tabIndex={2}
+                  onClick={() => handleSelect(placePrediction)}
+                  sizing={sizing}
+                  key={index}
+                >
+                  <ComponentContainer>
+                    <BiCurrentLocation color="black" />
+                  </ComponentContainer>
+                  <AddressContainer>
+                    <Text
+                      sizing={sizing}
+                      style={{ textAlign: "start", wordBreak: "break-all" }}
+                    >
+                      {placePrediction.description}
+                    </Text>
+                  </AddressContainer>
+                </Item>
+              ))}
+              {inputPlacePredictions.map((placePrediction, index) => (
+                <Item
+                  tabIndex={2}
+                  onClick={() => handleSelect(placePrediction)}
+                  sizing={sizing}
+                  key={index}
+                >
+                  <AddressContainer>
+                    <Text
+                      sizing={sizing}
+                      style={{ textAlign: "start", wordBreak: "break-all" }}
+                    >
+                      {placePrediction.description}
+                    </Text>
+                  </AddressContainer>
+                </Item>
+              ))}
+            </ListContainer>
           )}
-        </Component>
-      </InputContainer>
-      {isVisible &&
-        (0 < currentPlacePredictions.length ||
-          0 < inputPlacePredictions.length) && (
-          <ListContainer>
-            {currentPlacePredictions.map((placePrediction, index) => (
-              <Item
-                sizing={sizing}
-                onClick={() => handleSelect(placePrediction)}
-                key={index}
-              >
-                <ComponentContainer>
-                  <BiCurrentLocation color="black" />
-                </ComponentContainer>
-                <AddressContainer>
-                  <Text
-                    sizing={sizing}
-                    style={{ textAlign: "start", wordBreak: "break-all" }}
-                  >
-                    {placePrediction.description}
-                  </Text>
-                </AddressContainer>
-              </Item>
-            ))}
-            {inputPlacePredictions.map((placePrediction, index) => (
-              <Item
-                sizing={sizing}
-                onClick={() => handleSelect(placePrediction)}
-                key={index}
-              >
-                <AddressContainer>
-                  <Text
-                    sizing={sizing}
-                    style={{ textAlign: "start", wordBreak: "break-all" }}
-                  >
-                    {placePrediction.description}
-                  </Text>
-                </AddressContainer>
-              </Item>
-            ))}
-          </ListContainer>
-        )}
+      </Wrapper>
       {error && (
         <ErrorContainer sizing={sizing}>
           <Text coloring="red">{error}</Text>

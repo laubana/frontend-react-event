@@ -34,6 +34,8 @@ export const LabelContainer = styled.div<{ sizing: Sizing }>`
   ${({ sizing }) => paddingSizes[sizing]}
 `;
 
+export const Wrapper = styled.div``;
+
 export const InputContainer = styled.div<{
   sizing: Sizing;
 }>`
@@ -62,13 +64,10 @@ export const Input = styled.input<{ sizing: Sizing }>`
   }
 `;
 
-export const Component = styled.button`
+export const Component = styled.div`
   align-items: center;
   background-color: white;
-  border: 0;
   display: flex;
-  margin: 0;
-  padding: 0;
 `;
 
 export const ListContainer = styled.div`
@@ -84,9 +83,8 @@ export const ListContainer = styled.div`
   z-index: 5;
 `;
 
-export const Item = styled.button<{ sizing: Sizing }>`
+export const Item = styled.div<{ sizing: Sizing }>`
   background-color: white;
-  border: 0;
   display: grid;
   justify-items: flex-start;
   ${({ sizing }) => paddingSizes[sizing]};

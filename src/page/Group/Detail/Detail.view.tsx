@@ -16,6 +16,7 @@ import Text from "../../../component/Text";
 import TextArea from "../../../component/InputTextArea";
 import Map from "../../../component/Map";
 import Avatar from "../../../component/Avatar";
+import InputTextArea from "../../../component/InputTextArea";
 
 const Detail = (props: DetailProps) => {
   const {
@@ -71,6 +72,13 @@ const Detail = (props: DetailProps) => {
                     )
                   )}
                 </Grid>
+              )}
+              <Text>Comment</Text>
+              {registration && (
+                <Columns columns="9 1" style={{ alignItems: "end" }}>
+                  <InputTextArea text="t" setText={() => null} />
+                  <Button>Submit</Button>
+                </Columns>
               )}
             </Grid>
           </Columns>

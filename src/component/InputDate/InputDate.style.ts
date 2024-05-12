@@ -44,6 +44,8 @@ export const LabelContainer = styled.div<{ sizing: Sizing }>`
   ${({ sizing }) => paddingSizes[sizing]}
 `;
 
+export const Wrapper = styled.div``;
+
 export const InputContainer = styled.div<{ sizing: Sizing }>`
   align-items: center;
   background-color: white;
@@ -60,25 +62,17 @@ export const InputContainer = styled.div<{ sizing: Sizing }>`
   }
 `;
 
-export const InputDate = styled.button<{ sizing: Sizing }>`
+export const InputDate = styled.div<{ sizing: Sizing }>`
   background-color: transparent;
-  border: none;
   ${({ sizing }) => fontSizes[sizing]};
   text-align: left;
   width: 100%;
-
-  :focus {
-    outline: none;
-  }
 `;
 
-export const Component = styled.button`
+export const Component = styled.div`
   align-items: center;
   background-color: white;
-  border: 0;
   display: flex;
-  margin: 0;
-  padding: 0;
 `;
 
 export const ListContainer = styled.div`

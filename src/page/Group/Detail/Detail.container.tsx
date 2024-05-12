@@ -9,6 +9,7 @@ import {
   useGetRegistrationGroupUserQuery,
   useGetRegistrationsGroupQuery,
 } from "../../../slice/registrationApiSlice";
+import { useAddCommentMutation } from "../../../slice/commentApiSlice";
 
 const Detail = () => {
   const { groupId } = useParams();
@@ -20,6 +21,7 @@ const Detail = () => {
   const { data: registration } = useGetRegistrationGroupUserQuery({ groupId });
   const [addRegistration] = useAddRegistrationMutation();
   const [deleteRegistration] = useDeleteRegistrationGroupUserMutation();
+  const [addComment] = useAddCommentMutation();
 
   const isMobileDevice = useMediaQuery({ maxWidth: 767 });
   const isTabletDevice = useMediaQuery({ minWidth: 768, maxWidth: 991 });

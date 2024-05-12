@@ -10,6 +10,7 @@ import {
   InputContainer,
   LabelContainer,
   ListContainer,
+  Wrapper,
 } from "./InputDate.style";
 import Text from "../Text";
 
@@ -65,36 +66,41 @@ const DateField = (props: DateFieldProps): JSX.Element => {
   useEffect(() => {
     if (date) {
       setInputValue(convertDate(date));
+      setIsVisible(false);
     }
   }, [date]);
 
   return (
-    <Container onFocus={handleFocus} onBlur={handleBlur} style={style}>
+    <Container style={style}>
       {label && (
         <LabelContainer sizing={sizing}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
-      <InputContainer sizing={sizing}>
-        <InputDate sizing={sizing}>{inputValue || placeholder} </InputDate>
-        <Component>
-          <CiCalendar color="grey" />
-        </Component>
-      </InputContainer>
-      {isVisible && (
-        <ListContainer>
-          <Calendar
-            inline
-            selected={date}
-            onChange={(date) => {
-              if (date) {
-                setDate(date);
-              }
-            }}
-            minDate={new Date()}
-          />
-        </ListContainer>
-      )}
+      <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
+        <InputContainer sizing={sizing}>
+          <InputDate tabIndex={0} sizing={sizing}>
+            {inputValue || placeholder}{" "}
+          </InputDate>
+          <Component tabIndex={1}>
+            <CiCalendar color="grey" />
+          </Component>
+        </InputContainer>
+        {isVisible && (
+          <ListContainer>
+            <Calendar
+              inline
+              selected={date}
+              onChange={(date) => {
+                if (date) {
+                  setDate(date);
+                }
+              }}
+              minDate={new Date()}
+            />
+          </ListContainer>
+        )}
+      </Wrapper>
       {error && (
         <ErrorContainer sizing={sizing}>
           <Text coloring="red">{error}</Text>

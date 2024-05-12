@@ -1,10 +1,6 @@
 import { apiSlice } from "./apiSlice";
 import { Registration } from "../type/Registration";
 
-type RegistrationRequest = {
-  groupId: string;
-};
-
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRegistrationsGroup: builder.query<Registration[], { groupId?: string }>({

@@ -58,13 +58,10 @@ export const InputText = styled.input<{ sizing: Sizing }>`
   }
 `;
 
-export const Component = styled.button`
+export const Component = styled.div`
   align-items: center;
   background-color: white;
-  border: 0;
   display: flex;
-  margin: 0;
-  padding: 0;
 `;
 
 export const ErrorContainer = styled.div<{ sizing: Sizing }>`

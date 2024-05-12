@@ -60,6 +60,7 @@ const InputNumberComponent = ({
       )}
       <InputContainer onFocus={handleFocus} onBlur={handleBlur} sizing={sizing}>
         <InputNumber
+          tabIndex={0}
           type="text"
           placeholder={placeholder}
           value={inputValue}
@@ -67,7 +68,7 @@ const InputNumberComponent = ({
           sizing={sizing}
         />
         {isFocused && (
-          <Component onClick={handleReset}>
+          <Component tabIndex={1} onClick={handleReset}>
             <FaRegCircleXmark color="grey" />
           </Component>
         )}

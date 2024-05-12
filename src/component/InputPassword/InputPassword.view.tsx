@@ -54,6 +54,7 @@ const InputPasswordComponent = ({
       <InputContainer onFocus={handleFocus} onBlur={handleBlur} sizing={sizing}>
         {visibility ? (
           <InputPassword
+            tabIndex={0}
             type="type"
             placeholder={placeholder}
             value={password}
@@ -62,6 +63,7 @@ const InputPasswordComponent = ({
           />
         ) : (
           <InputPassword
+            tabIndex={0}
             type="password"
             placeholder={placeholder}
             value={password}
@@ -70,17 +72,17 @@ const InputPasswordComponent = ({
           />
         )}
         {isFocused && (
-          <Component onClick={handleReset}>
+          <Component tabIndex={1} onClick={handleReset}>
             <FaRegCircleXmark color="grey" />
           </Component>
         )}
         {visibility ? (
-          <Component onClick={handleToggle}>
-            <FaEye color="grey" cursor="pointer" />
+          <Component tabIndex={1} onClick={handleToggle}>
+            <FaEye color="grey" />
           </Component>
         ) : (
-          <Component onClick={handleToggle}>
-            <FaEyeSlash color="grey" cursor="pointer" />
+          <Component tabIndex={1} onClick={handleToggle}>
+            <FaEyeSlash color="grey" />
           </Component>
         )}
       </InputContainer>

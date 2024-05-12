@@ -48,6 +48,7 @@ const InputTextComponent = ({
       )}
       <InputContainer onFocus={handleFocus} onBlur={handleBlur} sizing={sizing}>
         <InputText
+          tabIndex={0}
           type="text"
           placeholder={placeholder}
           value={text}
@@ -55,7 +56,7 @@ const InputTextComponent = ({
           sizing={sizing}
         />
         {isFocused && (
-          <Component onClick={handleReset}>
+          <Component tabIndex={1} onClick={handleReset}>
             <FaRegCircleXmark color="grey" />
           </Component>
         )}

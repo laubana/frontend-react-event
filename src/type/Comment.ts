@@ -1,6 +1,9 @@
+import { Group } from "./Group";
 import { User } from "./User";
 
 export type Comment = {
-  id: number;
+  _id: string;
+  group: Group;
   user: User;
+  value: string;
 };

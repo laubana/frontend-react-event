@@ -4,6 +4,7 @@ import { AutoCompleteProps } from "./AutoComplete.props";
 import {
   Container,
   LabelContainer,
+  Wrapper,
   InputContainer,
   Input,
   Component,
@@ -24,6 +25,7 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
     error,
     sizing = "medium",
   } = props;
+
   const [inputValue, setInputValue] = useState<string>(
     options.find((optionItem) => optionItem.value === option?.value)?.label ||
       ""
@@ -35,7 +37,12 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
       option.label.toUpperCase().includes(inputValue?.toUpperCase() || "")
     )
     .map((option, index) => (
-      <Item sizing={sizing} onClick={() => handleSelect(option)} key={index}>
+      <Item
+        tabIndex={2}
+        sizing={sizing}
+        onClick={() => handleSelect(option)}
+        key={index}
+      >
         <Text sizing={sizing}>{option.label}</Text>
       </Item>
     ));
@@ -45,8 +52,10 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
     setIsVisible(true);
   };
 
-  const handleFocus = () => {
-    setInputValue("");
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setInputValue("");
+    }
     setIsVisible(true);
   };
 
@@ -76,28 +85,33 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   }, [inputValue]);
 
   return (
-    <Container onFocus={handleFocus} onBlur={handleBlur}>
+    <Container>
       {label && (
         <LabelContainer sizing={sizing}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
-      <InputContainer sizing={sizing}>
-        <Input
-          value={inputValue}
-          placeholder={placeholder}
-          onChange={handleChange}
-          sizing={sizing}
-        />
-        <Component>
-          {isVisible ? (
-            <FaChevronUp color="grey" />
-          ) : (
-            <FaChevronDown color="grey" />
-          )}
-        </Component>
-      </InputContainer>
-      {isVisible && 0 < items.length && <ListContainer>{items}</ListContainer>}
+      <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
+        <InputContainer sizing={sizing}>
+          <Input
+            tabIndex={0}
+            value={inputValue}
+            placeholder={placeholder}
+            onChange={handleChange}
+            sizing={sizing}
+          />
+          <Component tabIndex={1}>
+            {isVisible ? (
+              <FaChevronUp color="grey" />
+            ) : (
+              <FaChevronDown color="grey" />
+            )}
+          </Component>
+        </InputContainer>
+        {isVisible && 0 < items.length && (
+          <ListContainer>{items}</ListContainer>
+        )}
+      </Wrapper>
       {error && (
         <ErrorContainer sizing={sizing}>
           <Text coloring="red">{error}</Text>
