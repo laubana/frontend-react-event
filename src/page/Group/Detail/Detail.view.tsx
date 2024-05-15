@@ -1,34 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import { DetailProps } from "./Detail.props";
-import { Container, Image, MapContainer, Thumbnail } from "./Detail.style";
+import {
+  Container,
+  Image,
+  MapContainer,
+  PaginationContainer,
+  Thumbnail,
+  TitleContainer,
+} from "./Detail.style";
+import Avatar from "../../../component/Avatar";
 import Button from "../../../component/Button";
-import Card from "../../../component/Card";
-import Carousel from "../../../component/Carousel";
 import Columns from "../../../component/Columns";
-import Flex from "../../../component/Flex";
+import Comment from "../../../module/Comment";
 import Grid from "../../../component/Grid";
-import InputImage from "../../../component/InputSingleImage";
+import InputSingleImage from "../../../component/InputSingleImage";
+import InputTextArea from "../../../component/InputTextArea";
+import Map from "../../../component/Map";
 import Modal from "../../../component/Modal";
 import Pagination from "../../../component/Pagination";
-import Select from "../../../component/Select";
 import Text from "../../../component/Text";
-import TextArea from "../../../component/InputTextArea";
-import Map from "../../../component/Map";
-import Avatar from "../../../component/Avatar";
-import InputTextArea from "../../../component/InputTextArea";
 
 const Detail = (props: DetailProps) => {
   const {
     group,
     registrations,
     registration,
-    isMobileDevice,
-    isTabletDevice,
-    isDesktopDevice,
+    comments,
+    pagedComments,
+    inputComment,
+    setInputComment,
+    isVisible,
+    images,
+    pagedImages,
+    inputImage,
+    setInputImage,
     handleJoin,
     handleLeave,
+    handleComment,
+    handleCommentPagination,
+    handleOpen,
+    handleClose,
+    handleImage,
+    handleImagePagination,
   } = props;
+
+  const isMobileDevice = useMediaQuery({ maxWidth: 767 });
+  const isTabletDevice = useMediaQuery({ minWidth: 768, maxWidth: 991 });
+  const isDesktopDevice = useMediaQuery({ minWidth: 992 });
 
   return (
     <>
@@ -60,26 +78,63 @@ const Detail = (props: DetailProps) => {
             </Grid>
             <Grid>
               <Thumbnail src={group.imageUrl} />
-              <Text sizing="large">Member</Text>
+              <TitleContainer>
+                <Text sizing="large">Member</Text>
+              </TitleContainer>
               {0 < registrations.length && (
                 <Grid columns={isDesktopDevice ? 8 : isTabletDevice ? 6 : 4}>
                   {registrations.map(
                     (registrationMapItem, registrationMapIndex) => (
                       <Avatar
-                        source={registrationMapItem.user.imageUrl}
+                        imageUrl={registrationMapItem.user.imageUrl}
                         key={registrationMapIndex}
                       />
                     )
                   )}
                 </Grid>
               )}
-              <Text>Comment</Text>
+              <TitleContainer>
+                <Text sizing="large">Comment</Text>
+              </TitleContainer>
+              {pagedComments.map((pagedComment, index) => (
+                <Comment
+                  imageUrl={pagedComment.user.imageUrl}
+                  content={pagedComment.value}
+                  key={index}
+                />
+              ))}
+              <PaginationContainer>
+                <Pagination
+                  items={comments}
+                  groupItemNumber={4}
+                  onClick={handleCommentPagination}
+                />
+              </PaginationContainer>
               {registration && (
                 <Columns columns="9 1" style={{ alignItems: "end" }}>
-                  <InputTextArea text="t" setText={() => null} />
-                  <Button>Submit</Button>
+                  <InputTextArea
+                    text={inputComment}
+                    setText={setInputComment}
+                  />
+                  <Button onClick={handleComment}>Submit</Button>
                 </Columns>
               )}
+              <TitleContainer>
+                <Text sizing="large">Image</Text>
+                {registration && <Button onClick={handleOpen}>Upload</Button>}
+              </TitleContainer>
+              <Grid columns={4}>
+                {pagedImages.map((pagedImage, index) => (
+                  <Image src={pagedImage.imageUrl} key={index} />
+                ))}
+              </Grid>
+              <PaginationContainer>
+                <Pagination
+                  items={images}
+                  groupItemNumber={4}
+                  onClick={handleImagePagination}
+                />
+              </PaginationContainer>
             </Grid>
           </Columns>
         </Container>
@@ -87,6 +142,16 @@ const Detail = (props: DetailProps) => {
         <div style={{ padding: "32px", textAlign: "center" }}>
           <div className="spinner-border text-danger"></div>
         </div>
+      )}
+      {isVisible && (
+        <Modal isVisibile={isVisible} onClose={handleClose}>
+          <InputSingleImage
+            image={inputImage}
+            setImage={setInputImage}
+            style={{ aspectRatio: 2 }}
+          />
+          <Button onClick={handleImage}>Confirm</Button>
+        </Modal>
       )}
     </>
   );

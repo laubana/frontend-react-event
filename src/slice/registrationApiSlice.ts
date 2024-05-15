@@ -1,7 +1,7 @@
 import { apiSlice } from "./apiSlice";
 import { Registration } from "../type/Registration";
 
-export const authApiSlice = apiSlice.injectEndpoints({
+export const registrationApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRegistrationsGroup: builder.query<Registration[], { groupId?: string }>({
       query: (args) =>
@@ -23,22 +23,19 @@ export const authApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: "Registration" as const, id: "LIST" }],
     }),
-    getRegistrationGroupUser: builder.query<Registration, { groupId?: string }>(
-      {
-        query: (args) =>
-          args.groupId
-            ? {
-                url: `/api/registration/group/user`,
-                method: "GET",
-                params: { groupId: args.groupId },
-              }
-            : null,
-        providesTags: (result, error, args) =>
-          result
-            ? [{ type: "Registration" as const, id: "ITEM" }]
-            : [{ type: "Registration" as const, id: "ITEM" }],
-      }
-    ),
+    getRegistration: builder.query<Registration, { groupId?: string }>({
+      query: (args) =>
+        args.groupId
+          ? {
+              url: `/api/registration`,
+              method: "GET",
+              params: { groupId: args.groupId },
+            }
+          : null,
+      providesTags: (result, error, args) => [
+        { type: "Registration" as const, id: "ITEM" },
+      ],
+    }),
     addRegistration: builder.mutation<Registration, { groupId: string }>({
       query: (body) => ({
         url: `/api/registration`,
@@ -50,9 +47,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
         { type: "Registration" as const, id: "ITEM" },
       ],
     }),
-    deleteRegistrationGroupUser: builder.mutation<void, { groupId: string }>({
+    deleteRegistration: builder.mutation<void, { registrationId: string }>({
       query: (body) => ({
-        url: `/api/registration/group/user`,
+        url: `/api/registration`,
         method: "DELETE",
         body,
       }),
@@ -66,7 +63,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetRegistrationsGroupQuery,
-  useGetRegistrationGroupUserQuery,
+  useGetRegistrationQuery,
   useAddRegistrationMutation,
-  useDeleteRegistrationGroupUserMutation,
-} = authApiSlice;
+  useDeleteRegistrationMutation,
+} = registrationApiSlice;

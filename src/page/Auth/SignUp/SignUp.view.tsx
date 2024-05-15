@@ -150,7 +150,7 @@ const SignUpView = (props: SignUpProps) => {
           </Grid>
         )}
       </Formik>
-      <Button color="black" onClick={handleGoBack} block>
+      <Button coloring="black" onClick={handleGoBack} block>
         Go Back
       </Button>
     </Container>

@@ -14,6 +14,16 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
+export const MapContainer = styled.div`
+  width: 100%;
+  aspect-ratio: 1;
+`;
+
+export const PaginationContainer = styled.div`
+  display: grid;
+  justify-content: center;
+`;
+
 export const Thumbnail = styled.img`
   border-radius: 8px;
   width: 100%;
@@ -21,7 +31,8 @@ export const Thumbnail = styled.img`
   object-fit: cover;
 `;
 
-export const MapContainer = styled.div`
-  width: 100%;
-  aspect-ratio: 1;
+export const TitleContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 `;

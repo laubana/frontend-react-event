@@ -66,7 +66,7 @@ const InputSingleImageComponent = (
               )}
               {imageList.map((image, index) => (
                 <Item onClick={() => onImageUpdate(index)} key={index}>
-                  <Image src={image.dataURL} />
+                  <Image src={image.dataURL} style={style} />
                 </Item>
               ))}
             </>

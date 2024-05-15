@@ -1,5 +1,5 @@
-import { Category } from "../type/Category";
 import { apiSlice } from "./apiSlice";
+import { Category } from "../type/Category";
 
 export const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

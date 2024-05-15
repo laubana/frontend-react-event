@@ -1,13 +1,13 @@
 import { apiSlice } from "./apiSlice";
-import { Comment } from "../type/Comment";
+import { Image } from "../type/Image";
 
-export const commentApiSlice = apiSlice.injectEndpoints({
+export const imageApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getComments: builder.query<Comment[], { groupId?: string }>({
+    getImages: builder.query<Image[], { groupId?: string }>({
       query: (args) =>
         args.groupId
           ? {
-              url: `/api/comments`,
+              url: `/api/images`,
               method: "GET",
               params: { groupId: args.groupId },
             }
@@ -15,25 +15,25 @@ export const commentApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, args) =>
         result
           ? [
-              { type: "Comment" as const, id: "LIST" },
-              ...result.map((comment) => ({
-                type: "Comment" as const,
-                id: comment._id,
+              { type: "Image" as const, id: "LIST" },
+              ...result.map((image) => ({
+                type: "Image" as const,
+                id: image._id,
               })),
             ]
           : [{ type: "Registration" as const, id: "LIST" }],
     }),
-    addComment: builder.mutation<Comment, { groupId: string; value: string }>({
+    addImage: builder.mutation<Comment, { groupId: string; imageUrl: string }>({
       query: (body) => ({
-        url: `/api/comment`,
+        url: `/api/image`,
         method: "POST",
         body,
       }),
       invalidatesTags: (result, error, args) => [
-        { type: "Comment" as const, id: "LIST" },
+        { type: "Image" as const, id: "LIST" },
       ],
     }),
-    deleteComment: builder.mutation<void, { commentId: string }>({
+    deleteImage: builder.mutation<void, { imageId: string }>({
       query: (body) => ({
         url: `/api/comment/user`,
         method: "DELETE",
@@ -47,7 +47,7 @@ export const commentApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetCommentsQuery,
-  useAddCommentMutation,
-  useDeleteCommentMutation,
-} = commentApiSlice;
+  useGetImagesQuery,
+  useAddImageMutation,
+  useDeleteImageMutation,
+} = imageApiSlice;

@@ -1,15 +1,25 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
-
+import { ImageType } from "react-images-uploading";
 import DetailView from "./Detail.view";
 import { useGetGroupQuery } from "../../../slice/groupApiSlice";
 import {
-  useAddRegistrationMutation,
-  useDeleteRegistrationGroupUserMutation,
-  useGetRegistrationGroupUserQuery,
   useGetRegistrationsGroupQuery,
+  useGetRegistrationQuery,
+  useAddRegistrationMutation,
+  useDeleteRegistrationMutation,
 } from "../../../slice/registrationApiSlice";
-import { useAddCommentMutation } from "../../../slice/commentApiSlice";
+import {
+  useGetCommentsQuery,
+  useAddCommentMutation,
+} from "../../../slice/commentApiSlice";
+import { Comment } from "../../../type/Comment";
+import { uploadImage } from "../../../service/s3";
+import {
+  useGetImagesQuery,
+  useAddImageMutation,
+} from "../../../slice/imageApiSlice";
+import { Image } from "../../../type/Image";
 
 const Detail = () => {
   const { groupId } = useParams();
@@ -18,14 +28,21 @@ const Detail = () => {
   const { data: registrations = [] } = useGetRegistrationsGroupQuery({
     groupId,
   });
-  const { data: registration } = useGetRegistrationGroupUserQuery({ groupId });
+  const { data: registration } = useGetRegistrationQuery({ groupId });
   const [addRegistration] = useAddRegistrationMutation();
-  const [deleteRegistration] = useDeleteRegistrationGroupUserMutation();
+  const [deleteRegistration] = useDeleteRegistrationMutation();
+  const { data: comments = [] } = useGetCommentsQuery({ groupId });
   const [addComment] = useAddCommentMutation();
+  const { data: images = [] } = useGetImagesQuery({ groupId });
+  const [addImage] = useAddImageMutation();
 
-  const isMobileDevice = useMediaQuery({ maxWidth: 767 });
-  const isTabletDevice = useMediaQuery({ minWidth: 768, maxWidth: 991 });
-  const isDesktopDevice = useMediaQuery({ minWidth: 992 });
+  const [pagedComments, setPagedComments] = useState<Comment[]>([]);
+  const [inputComment, setInputComment] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [pagedImages, setPagedImages] = useState<Image[]>([]);
+  const [inputImage, setInputImage] = useState<ImageType | undefined>(
+    undefined
+  );
 
   const handleJoin = () => {
     if (groupId) {
@@ -34,20 +51,66 @@ const Detail = () => {
   };
 
   const handleLeave = () => {
-    if (groupId) {
-      deleteRegistration({ groupId });
+    if (registration?.group._id) {
+      deleteRegistration({ registrationId: registration._id });
     }
+  };
+
+  const handleComment = () => {
+    if (group?._id && inputComment) {
+      addComment({ groupId: group._id, value: inputComment });
+    }
+  };
+
+  const handleCommentPagination = (items: any[]) => {
+    setPagedComments(items);
+  };
+
+  const handleOpen = () => {
+    setIsVisible(true);
+  };
+
+  const handleClose = () => {
+    setIsVisible(false);
+  };
+
+  const handleImage = async () => {
+    if (inputImage) {
+      const imageUrl = await uploadImage("image", inputImage);
+      if (group?._id && imageUrl) {
+        const response = await addImage({
+          groupId: group._id,
+          imageUrl,
+        }).unwrap();
+      }
+    }
+  };
+
+  const handleImagePagination = (items: any[]) => {
+    setPagedImages(items);
   };
 
   const props = {
     group,
     registrations,
     registration,
-    isMobileDevice,
-    isTabletDevice,
-    isDesktopDevice,
+    comments,
+    pagedComments,
+    inputComment,
+    setInputComment,
+    isVisible,
+    images,
+    pagedImages,
+    inputImage,
+    setInputImage,
     handleJoin,
     handleLeave,
+    handleComment,
+    handleCommentPagination,
+    handleOpen,
+    handleClose,
+    handleImage,
+    handleImagePagination,
   };
 
   return <DetailView {...props} />;

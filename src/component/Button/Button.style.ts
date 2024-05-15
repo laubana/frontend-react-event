@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-import { Size, Color } from "./Button.props";
+import { Sizing, Coloring } from "./Button.props";
 
-const paddingSizes: Record<Size, string> = {
+const paddingSizes: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
     `,
@@ -14,27 +14,27 @@ const paddingSizes: Record<Size, string> = {
     `,
 };
 
-const colors: Record<Color, string> = {
+const colors: Record<Coloring, string> = {
   black: `        
         background-color: black;
         color: white;
         &:hover {
-          background-color: #424649;
+          background-color: grey;
         }
     `,
   white: `        
         background-color: white;
         color: black;
         &:hover {
-          background-color: #424649;
+          background-color: white;
           color: white;
         }
     `,
   red: `        
-        background-color: #dc3545;
+        background-color: crimson;
         color: white;
         &:hover {
-          background-color: #bb2d3b;
+          background-color: tomato;
         }
     `,
   transparent: `  
@@ -44,8 +44,8 @@ const colors: Record<Color, string> = {
 };
 
 export const Button = styled.button<{
-  size: Size;
-  color: Color;
+  size: Sizing;
+  color: Coloring;
   block?: boolean;
   nopadding?: boolean;
 }>`

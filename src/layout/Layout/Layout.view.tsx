@@ -82,14 +82,14 @@ const LayoutComponent = ({}): JSX.Element => {
                 }}
               >
                 <Link to={`/user/detail/`}>
-                  <Button color="transparent">{email}</Button>
+                  <Button coloring="transparent">{email}</Button>
                 </Link>
                 <Flex style={{ alignItems: "center" }}>
                   <Link to={`/group/create`}>
                     <Button>Create Group</Button>
                   </Link>
                   <Button
-                    color="black"
+                    coloring="black"
                     onClick={() => {
                       dispatch(signOut());
                     }}
@@ -101,7 +101,7 @@ const LayoutComponent = ({}): JSX.Element => {
             ) : (
               <>
                 <Link to="/auth/sign-in">
-                  <Button color="black">Sign In</Button>
+                  <Button coloring="black">Sign In</Button>
                 </Link>
                 <Link to="/auth/sign-up">
                   <Button>Sign Up</Button>
@@ -115,7 +115,7 @@ const LayoutComponent = ({}): JSX.Element => {
         <Outlet />
       </Main>
       <Footer>
-        <p>© 2024, Yuhwan Ban</p>
+        <Text alignment="center">© 2024, Yuhwan Ban</Text>
       </Footer>
     </>
   );

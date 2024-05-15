@@ -22,13 +22,19 @@ const Pagination = (props: PaginationProps): JSX.Element => {
   };
 
   useEffect(() => {
+    if (currentPageIndex !== 1) {
+      setCurrentPageIndex(1);
+    }
+  }, [items]);
+
+  useEffect(() => {
     onClick(
       items.slice(
         (currentPageIndex - 1) * groupItemNumber,
         currentPageIndex * groupItemNumber
       )
     );
-  }, [currentPageIndex]);
+  }, [items, currentPageIndex]);
 
   return (
     <Container>

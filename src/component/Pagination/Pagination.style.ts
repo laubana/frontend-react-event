@@ -17,7 +17,7 @@ export const Item = styled.button<{ edge?: boolean; selected?: boolean }>`
   border-radius: 4px;
   border: 0;
   background-color: transparent;
-  ${({ selected }) => selected && `background-color: tomato; color: white;`}
+  ${({ selected }) => selected && `background-color: crimson; color: white;`}
   padding: 4px 12px;
   ${({ edge }) => edge && `padding: 8px;`}
   display: flex;

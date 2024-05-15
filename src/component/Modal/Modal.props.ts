@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
-  visibility: boolean;
+  isVisibile: boolean;
   onClose: () => void;
 }

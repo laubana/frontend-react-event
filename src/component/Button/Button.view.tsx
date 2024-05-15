@@ -3,8 +3,8 @@ import { ButtonProps } from "./Button.props";
 import { Button, ChildrenContainer } from "./Button.style";
 
 const ButtonComponent = ({
-  size = "medium",
-  color = "red",
+  sizing: size = "medium",
+  coloring: color = "red",
   block,
   nopadding,
   onClick,

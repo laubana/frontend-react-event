@@ -1,6 +1,6 @@
 export type Coloring = "lightgrey" | "red";
 
 export interface AvatarProps {
-  source: string;
+  imageUrl: string;
   coloring?: Coloring;
 }

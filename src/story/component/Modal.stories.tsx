@@ -3,17 +3,23 @@ import { useState } from "react";
 import Modal from "../../component/Modal";
 
 import "../../../src/index.css";
+import Button from "../../component/Button";
 
 const Component = () => {
-  const [visibility, setVisibility] = useState<boolean>(true);
+  const [isVisibile, setIsVisibile] = useState<boolean>(false);
+
+  const handleOpen = () => {
+    setIsVisibile(true);
+  };
 
   const handleClose = () => {
-    setVisibility(false);
+    setIsVisibile(false);
   };
 
   return (
     <div>
-      <Modal visibility={visibility} onClose={handleClose}>
+      <Button onClick={handleOpen}>Open</Button>
+      <Modal isVisibile={isVisibile} onClose={handleClose}>
         Test
       </Modal>
     </div>

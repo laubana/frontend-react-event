@@ -35,7 +35,6 @@ const Create = () => {
         longitude: values.longitude,
         description: values.description,
       }).unwrap();
-      console.log(response);
     }
   };
 

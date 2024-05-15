@@ -12,7 +12,7 @@ type AddGroupRequest = {
   description: string;
 };
 
-export const authApiSlice = apiSlice.injectEndpoints({
+export const groupApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getGroups: builder.query<Group[], void>({
       query: () => ({
@@ -55,4 +55,4 @@ export const authApiSlice = apiSlice.injectEndpoints({
 });
 
 export const { useGetGroupsQuery, useGetGroupQuery, useAddGroupMutation } =
-  authApiSlice;
+  groupApiSlice;

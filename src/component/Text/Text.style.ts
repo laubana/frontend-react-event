@@ -4,13 +4,13 @@ import { Sizing, Coloring, Alignment } from "./Text.props";
 
 const fontSizes: Record<Sizing, string> = {
   small: `
-        font-size: 14px;
+        font-size: 12px;
     `,
   medium: `
         font-size: 16px;
     `,
   large: `
-        font-size: 18px;
+        font-size: 20px;
     `,
 };
 

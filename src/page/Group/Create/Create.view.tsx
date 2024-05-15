@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { MapRef } from "react-map-gl";
-import { FaCheck, FaChevronLeft } from "react-icons/fa6";
 import InputText from "../../../component/InputText";
 import { CreateProps } from "./Create.props";
 import { useRef } from "react";
@@ -127,7 +126,7 @@ const Create = (props: CreateProps) => {
               </Grid>
             )}
           </Formik>
-          <Button color="black" onClick={handleGoBack} block>
+          <Button coloring="black" onClick={handleGoBack} block>
             Go Back
           </Button>
         </Container>
