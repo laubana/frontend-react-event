@@ -10,8 +10,7 @@ import InputText from "../../../component/InputText";
 import InputPassword from "../../../component/InputPassword";
 
 const SigninView = (props: SignInProps) => {
-  const { initialValues, handleSubmit, handleGoBack, handleSigninWithGoogle } =
-    props;
+  const { initialValues, handleSubmit, handleGoBack, handleGoogle } = props;
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required"),
@@ -62,6 +61,12 @@ const SigninView = (props: SignInProps) => {
           </Grid>
         )}
       </Formik>
+      <Grid>
+        <Button onClick={handleGoogle}>
+          <FaGoogle size={16} />
+          Sign In with Google
+        </Button>
+      </Grid>
       <Button coloring="black" onClick={handleGoBack} block>
         Go Back
       </Button>

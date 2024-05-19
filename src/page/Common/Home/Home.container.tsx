@@ -3,25 +3,27 @@ import { useMediaQuery } from "react-responsive";
 import { MapRef } from "react-map-gl";
 import { HomeProps } from "./Home.props";
 import HomeView from "./Home.view";
-import { Group } from "../../../type/Group";
+import { Event } from "../../../type/Event";
 import { UseSearchContext } from "../../../context/SearchContext";
 import { Place } from "../../../type/Place";
 import { Option } from "../../../type/Option";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
-import { useGetGroupsQuery } from "../../../slice/groupApiSlice";
+import { useGetEventsQuery } from "../../../slice/eventApiSlice";
 
 const Home = (): JSX.Element => {
-  const { data: categorys = [] } = useGetCategorysQuery();
-  const { data: groups = [], isSuccess } = useGetGroupsQuery();
+  const { data: categorys = { message: "", data: [] } } =
+    useGetCategorysQuery();
+  const { data: events = { message: "", data: [] }, isSuccess } =
+    useGetEventsQuery();
 
   const mapForwardedRef = useRef<MapRef>(null);
 
-  const [filteredGroups, setFilteredroups] = useState<Group[]>([]);
-  const [pagedGroups, setPagedGroups] = useState<Group[]>([]);
-  const [currentGroupPage, setCurrentGroupPage] = useState<number>(1);
-  const [hasMoreGroups, setHasMoreGroups] = useState<boolean>(true);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [pagedEvents, setPagedEvents] = useState<Event[]>([]);
+  const [currentEventPage, setCurrentEventPage] = useState<number>(1);
+  const [hasMoreEvents, setHasMoreEvents] = useState<boolean>(true);
 
-  const { searchGroupName } = UseSearchContext();
+  const { searchEventName } = UseSearchContext();
   const [searchCategory, setSearchCategory] = useState<Option | undefined>(
     undefined
   );
@@ -31,49 +33,49 @@ const Home = (): JSX.Element => {
     label: "50 km",
   });
 
-  const [popup, setPopup] = useState<Group>();
+  const [popup, setPopup] = useState<Event>();
 
   const isMobileDevice = useMediaQuery({ maxWidth: 767 });
   const isTabletDevice = useMediaQuery({ minWidth: 768, maxWidth: 991 });
   const isDesktopDevice = useMediaQuery({ minWidth: 992 });
 
   const handleScroll = () => {
-    setCurrentGroupPage((oldValue) => oldValue + 1);
+    setCurrentEventPage((oldValue) => oldValue + 1);
   };
 
   useEffect(() => {
-    setFilteredroups(
-      groups
-        .filter((group) =>
-          searchCategory ? group.category._id === searchCategory.value : true
+    setFilteredEvents(
+      events.data
+        .filter((event) =>
+          searchCategory ? event.category._id === searchCategory.value : true
         )
-        .filter((group) =>
-          searchGroupName
-            ? group.name.toUpperCase().includes(searchGroupName.toUpperCase())
+        .filter((event) =>
+          searchEventName
+            ? event.name.toUpperCase().includes(searchEventName.toUpperCase())
             : true
         )
     );
-    setCurrentGroupPage(1);
-  }, [isSuccess, searchCategory, searchGroupName, searchPlace, searchDistance]);
+    setCurrentEventPage(1);
+  }, [isSuccess, searchCategory, searchEventName, searchPlace, searchDistance]);
 
   useEffect(() => {
     const main = async () => {
-      setPagedGroups(filteredGroups.slice(0, 4 * currentGroupPage));
+      setPagedEvents(filteredEvents.slice(0, 4 * currentEventPage));
 
-      if (Math.ceil(filteredGroups.length / 4) <= currentGroupPage) {
-        setHasMoreGroups(false);
+      if (Math.ceil(filteredEvents.length / 4) <= currentEventPage) {
+        setHasMoreEvents(false);
       } else {
-        setHasMoreGroups(true);
+        setHasMoreEvents(true);
       }
     };
     main();
-  }, [filteredGroups, currentGroupPage]);
+  }, [filteredEvents, currentEventPage]);
 
   const props: HomeProps = {
     mapForwardedRef,
-    categorys,
-    pagedGroups,
-    hasMoreGroups,
+    categorys: categorys.data,
+    pagedEvents,
+    hasMoreEvents,
     popup,
     handleScroll,
     setSearchCategory,

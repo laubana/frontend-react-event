@@ -99,6 +99,7 @@ const SignUpView = (props: SignUpProps) => {
                   setFieldValue("image", image);
                 }}
                 error={touched.image ? errors.image : ""}
+                style={{ aspectRatio: 2 }}
               />
               <InputText
                 label="Name"

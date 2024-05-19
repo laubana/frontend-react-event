@@ -17,7 +17,8 @@ export type Form = {
 
 export interface CreateProps {
   categorys: Category[] | undefined;
-  initialValues: Form;
-  handleSubmit: (values: Form) => void;
   handleGoBack: () => void;
+  handleSubmit: (values: Form) => void;
+  initialValues: Form;
+  isVisible: boolean;
 }

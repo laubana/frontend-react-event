@@ -3,40 +3,47 @@ import { Registration } from "../type/Registration";
 
 export const registrationApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getRegistrationsGroup: builder.query<Registration[], { groupId?: string }>({
-      query: (args) =>
-        args.groupId
-          ? {
-              url: `/api/registrations/group`,
-              method: "GET",
-              params: { groupId: args.groupId },
-            }
-          : null,
+    getRegistrationsEvent: builder.query<
+      { message: string; data: Registration[] },
+      string | undefined
+    >({
+      query: (eventId) => {
+        return {
+          url: `/api/registrations/event`,
+          method: "GET",
+          params: { eventId },
+        };
+      },
       providesTags: (result, error, args) =>
-        result
+        result?.data
           ? [
               { type: "Registration" as const, id: "LIST" },
-              ...result.map((registration) => ({
+              ...result.data.map((registration) => ({
                 type: "Registration" as const,
                 id: registration._id,
               })),
             ]
           : [{ type: "Registration" as const, id: "LIST" }],
     }),
-    getRegistration: builder.query<Registration, { groupId?: string }>({
-      query: (args) =>
-        args.groupId
-          ? {
-              url: `/api/registration`,
-              method: "GET",
-              params: { groupId: args.groupId },
-            }
-          : null,
+    getRegistration: builder.query<
+      { message: string; data: Registration },
+      string | undefined
+    >({
+      query: (eventId) => {
+        return {
+          url: `/api/registration`,
+          method: "GET",
+          params: { eventId },
+        };
+      },
       providesTags: (result, error, args) => [
         { type: "Registration" as const, id: "ITEM" },
       ],
     }),
-    addRegistration: builder.mutation<Registration, { groupId: string }>({
+    addRegistration: builder.mutation<
+      { message: string; data: Registration },
+      { eventId: string }
+    >({
       query: (body) => ({
         url: `/api/registration`,
         method: "POST",
@@ -47,7 +54,10 @@ export const registrationApiSlice = apiSlice.injectEndpoints({
         { type: "Registration" as const, id: "ITEM" },
       ],
     }),
-    deleteRegistration: builder.mutation<void, { registrationId: string }>({
+    deleteRegistration: builder.mutation<
+      { meesage: string },
+      { registrationId: string }
+    >({
       query: (body) => ({
         url: `/api/registration`,
         method: "DELETE",
@@ -62,7 +72,7 @@ export const registrationApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetRegistrationsGroupQuery,
+  useGetRegistrationsEventQuery,
   useGetRegistrationQuery,
   useAddRegistrationMutation,
   useDeleteRegistrationMutation,

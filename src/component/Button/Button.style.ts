@@ -2,6 +2,18 @@ import styled from "@emotion/styled";
 
 import { Sizing, Coloring } from "./Button.props";
 
+const fontSizes: Record<Sizing, string> = {
+  small: `
+        font-size: 12px;
+    `,
+  medium: `
+        font-size: 16px;
+    `,
+  large: `
+        font-size: 20px;
+    `,
+};
+
 const paddingSizes: Record<Sizing, string> = {
   small: `
         padding: 4px 8px;
@@ -50,6 +62,7 @@ export const Button = styled.button<{
   nopadding?: boolean;
 }>`
   ${({ size }) => paddingSizes[size]};
+  ${({ size }) => fontSizes[size]};
   ${({ color }) => colors[color]};
   ${({ block }) => block && "display: block; width: 100%;"}
   ${({ nopadding }) => nopadding && "padding: 0;"}

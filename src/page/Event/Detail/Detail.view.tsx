@@ -22,9 +22,11 @@ import Text from "../../../component/Text";
 
 const Detail = (props: DetailProps) => {
   const {
-    group,
-    registrations,
+    accessToken,
+    event,
     registration,
+    registrations,
+    pagedRegistrations,
     comments,
     pagedComments,
     inputComment,
@@ -36,6 +38,7 @@ const Detail = (props: DetailProps) => {
     setInputImage,
     handleJoin,
     handleLeave,
+    handleRegistrationPagination,
     handleComment,
     handleCommentPagination,
     handleOpen,
@@ -50,26 +53,27 @@ const Detail = (props: DetailProps) => {
 
   return (
     <>
-      {group ? (
+      {event ? (
         <Container>
           <Columns columns={isMobileDevice ? "1" : "1 3"}>
             <Grid>
-              <Image src={group.imageUrl} />
-              <Text>{group.name}</Text>
-              <Text>{group.address}</Text>
+              <Thumbnail src={event.imageUrl} />
+              <Text>{event.name}</Text>
+              <Text>{event.address}</Text>
               <MapContainer>
                 <Map
                   location={{
-                    latitude: group.latitude,
-                    longitude: group.longitude,
+                    latitude: event.latitude,
+                    longitude: event.longitude,
                   }}
                   markers={[
-                    { latitude: group.latitude, longitude: group.longitude },
+                    { latitude: event.latitude, longitude: event.longitude },
                   ]}
                 />
               </MapContainer>
-              <Text>{group.description}</Text>
-              {group.user._id !== registration?.user._id &&
+              <Text>{event.description}</Text>
+              {accessToken &&
+                event.user._id !== registration?.user._id &&
                 (registration ? (
                   <Button onClick={handleLeave}>Leave</Button>
                 ) : (
@@ -77,39 +81,54 @@ const Detail = (props: DetailProps) => {
                 ))}
             </Grid>
             <Grid>
-              <Thumbnail src={group.imageUrl} />
+              <Image src={event.imageUrl} />
               <TitleContainer>
                 <Text sizing="large">Member</Text>
               </TitleContainer>
               {0 < registrations.length && (
-                <Grid columns={isDesktopDevice ? 8 : isTabletDevice ? 6 : 4}>
-                  {registrations.map(
-                    (registrationMapItem, registrationMapIndex) => (
-                      <Avatar
-                        imageUrl={registrationMapItem.user.imageUrl}
-                        key={registrationMapIndex}
-                      />
-                    )
-                  )}
-                </Grid>
+                <>
+                  <Grid columns={isDesktopDevice ? 8 : isTabletDevice ? 6 : 4}>
+                    {pagedRegistrations.map(
+                      (pagedRegistrationMapItem, pagedRegistrationMapIndex) => (
+                        <Avatar
+                          imageUrl={pagedRegistrationMapItem.user.imageUrl}
+                          key={pagedRegistrationMapIndex}
+                        />
+                      )
+                    )}
+                  </Grid>
+                  <PaginationContainer>
+                    <Pagination
+                      items={registrations}
+                      groupItemNumber={4}
+                      onClick={handleRegistrationPagination}
+                    />
+                  </PaginationContainer>{" "}
+                </>
               )}
               <TitleContainer>
                 <Text sizing="large">Comment</Text>
               </TitleContainer>
-              {pagedComments.map((pagedComment, index) => (
-                <Comment
-                  imageUrl={pagedComment.user.imageUrl}
-                  content={pagedComment.value}
-                  key={index}
-                />
-              ))}
-              <PaginationContainer>
-                <Pagination
-                  items={comments}
-                  groupItemNumber={4}
-                  onClick={handleCommentPagination}
-                />
-              </PaginationContainer>
+              {0 < comments.length && (
+                <>
+                  <Grid>
+                    {pagedComments.map((pagedComment, index) => (
+                      <Comment
+                        imageUrl={pagedComment.user.imageUrl}
+                        content={pagedComment.value}
+                        key={index}
+                      />
+                    ))}
+                  </Grid>
+                  <PaginationContainer>
+                    <Pagination
+                      items={comments}
+                      groupItemNumber={4}
+                      onClick={handleCommentPagination}
+                    />
+                  </PaginationContainer>
+                </>
+              )}
               {registration && (
                 <Columns columns="9 1" style={{ alignItems: "end" }}>
                   <InputTextArea
@@ -123,18 +142,22 @@ const Detail = (props: DetailProps) => {
                 <Text sizing="large">Image</Text>
                 {registration && <Button onClick={handleOpen}>Upload</Button>}
               </TitleContainer>
-              <Grid columns={4}>
-                {pagedImages.map((pagedImage, index) => (
-                  <Image src={pagedImage.imageUrl} key={index} />
-                ))}
-              </Grid>
-              <PaginationContainer>
-                <Pagination
-                  items={images}
-                  groupItemNumber={4}
-                  onClick={handleImagePagination}
-                />
-              </PaginationContainer>
+              {0 < images.length && (
+                <>
+                  <Grid columns={4}>
+                    {pagedImages.map((pagedImage, index) => (
+                      <Image src={pagedImage.imageUrl} key={index} />
+                    ))}
+                  </Grid>
+                  <PaginationContainer>
+                    <Pagination
+                      items={images}
+                      groupItemNumber={4}
+                      onClick={handleImagePagination}
+                    />
+                  </PaginationContainer>
+                </>
+              )}
             </Grid>
           </Columns>
         </Container>

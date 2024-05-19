@@ -1,8 +1,7 @@
-import { Location } from "./Location";
 import { Category } from "./Category";
 import { User } from "./User";
 
-export type Group = {
+export type Event = {
   _id: string;
   category: Category;
   user: User;
@@ -13,4 +12,5 @@ export type Group = {
   latitude: number;
   longitude: number;
   description: string;
+  isActive: boolean;
 };

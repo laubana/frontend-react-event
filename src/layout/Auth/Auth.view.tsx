@@ -24,7 +24,7 @@ const ProtectComponent = (props: ProtectProps): JSX.Element => {
 
         if (refreshToken) {
           const response = await refresh().unwrap();
-          dispatch(setAuth(response));
+          dispatch(setAuth(response.data));
         }
       } catch (error) {
       } finally {

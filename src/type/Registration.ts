@@ -1,8 +1,8 @@
-import { Group } from "./Group";
+import { Event } from "./Event";
 import { User } from "./User";
 
 export type Registration = {
   _id: string;
-  group: Group;
+  event: Event;
   user: User;
 };

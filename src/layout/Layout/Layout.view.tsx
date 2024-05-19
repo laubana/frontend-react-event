@@ -5,7 +5,12 @@ import { Footer, Header, Main, SearchContainer } from "./Layout.style";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { store } from "../../store/store";
 import { UseSearchContext } from "../../context/SearchContext";
-import { selectAccessToken, selectEmail, signOut } from "../../slice/authSlice";
+import {
+  selectAccessToken,
+  selectEmail,
+  selectId,
+  signOut,
+} from "../../slice/authSlice";
 import Grid from "../../component/Grid";
 import Flex from "../../component/Flex";
 import Button from "../../component/Button";
@@ -16,21 +21,22 @@ const LayoutComponent = ({}): JSX.Element => {
   const navigate = useNavigate();
 
   const accessToken = useSelector(selectAccessToken);
+  const id = useSelector(selectId);
   const email = useSelector(selectEmail);
 
   const dispatch = useDispatch<typeof store.dispatch>();
-  const { handleChangeGroupName } = UseSearchContext();
+  const { handleChangeEventName } = UseSearchContext();
 
-  const [inputGroupName, setInputGroupName] = useState<string>("");
+  const [inputEventName, setInputEventName] = useState<string>("");
 
   const isMobileDevice = useMediaQuery({ maxWidth: 767 });
 
-  const handleChangeInputGroupName = (inputGroupName: string) => {
-    setInputGroupName(inputGroupName);
+  const handleChangeInputEventName = (inputEventName: string) => {
+    setInputEventName(inputEventName);
   };
 
   const handleSearch = () => {
-    handleChangeGroupName(inputGroupName);
+    handleChangeEventName(inputEventName);
     navigate("/");
   };
 
@@ -53,14 +59,14 @@ const LayoutComponent = ({}): JSX.Element => {
             }}
           >
             <Link to="/" reloadDocument={true}>
-              <Text>Group</Text>
+              <Text>Event</Text>
             </Link>
             <Flex style={{ alignItems: "center", flexGrow: 1 }}>
               <SearchContainer>
                 <InputText
                   placeholder="Search"
-                  text={inputGroupName}
-                  setText={handleChangeInputGroupName}
+                  text={inputEventName}
+                  setText={handleChangeInputEventName}
                 />
               </SearchContainer>
               <Button onClick={handleSearch}>Search</Button>
@@ -81,12 +87,12 @@ const LayoutComponent = ({}): JSX.Element => {
                   justifyContent: "flex-end",
                 }}
               >
-                <Link to={`/user/detail/`}>
+                <Link to={`/user/detail/${id}`}>
                   <Button coloring="transparent">{email}</Button>
                 </Link>
                 <Flex style={{ alignItems: "center" }}>
-                  <Link to={`/group/create`}>
-                    <Button>Create Group</Button>
+                  <Link to={`/event/create`}>
+                    <Button>Create Event</Button>
                   </Link>
                   <Button
                     coloring="black"

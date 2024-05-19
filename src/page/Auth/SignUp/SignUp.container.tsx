@@ -34,7 +34,6 @@ const SignUp = (): JSX.Element => {
         longitude: values.longitude,
         description: values.description,
       }).unwrap();
-      console.log(response);
     }
   };
 

@@ -12,8 +12,8 @@ const SignIn = (): JSX.Element => {
   const dispatch = useDispatch<typeof store.dispatch>();
 
   const initialValues: Form = {
-    email: "u1@e.c",
-    password: "123123",
+    email: "",
+    password: "",
   };
 
   const handleSubmit = async (values: Form) => {
@@ -22,7 +22,8 @@ const SignIn = (): JSX.Element => {
         email: values.email,
         password: values.password,
       }).unwrap();
-      dispatch(setAuth(response));
+      console.log(response.data);
+      dispatch(setAuth(response.data));
       navigate("/");
     } catch (error) {}
   };
@@ -31,17 +32,23 @@ const SignIn = (): JSX.Element => {
     navigate(-1);
   };
 
-  const handleSigninWithGoogle = () => {
-    window.location.href =
-      "http://localhost/square/oauth2/authorization/google";
+  const handleGoogle = async () => {
+    const url = [
+      `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}`,
+      `redirect_uri=http://localhost:3501/auth/oauth`,
+      `response_type=code`,
+      `scope=openid profile email`,
+    ].join("&");
+    document.location.href = url;
   };
 
   const props = {
     initialValues,
     handleSubmit,
     handleGoBack,
-    handleSigninWithGoogle,
+    handleGoogle,
   };
+
   return <SigninView {...props} />;
 };
 

@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { MapRef } from "react-map-gl";
+import { FaRegCreditCard } from "react-icons/fa6";
 import InputText from "../../../component/InputText";
 import { CreateProps } from "./Create.props";
 import { useRef } from "react";
@@ -15,9 +16,11 @@ import AutoComplete from "../../../component/AutoComplete";
 import Button from "../../../component/Button";
 
 import "mapbox-gl/dist/mapbox-gl.css";
+import Loading from "../../../component/Loading";
 
 const Create = (props: CreateProps) => {
-  const { categorys, initialValues, handleSubmit, handleGoBack } = props;
+  const { categorys, handleGoBack, handleSubmit, initialValues, isVisible } =
+    props;
 
   const mapRef = useRef<MapRef>(null);
 
@@ -37,7 +40,7 @@ const Create = (props: CreateProps) => {
     <>
       {categorys ? (
         <Container>
-          <Text sizing="large">Create Group</Text>
+          <Text sizing="large">Create Event</Text>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -121,6 +124,7 @@ const Create = (props: CreateProps) => {
                   />
                 </Grid>
                 <Button onClick={handleSubmit} block>
+                  <FaRegCreditCard size={16} />
                   Create
                 </Button>
               </Grid>
@@ -131,10 +135,9 @@ const Create = (props: CreateProps) => {
           </Button>
         </Container>
       ) : (
-        <div style={{ padding: "32px", textAlign: "center" }}>
-          <div className="spinner-border text-danger"></div>
-        </div>
+        <Loading isVisibile={true} />
       )}
+      <Loading isVisibile={isVisible} />
     </>
   );
 };

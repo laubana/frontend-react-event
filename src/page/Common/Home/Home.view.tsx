@@ -1,7 +1,6 @@
 import { HomeProps } from "./Home.props";
 import { Container, MapContainer } from "./Home.style";
 import Grid from "../../../component/Grid";
-import { FaXmark } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import InputPlace from "../../../component/InputPlace";
@@ -15,8 +14,8 @@ const HomeView = (props: HomeProps) => {
   const {
     mapForwardedRef,
     categorys,
-    pagedGroups,
-    hasMoreGroups,
+    pagedEvents,
+    hasMoreEvents,
     popup,
     handleScroll,
     setSearchCategory,
@@ -29,14 +28,14 @@ const HomeView = (props: HomeProps) => {
 
   return (
     <Container>
-      {pagedGroups && categorys ? (
+      {pagedEvents && categorys ? (
         <>
           <MapContainer>
             <Map
               forwardedRef={mapForwardedRef}
-              markers={pagedGroups.map((pagedGroup) => ({
-                latitude: pagedGroup.latitude,
-                longitude: pagedGroup.longitude,
+              markers={pagedEvents.map((pagedEvent) => ({
+                latitude: pagedEvent.latitude,
+                longitude: pagedEvent.longitude,
               }))}
             />
           </MapContainer>
@@ -53,7 +52,7 @@ const HomeView = (props: HomeProps) => {
               columns={isMobileDevice ? "1" : "7 3"}
               style={{ justifyItems: "space-between" }}
             >
-              <InputPlace setPlace={setSearchPlace} />
+              <InputPlace placeholder="Address" setPlace={setSearchPlace} />
               <AutoComplete
                 placeholder="Distance"
                 options={[10, 20, 30, 40, 50, 60, 70, 80, 100].map(
@@ -69,12 +68,12 @@ const HomeView = (props: HomeProps) => {
           </Grid>
           <Infinite
             columns={isDesktopDevice ? 4 : isTabletDevice ? 3 : 2}
-            items={pagedGroups.map((group, index) => (
-              <Link to={`/group/detail/${group._id}`} key={index}>
-                <Card image={group.thumbnailUrl} title={group.name} />
+            items={pagedEvents.map((event, index) => (
+              <Link to={`/event/detail/${event._id}`} key={index}>
+                <Card image={event.thumbnailUrl} title={event.name} />
               </Link>
             ))}
-            hasMore={hasMoreGroups}
+            hasMore={hasMoreEvents}
             onScroll={handleScroll}
             style={{ padding: "8px" }}
           />

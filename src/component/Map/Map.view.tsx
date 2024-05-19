@@ -64,7 +64,7 @@ const MapComponent = (props: MapProps): JSX.Element => {
               <Marker
                 latitude={locationMapItem.latitude}
                 longitude={locationMapItem.longitude}
-                color="tomato"
+                color="crimson"
                 onClick={() => {
                   if (popups) {
                     setPopupLocation({

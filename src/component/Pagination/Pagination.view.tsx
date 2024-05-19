@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { PaginationProps } from "./Pagination.props";
 import { Container, Item, ItemContainer } from "./Pagination.style";
-import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronsLeft,
+  FiChevronsRight,
+} from "react-icons/fi";
 
 const Pagination = (props: PaginationProps): JSX.Element => {
   const { items, groupItemNumber = 10, groupPageNumber = 3, onClick } = props;
@@ -38,10 +43,15 @@ const Pagination = (props: PaginationProps): JSX.Element => {
 
   return (
     <Container>
+      <ItemContainer>
+        <Item onClick={() => handleClick(1)} edge>
+          <FiChevronsLeft />
+        </Item>
+      </ItemContainer>
       {1 < currentPageIndex && (
         <ItemContainer>
           <Item onClick={() => handleClick(currentPageIndex - 1)} edge>
-            <HiArrowSmallLeft />
+            <FiChevronLeft />
           </Item>
         </ItemContainer>
       )}
@@ -72,10 +82,15 @@ const Pagination = (props: PaginationProps): JSX.Element => {
       {currentPageIndex < totalPageNumber && (
         <ItemContainer>
           <Item onClick={() => handleClick(currentPageIndex + 1)} edge>
-            <HiArrowSmallRight />
+            <FiChevronRight />
           </Item>
         </ItemContainer>
       )}
+      <ItemContainer>
+        <Item onClick={() => handleClick(totalPageNumber)} edge>
+          <FiChevronsRight />
+        </Item>
+      </ItemContainer>
     </Container>
   );
 };
