@@ -1,9 +1,12 @@
 import { apiSlice } from "./apiSlice";
-import { Card } from "../type/Card";
+import { PaymentMethod } from "../type/PaymentMethod";
 
 export const paymentMethodApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPaymentMethods: builder.query<{ message: string; data: Card[] }, void>({
+    getPaymentMethods: builder.query<
+      { message: string; data: PaymentMethod[] },
+      void
+    >({
       query: (customerId) => {
         return {
           url: `/api/payment-methods`,

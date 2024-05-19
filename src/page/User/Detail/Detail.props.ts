@@ -1,4 +1,4 @@
-import { Card } from "../../../type/Card";
+import { PaymentMethod } from "../../../type/PaymentMethod";
 import { Transaction } from "../../../type/Transaction";
 import { User } from "../../../type/User";
 
@@ -7,7 +7,7 @@ export interface DetailProps {
   handleDeletePaymentMethod: (paymentMethodId: string) => void;
   handleDeleteTransaction: (transactionId: string) => void;
   isVisible: boolean;
-  paymentMethods: Card[];
+  paymentMethods: PaymentMethod[];
   transactions: Transaction[];
   user: User | undefined;
 }

@@ -1,4 +1,4 @@
-export type Card = {
+export type PaymentMethod = {
   brand: string;
   lastDigits: string;
   id: string;

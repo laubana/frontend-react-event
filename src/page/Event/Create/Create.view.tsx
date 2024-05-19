@@ -135,7 +135,7 @@ const Create = (props: CreateProps) => {
           </Button>
         </Container>
       ) : (
-        <Loading isVisibile={true} />
+        <Loading />
       )}
       <Loading isVisibile={isVisible} />
     </>

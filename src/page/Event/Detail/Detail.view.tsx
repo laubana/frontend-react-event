@@ -19,6 +19,7 @@ import Map from "../../../component/Map";
 import Modal from "../../../component/Modal";
 import Pagination from "../../../component/Pagination";
 import Text from "../../../component/Text";
+import Loading from "../../../component/Loading";
 
 const Detail = (props: DetailProps) => {
   const {
@@ -162,9 +163,7 @@ const Detail = (props: DetailProps) => {
           </Columns>
         </Container>
       ) : (
-        <div style={{ padding: "32px", textAlign: "center" }}>
-          <div className="spinner-border text-danger"></div>
-        </div>
+        <Loading />
       )}
       {isVisible && (
         <Modal isVisibile={isVisible} onClose={handleClose}>

@@ -1,4 +1,11 @@
-import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
+import {
+  FaCcVisa,
+  FaCcMastercard,
+  FaCcJcb,
+  FaCcDiscover,
+  FaRegCreditCard,
+  FaCcAmex,
+} from "react-icons/fa";
 import { RxBorderDotted } from "react-icons/rx";
 import { DetailProps } from "./Detail.props";
 import { Container, Image, TitleContainer } from "./Detail.style";
@@ -51,8 +58,14 @@ const DetailView = (props: DetailProps) => {
                           <FaCcVisa size={32} />
                         ) : paymentMethod.brand === "mastercard" ? (
                           <FaCcMastercard size={32} />
+                        ) : paymentMethod.brand === "jcb" ? (
+                          <FaCcJcb size={32} />
+                        ) : paymentMethod.brand === "discover" ? (
+                          <FaCcDiscover size={32} />
+                        ) : paymentMethod.brand === "amex" ? (
+                          <FaCcAmex size={32} />
                         ) : (
-                          <></>
+                          <FaRegCreditCard size={32} />
                         )}
                         <RxBorderDotted size={32} />
                         <RxBorderDotted size={32} />
@@ -74,7 +87,7 @@ const DetailView = (props: DetailProps) => {
             </>
           )}
           <TitleContainer>
-            <Text sizing="large">Payment</Text>
+            <Text sizing="large">Transaction</Text>
           </TitleContainer>
           {0 < transactions.length && (
             <Grid style={{ gap: "8px" }}>
@@ -116,9 +129,7 @@ const DetailView = (props: DetailProps) => {
           )}
         </Container>
       ) : (
-        <div style={{ padding: "32px", textAlign: "center" }}>
-          <div className="spinner-border text-danger"></div>
-        </div>
+        <Loading />
       )}
       <Loading isVisibile={isVisible} />
     </>

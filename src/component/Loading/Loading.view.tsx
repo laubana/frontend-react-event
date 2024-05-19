@@ -2,7 +2,9 @@ import React from "react";
 import { ModalProps } from "./Loading.props";
 import { BackgroundContainer, ContentContainer } from "./Loading.style";
 
-const ModalComponent = ({ isVisibile }: ModalProps): JSX.Element => {
+const ModalComponent = (props: ModalProps): JSX.Element => {
+  const { isVisibile = true } = props;
+
   return (
     <>
       {isVisibile && (
