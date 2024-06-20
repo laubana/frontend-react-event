@@ -5,7 +5,7 @@ import Layout from "./layout/Layout";
 import Create from "./page/Event/Create";
 import EventDetail from "./page/Event/Detail";
 import Home from "./page/Common/Home";
-import SignIn from "./page/Auth/SignIn";
+import SignIn from "./page/Auth/Signn";
 import SignUp from "./page/Auth/SignUp";
 import Success from "./page/Common/Success";
 import UserDetail from "./page/User/Detail";

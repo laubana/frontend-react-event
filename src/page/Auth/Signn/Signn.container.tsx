@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Form } from "./SignIn.props";
-import SigninView from "./SignIn.view";
+import { Form } from "./Signn.props";
+import SignInView from "./Signn.view";
 import { useSignInMutation } from "../../../slice/authApiSlice";
 import { useDispatch } from "react-redux";
 import { store } from "../../../store/store";
@@ -49,7 +49,7 @@ const SignIn = (): JSX.Element => {
     handleGoogle,
   };
 
-  return <SigninView {...props} />;
+  return <SignInView {...props} />;
 };
 
 export default SignIn;
