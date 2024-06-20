@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { FaGoogle } from "react-icons/fa6";
-import { SignInProps } from "./Signn.props";
-import { Container } from "./Signn.style";
+import { SignInProps } from "./SignIn.props";
+import { Container } from "./SignIn.style";
 import Button from "../../../component/Button";
 import Grid from "../../../component/Grid";
 import Text from "../../../component/Text";

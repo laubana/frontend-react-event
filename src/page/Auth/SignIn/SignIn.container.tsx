@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Form } from "./Signn.props";
-import SignInView from "./Signn.view";
+import { Form } from "./SignIn.props";
+import SignInView from "./SignIn.view";
 import { useSignInMutation } from "../../../slice/authApiSlice";
 import { useDispatch } from "react-redux";
 import { store } from "../../../store/store";
