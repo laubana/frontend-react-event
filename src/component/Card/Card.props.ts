@@ -1,8 +1,4 @@
-import { HTMLAttributes } from "react";
-
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  image: string;
-  title: string;
+export interface CardProps {
+  brand: string;
+  lastDigits: string;
 }
-
-export type CardStyle = {};

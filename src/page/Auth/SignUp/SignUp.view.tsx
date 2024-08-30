@@ -22,21 +22,21 @@ const SignUpView = (props: SignUpProps) => {
   const mapRef = useRef<MapRef>(null);
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required"),
+    email: Yup.string().required("Email is required."),
     password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
+      .required("Password is required.")
+      .min(6, "Password must be at least 6 characters."),
     confirmPassword: Yup.string()
-      .required("Confirm password is required")
-      .oneOf([Yup.ref("password")], "Password and confirm password must match")
-      .min(6, "Confirm password must be at least 6 characters"),
-    image: Yup.object().required("Image is required"),
-    name: Yup.string().required("Name is required"),
-    place: Yup.object().required("Place is required"),
-    address: Yup.string().required("Address is required"),
-    latitude: Yup.string().required("Latitude is required"),
-    longitude: Yup.string().required("Longitude is required"),
-    description: Yup.string().required("Description is required"),
+      .required("Confirm password is required.")
+      .oneOf([Yup.ref("password")], "Password and confirm password must match.")
+      .min(6, "Confirm password must be at least 6 characters."),
+    image: Yup.object().required("Image is required."),
+    name: Yup.string().required("Name is required."),
+    place: Yup.object().required("Place is required."),
+    address: Yup.string().required("Address is required."),
+    latitude: Yup.string().required("Latitude is required."),
+    longitude: Yup.string().required("Longitude is required."),
+    description: Yup.string().required("Description is required."),
   });
 
   return (

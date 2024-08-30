@@ -1,14 +1,16 @@
+import "mapbox-gl/dist/mapbox-gl.css";
+import { Link } from "react-router-dom";
+
 import { HomeProps } from "./Home.props";
 import { Container, MapContainer } from "./Home.style";
-import Grid from "../../../component/Grid";
-import { Link } from "react-router-dom";
-import "mapbox-gl/dist/mapbox-gl.css";
-import InputPlace from "../../../component/InputPlace";
-import Columns from "../../../component/Columns";
-import Card from "../../../component/Card";
-import Infinite from "../../../component/Infinite";
-import Map from "../../../component/Map";
+
 import AutoComplete from "../../../component/AutoComplete";
+import Columns from "../../../component/Columns";
+import EventCard from "../../../component/EventCard";
+import Grid from "../../../component/Grid";
+import Infinite from "../../../component/Infinite";
+import InputPlace from "../../../component/InputPlace";
+import Map from "../../../component/Map";
 
 const HomeView = (props: HomeProps) => {
   const {
@@ -69,8 +71,8 @@ const HomeView = (props: HomeProps) => {
           <Infinite
             columns={isDesktopDevice ? 4 : isTabletDevice ? 3 : 2}
             items={pagedEvents.map((event, index) => (
-              <Link to={`/event/detail/${event._id}`} key={index}>
-                <Card image={event.thumbnailUrl} title={event.name} />
+              <Link to={`/event/${event._id}`} key={index}>
+                <EventCard image={event.thumbnailUrl} title={event.name} />
               </Link>
             ))}
             hasMore={hasMoreEvents}

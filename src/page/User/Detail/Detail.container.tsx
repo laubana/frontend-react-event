@@ -1,77 +1,73 @@
+import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+
 import DetailView from "./Detail.view";
-import { useGetUserQuery } from "../../../slice/userApiSlice";
+
 import {
-  useGetPaymentMethodsQuery,
-  useAddPaymentMethodMutation,
   useDeletePaymentMethodMutation,
-} from "../../../slice/paymentMethodApiSlice";
+  useGetPaymentMethodsQuery,
+} from "../../../slice/stripeApiSlice";
 import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
 } from "../../../slice/transactionApiSlice";
-import {
-  useAddThreadMutation,
-  useGetThreadMutation,
-} from "../../../slice/threadApiSlice";
+import { useGetUserQuery } from "../../../slice/userApiSlice";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC as string);
 
 const Detail = (): JSX.Element => {
   const { userId } = useParams();
-
+  const {
+    data: paymentMethods = { message: "", data: [] },
+    refetch: refetchPaymentMethods,
+  } = useGetPaymentMethodsQuery();
+  const { data: transactions = { message: "", data: [] } } =
+    useGetTransactionsQuery();
   const { data: user = { message: "", data: undefined } } =
     useGetUserQuery(userId);
-  const {
-    data: transactions = { message: "", data: [] },
-    refetch: refetchTransactions,
-  } = useGetTransactionsQuery();
-  const { data: paymentMethods = { message: "", data: [] } } =
-    useGetPaymentMethodsQuery();
-  const [addThread] = useAddThreadMutation();
-  const [getThread] = useGetThreadMutation();
-  const [addPaymentMethod] = useAddPaymentMethodMutation();
   const [deletePaymentMethod] = useDeletePaymentMethodMutation();
   const [deleteTransaction] = useDeleteTransactionMutation();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleAddPaymentMethod = async () => {
     if (user.data && user.data.customerId) {
       setIsVisible(true);
-      try {
-        const response = await addPaymentMethod().unwrap();
-
-        window.location.href = response.data.url;
-      } catch (error) {
-        setIsVisible(false);
-      }
     }
   };
 
-  const handleDeletePaymentMethod = (paymentMethodId: string) => {
-    deletePaymentMethod({ paymentMethodId });
+  const handleClose = () => {
+    setIsVisible(false);
+  };
+
+  const handleDeletePaymentMethod = async (paymentMethodId: string) => {
+    setIsLoading(true);
+    await deletePaymentMethod({ paymentMethodId });
+    await refetchPaymentMethods();
+    setIsLoading(false);
   };
 
   const handleDeleteTransaction = async (transactionId: string) => {
-    const response = await addThread().unwrap();
-    const main = async () => {
-      try {
-        const thread = await getThread(response.data._id);
-        refetchTransactions();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    main();
-    await deleteTransaction({ threadId: response.data._id, transactionId });
+    await deleteTransaction({ transactionId });
+  };
+
+  const handleSubmit = async () => {
+    await refetchPaymentMethods();
+    setIsVisible(false);
   };
 
   const props = {
-    paymentMethods: paymentMethods.data,
     handleAddPaymentMethod,
+    handleClose,
     handleDeletePaymentMethod,
     handleDeleteTransaction,
+    handleSubmit,
+    isLoading,
     isVisible,
+    paymentMethods: paymentMethods.data,
+    stripePromise,
     transactions: transactions.data,
     user: user.data,
   };

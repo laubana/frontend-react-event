@@ -12,5 +12,4 @@ export type Event = {
   latitude: number;
   longitude: number;
   description: string;
-  isActive: boolean;
 };

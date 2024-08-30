@@ -23,7 +23,6 @@ import {
   useGetImagesQuery,
   useAddImageMutation,
 } from "../../../slice/imageApiSlice";
-import { date } from "yup";
 
 const Detail = () => {
   const { eventId } = useParams();
@@ -106,7 +105,7 @@ const Detail = () => {
     if (inputImage) {
       const imageUrl = await uploadImage("image", inputImage);
       if (event.data && event.data._id && imageUrl) {
-        const response = await addImage({
+        await addImage({
           eventId: event.data._id,
           imageUrl,
         }).unwrap();

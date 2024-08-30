@@ -20,13 +20,13 @@ function App() {
             <Route element={<Protect allowedRoles={[]} />}>
               <Route path="create" element={<Create />} />
             </Route>
-            <Route path="detail">
-              <Route path=":eventId" element={<EventDetail />} />
-            </Route>
+            <Route path=":eventId" element={<EventDetail />} />
           </Route>
-          <Route path="user">
-            <Route path="detail">
-              <Route path=":userId" element={<UserDetail />} />
+          <Route element={<Protect allowedRoles={[]} />}>
+            <Route path="user">
+              <Route path="detail">
+                <Route path=":userId" element={<UserDetail />} />
+              </Route>
             </Route>
           </Route>
         </Route>

@@ -1,6 +1,7 @@
-import { HTMLAttributes } from "react";
+import { ReactNode } from "react";
 
-export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+export interface ModalProps {
+  children: ReactNode;
   isVisibile: boolean;
   onClose: () => void;
 }

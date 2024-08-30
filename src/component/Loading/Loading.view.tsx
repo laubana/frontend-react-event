@@ -2,7 +2,7 @@ import React from "react";
 import { ModalProps } from "./Loading.props";
 import { BackgroundContainer, ContentContainer } from "./Loading.style";
 
-const ModalComponent = (props: ModalProps): JSX.Element => {
+const LoadingComponent = (props: ModalProps): JSX.Element => {
   const { isVisibile = true } = props;
 
   return (
@@ -20,4 +20,4 @@ const ModalComponent = (props: ModalProps): JSX.Element => {
   );
 };
 
-export default React.memo(ModalComponent);
+export default React.memo(LoadingComponent);

@@ -1,5 +1,3 @@
-import { HTMLAttributes } from "react";
-
-export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+export interface ModalProps {
   isVisibile?: boolean;
 }

@@ -57,6 +57,7 @@ export const InputContainer = styled.div<{
 
 export const Input = styled.input<{ sizing: Sizing }>`
   border: none;
+  font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]};
   width: 100%;
 

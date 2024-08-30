@@ -2,8 +2,8 @@ import React from "react";
 import { useMediaQuery } from "react-responsive";
 import { CommentProps } from "./Comment.props";
 import { Container } from "./Comment.style";
-import Columns from "../../component/Columns";
 import Avatar from "../../component/Avatar";
+import Columns from "../../component/Columns";
 
 const CommentComponent = (props: CommentProps): JSX.Element => {
   const { imageUrl, content } = props;

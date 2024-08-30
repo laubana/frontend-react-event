@@ -47,6 +47,7 @@ export const InputContainer = styled.div<{ sizing: Sizing }>`
 
 export const InputTextArea = styled.textarea<{ sizing: Sizing }>`
   border: none;
+  font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]};
   resize: none;
   width: 100%;

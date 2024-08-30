@@ -8,9 +8,9 @@ import {
 } from "./Modal.style";
 
 const ModalComponent = ({
+  children,
   isVisibile,
   onClose,
-  children,
 }: ModalProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 

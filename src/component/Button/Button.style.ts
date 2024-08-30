@@ -66,14 +66,15 @@ export const Button = styled.button<{
   ${({ color }) => colors[color]};
   ${({ block }) => block && "display: block; width: 100%;"}
   ${({ nopadding }) => nopadding && "padding: 0;"}
-  border-radius: 8px;
   border: 0;
+  border-radius: 8px;
+  font-family: "Montserrat", sans-serif;
   white-space: nowrap;
 `;
 
 export const ChildrenContainer = styled.div`
-  display: flex;
   align-items: center;
-  justify-content: center;
+  display: flex;
   gap: 8px;
+  justify-content: center;
 `;

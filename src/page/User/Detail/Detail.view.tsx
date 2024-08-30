@@ -1,28 +1,28 @@
-import {
-  FaCcVisa,
-  FaCcMastercard,
-  FaCcJcb,
-  FaCcDiscover,
-  FaRegCreditCard,
-  FaCcAmex,
-} from "react-icons/fa";
-import { RxBorderDotted } from "react-icons/rx";
+import { Elements } from "@stripe/react-stripe-js";
+
 import { DetailProps } from "./Detail.props";
 import { Container, Image, TitleContainer } from "./Detail.style";
+
 import Button from "../../../component/Button";
+import Card from "../../../component/Card";
 import Flex from "../../../component/Flex";
-import Loading from "../../../component/Loading";
-import Text from "../../../component/Text";
 import Grid from "../../../component/Grid";
-import Columns from "../../../component/Columns";
+import Loading from "../../../component/Loading";
+import Modal from "../../../component/Modal";
+import PaymentMethodForm from "../../../module/PaymentMethodForm";
+import Text from "../../../component/Text";
 
 const DetailView = (props: DetailProps) => {
   const {
     handleAddPaymentMethod,
+    handleClose,
     handleDeletePaymentMethod,
     handleDeleteTransaction,
+    handleSubmit,
+    isLoading,
     isVisible,
     paymentMethods,
+    stripePromise,
     transactions,
     user,
   } = props;
@@ -47,32 +47,10 @@ const DetailView = (props: DetailProps) => {
                     }}
                     key={index}
                   >
-                    <Columns
-                      columns="2 8"
-                      style={{
-                        alignItems: "center",
-                      }}
-                    >
-                      <Flex>
-                        {paymentMethod.brand === "visa" ? (
-                          <FaCcVisa size={32} />
-                        ) : paymentMethod.brand === "mastercard" ? (
-                          <FaCcMastercard size={32} />
-                        ) : paymentMethod.brand === "jcb" ? (
-                          <FaCcJcb size={32} />
-                        ) : paymentMethod.brand === "discover" ? (
-                          <FaCcDiscover size={32} />
-                        ) : paymentMethod.brand === "amex" ? (
-                          <FaCcAmex size={32} />
-                        ) : (
-                          <FaRegCreditCard size={32} />
-                        )}
-                        <RxBorderDotted size={32} />
-                        <RxBorderDotted size={32} />
-                        <RxBorderDotted size={32} />
-                      </Flex>
-                      <Text>{paymentMethod.lastDigits}</Text>
-                    </Columns>
+                    <Card
+                      brand={paymentMethod.brand}
+                      lastDigits={paymentMethod.lastDigits}
+                    />
                     <Button
                       onClick={() =>
                         handleDeletePaymentMethod(paymentMethod.id)
@@ -131,7 +109,19 @@ const DetailView = (props: DetailProps) => {
       ) : (
         <Loading />
       )}
-      <Loading isVisibile={isVisible} />
+      <Loading isVisibile={isLoading} />
+      <Modal isVisibile={isVisible} onClose={handleClose}>
+        <Elements
+          stripe={stripePromise}
+          options={{
+            currency: "cad",
+            locale: "en",
+            mode: "setup",
+          }}
+        >
+          <PaymentMethodForm onSubmit={handleSubmit} />
+        </Elements>
+      </Modal>
     </>
   );
 };

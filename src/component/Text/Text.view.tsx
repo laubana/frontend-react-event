@@ -3,10 +3,10 @@ import { TextProps } from "./Text.props";
 import { Text } from "./Text.style";
 
 const TextComponent = ({
-  sizing = "medium",
-  coloring = "black",
   alignment = "left",
   children,
+  coloring = "black",
+  sizing = "medium",
   style,
 }: TextProps): JSX.Element => {
   return (

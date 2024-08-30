@@ -1,4 +1,5 @@
 import { apiSlice } from "./apiSlice";
+
 import { Event } from "../type/Event";
 
 type AddEventReq = {
@@ -14,6 +15,28 @@ type AddEventReq = {
 
 export const eventApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    addEvent: builder.mutation<{ message: string; data: Event }, AddEventReq>({
+      query: (body) => ({
+        url: `/api/event`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getEvent: builder.query<
+      { message: string; data: Event },
+      string | undefined
+    >({
+      query: (eventId) => {
+        return {
+          url: `/api/event/${eventId}`,
+          method: "GET",
+        };
+      },
+      providesTags: (result) =>
+        result?.data
+          ? [{ type: "Event" as const, id: result.data._id }]
+          : [{ type: "Event" as const }],
+    }),
     getEvents: builder.query<{ message: string; data: Event[] }, void>({
       query: () => ({
         url: `/api/events`,
@@ -30,34 +53,8 @@ export const eventApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: "Event" as const, id: "LIST" }],
     }),
-    getEvent: builder.query<
-      { message: string; data: Event },
-      string | undefined
-    >({
-      query: (eventId) => {
-        return {
-          url: `/api/event`,
-          method: "GET",
-          params: { eventId },
-        };
-      },
-      providesTags: (result) =>
-        result?.data
-          ? [{ type: "Event" as const, id: result.data._id }]
-          : [{ type: "Event" as const }],
-    }),
-    addEvent: builder.mutation<
-      { message: string; data: { url: string } },
-      AddEventReq
-    >({
-      query: (body) => ({
-        url: `/api/event`,
-        method: "POST",
-        body,
-      }),
-    }),
   }),
 });
 
-export const { useGetEventsQuery, useGetEventQuery, useAddEventMutation } =
+export const { useAddEventMutation, useGetEventQuery, useGetEventsQuery } =
   eventApiSlice;

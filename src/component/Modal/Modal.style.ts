@@ -4,6 +4,7 @@ export const BackgroundContainer = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   bottom: 0;
+  cursor: pointer;
   display: grid;
   justify-items: center;
   left: 0;
@@ -18,9 +19,10 @@ export const ContentContainer = styled.div`
   background-color: white;
   box-sizing: border-box;
   border-radius: 8px;
+  cursor: default;
   display: grid;
   gap: 16px;
-  max-width: 768px;
+  max-width: 576px;
   padding: 16px;
   width: 100%;
 `;

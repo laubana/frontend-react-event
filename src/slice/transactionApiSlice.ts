@@ -3,6 +3,31 @@ import { Transaction } from "../type/Transaction";
 
 export const transactionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    addTransaction: builder.mutation<
+      { message: string },
+      { description: string; paymentIntentId: string }
+    >({
+      query: (body) => ({
+        url: `/api/transaction`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: (result, error, args) => [
+        { type: "Transaction" as const, id: "LIST" },
+      ],
+    }),
+    deleteTransaction: builder.mutation<
+      { message: string },
+      { transactionId: string }
+    >({
+      query: (body) => ({
+        url: `/api/transaction/${body.transactionId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, args) => [
+        { type: "Transaction" as const, id: "LIST" },
+      ],
+    }),
     getTransactions: builder.query<
       { message: string; data: Transaction[] },
       void
@@ -24,33 +49,11 @@ export const transactionApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: "Transaction" as const, id: "LIST" }],
     }),
-    deleteTransaction: builder.mutation<
-      { message: string },
-      { threadId: string; transactionId: string }
-    >({
-      query: (body) => ({
-        url: `/api/transaction`,
-        method: "DELETE",
-        body,
-      }),
-      invalidatesTags: (result, error, args) => [
-        { type: "Transaction" as const, id: "LIST" },
-      ],
-    }),
-    verifyTransaction: builder.mutation<any, { transactionId: string }>({
-      query: (body) => {
-        return {
-          url: `/api/transaction`,
-          method: "POST",
-          body,
-        };
-      },
-    }),
   }),
 });
 
 export const {
-  useGetTransactionsQuery,
+  useAddTransactionMutation,
   useDeleteTransactionMutation,
-  useVerifyTransactionMutation,
+  useGetTransactionsQuery,
 } = transactionApiSlice;

@@ -13,10 +13,10 @@ const SigninView = (props: SignInProps) => {
   const { initialValues, handleSubmit, handleGoBack, handleGoogle } = props;
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required"),
+    email: Yup.string().required("Email is required."),
     password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
+      .required("Password is required.")
+      .min(6, "Password must be at least 6 characters."),
   });
 
   return (
