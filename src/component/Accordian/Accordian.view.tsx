@@ -4,8 +4,6 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AccordianProps } from "./Accordian.props";
 import { Container, FooterContainer, HeaderContainer } from "./Accordian.style";
 
-import Text from "../Text";
-
 const AccordianComponent = (props: AccordianProps): JSX.Element => {
   const { children, onClose = () => null, onOpen = () => null, title } = props;
 

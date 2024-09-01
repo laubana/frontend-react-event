@@ -7,9 +7,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
       {
         query: (userId) => {
           return {
-            url: `/api/user`,
+            url: `/api/user/${userId}`,
             method: "GET",
-            params: { userId },
           };
         },
         providesTags: (result) =>

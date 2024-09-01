@@ -6,7 +6,7 @@ import DetailView from "./Detail.view";
 import { selectAccessToken } from "../../../slice/authSlice";
 import { useGetEventQuery } from "../../../slice/eventApiSlice";
 import {
-  useGetRegistrationsEventQuery,
+  useGetRegistrationsQuery,
   useGetRegistrationQuery,
   useAddRegistrationMutation,
   useDeleteRegistrationMutation,
@@ -38,7 +38,7 @@ const Detail = () => {
       skip: !eventId,
     });
   const { data: registrations = { message: "", data: [] } } =
-    useGetRegistrationsEventQuery(eventId, {
+    useGetRegistrationsQuery(eventId, {
       skip: !eventId,
     });
   const { data: comments = { message: "", data: [] } } = useGetCommentsQuery(
@@ -109,6 +109,8 @@ const Detail = () => {
           eventId: event.data._id,
           imageUrl,
         }).unwrap();
+        setIsVisible(false);
+        setInputImage(undefined);
       }
     }
   };

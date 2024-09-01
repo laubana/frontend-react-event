@@ -1,16 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import { RootState } from "../store/store";
 
 interface StateProps {
-  accessToken: string | undefined;
-  id: string | undefined;
-  email: string | undefined;
+  accessToken: string;
+  id: string;
+  email: string;
 }
 
 const initialState: StateProps = {
-  accessToken: undefined,
-  id: undefined,
-  email: undefined,
+  accessToken: "",
+  id: "",
+  email: "",
 };
 
 export const authSlice = createSlice({
@@ -24,16 +25,10 @@ export const authSlice = createSlice({
       state.id = id;
       state.email = email;
     },
-    signOut: (state) => {
-      state.accessToken = undefined;
-      state.id = undefined;
-      state.email = undefined;
-      document.cookie = `refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-    },
   },
 });
 
-export const { setAuth, signOut } = authSlice.actions;
+export const { setAuth } = authSlice.actions;
 
 export default authSlice.reducer;
 

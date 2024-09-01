@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+
 import { ProtectProps } from "./Protect.props";
 import {} from "./Protect.style";
+
 import { selectAccessToken } from "../../slice/authSlice";
 
 const ProtectComponent = (props: ProtectProps): JSX.Element => {
-  const { allowedRoles } = props;
+  const {} = props;
 
   const location = useLocation();
 

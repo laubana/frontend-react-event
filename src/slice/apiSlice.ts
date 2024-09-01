@@ -3,8 +3,8 @@ import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
+import { setAuth } from "./authSlice";
 import { RootState } from "../store/store";
-import { setAuth, signOut } from "./authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BACKEND_URL,
@@ -38,7 +38,7 @@ const baseQueryWithRefresh = async (
 
       return newResponse;
     } else {
-      api.dispatch(signOut());
+      api.dispatch(setAuth({ accessToken: "", email: "", id: "" }));
 
       return refreshResponse;
     }

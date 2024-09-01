@@ -34,8 +34,8 @@ const Create = () => {
     category: undefined,
     description: "",
     image: undefined,
-    latitude: "",
-    longitude: "",
+    latitude: undefined,
+    longitude: undefined,
     name: "",
     place: undefined,
     thumbnail: undefined,
@@ -78,25 +78,31 @@ const Create = () => {
         const paymentIntentId = addPaymentIntentData.data.id;
 
         await addTransaction({ description: "New Event", paymentIntentId });
-      }
 
-      const values = initialValues;
+        const values = initialValues;
 
-      const imageUrl = await uploadImage("event", values.image);
-      const thumbnailUrl = await uploadImage("event", values.thumbnail);
-      if (values.category && thumbnailUrl && imageUrl) {
-        const addEventResponse = await addEvent({
-          categoryId: values.category?.value,
-          thumbnailUrl: thumbnailUrl,
-          imageUrl: imageUrl,
-          name: values.name,
-          address: values.address,
-          latitude: values.latitude,
-          longitude: values.longitude,
-          description: values.description,
-        }).unwrap();
+        const imageUrl = await uploadImage("event", values.image);
+        const thumbnailUrl = await uploadImage("event", values.thumbnail);
+        if (
+          values.category &&
+          values.latitude &&
+          values.longitude &&
+          thumbnailUrl &&
+          imageUrl
+        ) {
+          const addEventResponse = await addEvent({
+            categoryId: values.category?.value,
+            thumbnailUrl: thumbnailUrl,
+            imageUrl: imageUrl,
+            name: values.name,
+            address: values.address,
+            latitude: values.latitude,
+            longitude: values.longitude,
+            description: values.description,
+          }).unwrap();
 
-        navigate(`/event/${addEventResponse.data._id}`);
+          navigate(`/event/${addEventResponse.data._id}`);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -109,11 +115,19 @@ const Create = () => {
     try {
       setIsLoading(true);
 
+      await addTransaction({ description: "New Event", paymentIntentId });
+
       const values = initialValues;
 
       const imageUrl = await uploadImage("event", values.image);
       const thumbnailUrl = await uploadImage("event", values.thumbnail);
-      if (values.category && thumbnailUrl && imageUrl) {
+      if (
+        values.category &&
+        values.latitude &&
+        values.longitude &&
+        thumbnailUrl &&
+        imageUrl
+      ) {
         const addEventResponse = await addEvent({
           categoryId: values.category?.value,
           thumbnailUrl: thumbnailUrl,

@@ -8,8 +8,8 @@ type AddEventReq = {
   imageUrl: string;
   name: string;
   address: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   description: string;
 };
 

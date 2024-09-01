@@ -16,24 +16,29 @@ const SignUp = (): JSX.Element => {
     name: "",
     place: undefined,
     address: "",
-    latitude: "",
-    longitude: "",
+    latitude: undefined,
+    longitude: undefined,
     description: "",
   };
 
   const handleSubmit = async (values: Form) => {
-    const imageUrl = await uploadImage("user", values.image);
-    if (imageUrl) {
-      const response = await signUp({
-        email: values.email,
-        password: values.password,
-        imageUrl: imageUrl,
-        name: values.name,
-        address: values.address,
-        latitude: values.latitude,
-        longitude: values.longitude,
-        description: values.description,
-      }).unwrap();
+    try {
+      const imageUrl = await uploadImage("user", values.image);
+      if (values.latitude && values.longitude && imageUrl) {
+        await signUp({
+          email: values.email,
+          password: values.password,
+          imageUrl: imageUrl,
+          name: values.name,
+          address: values.address,
+          latitude: values.latitude,
+          longitude: values.longitude,
+          description: values.description,
+        }).unwrap();
+        navigate("/auth/sign-in");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 

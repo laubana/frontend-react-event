@@ -49,8 +49,8 @@ const Create = (props: CreateProps) => {
     category: Yup.object().required("Category is required."),
     description: Yup.string().required("Description is required."),
     image: Yup.object().required("Image is required."),
-    latitude: Yup.string().required("Latitude is required."),
-    longitude: Yup.string().required("Longitude is required."),
+    latitude: Yup.number().required("Latitude is required."),
+    longitude: Yup.number().required("Longitude is required."),
     place: Yup.object().required("Place is required."),
     name: Yup.string().required("Name is required."),
     thumbnail: Yup.object().required("Thumbnail is required."),
@@ -115,11 +115,8 @@ const Create = (props: CreateProps) => {
                         setPlace={(place) => {
                           setFieldValue("place", place);
                           setFieldValue("address", place.address);
-                          setFieldValue("latitude", place.latitude.toString());
-                          setFieldValue(
-                            "longitude",
-                            place.longitude.toString()
-                          );
+                          setFieldValue("latitude", place.latitude);
+                          setFieldValue("longitude", place.longitude);
 
                           mapRef.current?.flyTo({
                             center: [place.longitude, place.latitude],

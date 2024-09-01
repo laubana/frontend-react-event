@@ -19,7 +19,7 @@ export const uploadImage = async (
       const blob = await image.file.arrayBuffer();
       const params = {
         Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
-        Key: `${directory}/${uuid}-${image.file.name}`,
+        Key: `event/${directory}/${uuid}-${image.file.name}`,
         Body: blob,
         ContentType: contentType,
       };

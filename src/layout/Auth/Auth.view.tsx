@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
+import { Outlet } from "react-router-dom";
+
 import { ProtectProps } from "./Auth.props";
 import {} from "./Auth.style";
-import { store } from "../../store/store";
+
 import { useRefreshMutation } from "../../slice/authApiSlice";
 import { selectAccessToken, setAuth } from "../../slice/authSlice";
+import { store } from "../../store/store";
 
 const ProtectComponent = (props: ProtectProps): JSX.Element => {
   const [refresh] = useRefreshMutation();
@@ -20,12 +21,8 @@ const ProtectComponent = (props: ProtectProps): JSX.Element => {
   useEffect((): any => {
     const main = async () => {
       try {
-        const refreshToken = Cookies.get("refreshToken");
-
-        if (refreshToken) {
-          const response = await refresh().unwrap();
-          dispatch(setAuth(response.data));
-        }
+        const response = await refresh().unwrap();
+        dispatch(setAuth(response.data));
       } catch (error) {
       } finally {
         setIsRefreshed(true);

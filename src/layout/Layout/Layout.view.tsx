@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
-import { Footer, Header, Main, SearchContainer } from "./Layout.style";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { store } from "../../store/store";
-import { UseSearchContext } from "../../context/SearchContext";
-import {
-  selectAccessToken,
-  selectEmail,
-  selectId,
-  signOut,
-} from "../../slice/authSlice";
+
+import { Footer, Header, Main, SearchContainer } from "./Layout.style";
+
 import Grid from "../../component/Grid";
 import Flex from "../../component/Flex";
 import Button from "../../component/Button";
 import Text from "../../component/Text";
 import InputText from "../../component/InputText";
+import { useSearchContext } from "../../context/SearchContext";
+import {
+  selectAccessToken,
+  selectEmail,
+  selectId,
+  setAuth,
+} from "../../slice/authSlice";
+import { store } from "../../store/store";
+import { useSignOutMutation } from "../../slice/authApiSlice";
 
 const LayoutComponent = ({}): JSX.Element => {
   const navigate = useNavigate();
@@ -25,7 +28,8 @@ const LayoutComponent = ({}): JSX.Element => {
   const email = useSelector(selectEmail);
 
   const dispatch = useDispatch<typeof store.dispatch>();
-  const { handleChangeEventName } = UseSearchContext();
+  const { handleChangeEventName } = useSearchContext();
+  const [signOut] = useSignOutMutation();
 
   const [inputEventName, setInputEventName] = useState<string>("");
 
@@ -38,6 +42,15 @@ const LayoutComponent = ({}): JSX.Element => {
   const handleSearch = () => {
     handleChangeEventName(inputEventName);
     navigate("/");
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      dispatch(setAuth({ accessToken: "", email: "", id: "" }));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -94,12 +107,7 @@ const LayoutComponent = ({}): JSX.Element => {
                   <Link to={`/event/create`}>
                     <Button>Create Event</Button>
                   </Link>
-                  <Button
-                    coloring="black"
-                    onClick={() => {
-                      dispatch(signOut());
-                    }}
-                  >
+                  <Button coloring="black" onClick={handleSignOut}>
                     Sign Out
                   </Button>
                 </Flex>

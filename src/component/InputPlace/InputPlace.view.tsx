@@ -1,8 +1,9 @@
 import React, { ChangeEvent, FocusEvent, useEffect, useState } from "react";
-import useGoogle from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import Geocode from "react-geocode";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import useGoogle from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { BiCurrentLocation } from "react-icons/bi";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+
 import { InputPlaceProps } from "./InputPlace.props";
 import {
   Container,
@@ -17,6 +18,7 @@ import {
   AddressContainer,
   Wrapper,
 } from "./InputPlace.style";
+
 import Text from "../Text";
 
 const InputPlaceComponent = ({
@@ -124,9 +126,9 @@ const InputPlaceComponent = ({
           />
           <Component tabIndex={1}>
             {isVisible ? (
-              <FaChevronUp color="black" />
+              <FaChevronUp color="grey" />
             ) : (
-              <FaChevronDown color="black" />
+              <FaChevronDown color="grey" />
             )}
           </Component>
         </InputContainer>

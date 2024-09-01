@@ -6,8 +6,8 @@ type SignUpReq = {
   imageUrl: string;
   name: string;
   address: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   description: string;
 };
 
@@ -24,11 +24,10 @@ type SignInRes = {
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    signUp: builder.mutation<void, SignUpReq>({
-      query: (body) => ({
-        url: `/auth/sign-up`,
-        method: "POST",
-        body,
+    refresh: builder.mutation<{ message: string; data: SignInRes }, void>({
+      query: () => ({
+        url: `/auth/refresh`,
+        method: "GET",
       }),
     }),
     signIn: builder.mutation<{ message: string; data: SignInRes }, SignInReq>({
@@ -38,20 +37,25 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body,
       }),
     }),
-    refresh: builder.mutation<{ message: string; data: SignInRes }, void>({
-      query: () => ({
-        url: `/auth/refresh`,
-        method: "GET",
-      }),
-    }),
-    signOut: builder.mutation({
+    signOut: builder.mutation<{ message: string }, void>({
       query: () => ({
         url: `/auth/sign-out`,
         method: "POST",
       }),
     }),
+    signUp: builder.mutation<void, SignUpReq>({
+      query: (body) => ({
+        url: `/auth/sign-up`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation, useRefreshMutation } =
-  authApiSlice;
+export const {
+  useRefreshMutation,
+  useSignInMutation,
+  useSignOutMutation,
+  useSignUpMutation,
+} = authApiSlice;

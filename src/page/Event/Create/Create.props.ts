@@ -13,8 +13,8 @@ export type Form = {
   name: string;
   place: Place | undefined;
   address: string;
-  latitude: string;
-  longitude: string;
+  latitude: number | undefined;
+  longitude: number | undefined;
   description: string;
 };
 

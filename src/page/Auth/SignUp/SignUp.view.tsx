@@ -34,8 +34,8 @@ const SignUpView = (props: SignUpProps) => {
     name: Yup.string().required("Name is required."),
     place: Yup.object().required("Place is required."),
     address: Yup.string().required("Address is required."),
-    latitude: Yup.string().required("Latitude is required."),
-    longitude: Yup.string().required("Longitude is required."),
+    latitude: Yup.number().required("Latitude is required."),
+    longitude: Yup.number().required("Longitude is required."),
     description: Yup.string().required("Description is required."),
   });
 
@@ -114,8 +114,8 @@ const SignUpView = (props: SignUpProps) => {
                 setPlace={(place) => {
                   setFieldValue("place", place);
                   setFieldValue("address", place.address);
-                  setFieldValue("latitude", place.latitude.toString());
-                  setFieldValue("longitude", place.longitude.toString());
+                  setFieldValue("latitude", place.latitude);
+                  setFieldValue("longitude", place.longitude);
 
                   mapRef.current?.flyTo({
                     center: [place.longitude, place.latitude],

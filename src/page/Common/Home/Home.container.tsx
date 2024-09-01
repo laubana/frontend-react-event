@@ -4,7 +4,7 @@ import { MapRef } from "react-map-gl";
 import { HomeProps } from "./Home.props";
 import HomeView from "./Home.view";
 import { Event } from "../../../type/Event";
-import { UseSearchContext } from "../../../context/SearchContext";
+import { useSearchContext } from "../../../context/SearchContext";
 import { Place } from "../../../type/Place";
 import { Option } from "../../../type/Option";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
@@ -23,7 +23,7 @@ const Home = (): JSX.Element => {
   const [currentEventPage, setCurrentEventPage] = useState<number>(1);
   const [hasMoreEvents, setHasMoreEvents] = useState<boolean>(true);
 
-  const { searchEventName } = UseSearchContext();
+  const { searchEventName } = useSearchContext();
   const [searchCategory, setSearchCategory] = useState<Option | undefined>(
     undefined
   );

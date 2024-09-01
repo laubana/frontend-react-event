@@ -30,9 +30,8 @@ export const stripeApiSlice = apiSlice.injectEndpoints({
       { paymentMethodId: string }
     >({
       query: (body) => ({
-        url: `/stripe/payment-method`,
+        url: `/stripe/payment-method/${body.paymentMethodId}`,
         method: "DELETE",
-        body,
       }),
     }),
     getPaymentMethods: builder.query<

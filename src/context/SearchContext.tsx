@@ -30,7 +30,7 @@ const SearchContextProvider: FC<ProviderProps> = ({ children }) => {
   );
 };
 
-export const UseSearchContext = (): ContextProps => {
+export const useSearchContext = (): ContextProps => {
   const searchContext = useContext(SearchContext);
   if (!searchContext) {
     throw new Error("SearchContext failed.");

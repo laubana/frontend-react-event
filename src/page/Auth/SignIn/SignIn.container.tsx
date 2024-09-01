@@ -22,10 +22,11 @@ const SignIn = (): JSX.Element => {
         email: values.email,
         password: values.password,
       }).unwrap();
-      console.log(response.data);
       dispatch(setAuth(response.data));
       navigate("/");
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleGoBack = () => {
@@ -35,7 +36,7 @@ const SignIn = (): JSX.Element => {
   const handleGoogle = async () => {
     const url = [
       `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}`,
-      `redirect_uri=http://localhost:3501/auth/oauth`,
+      `redirect_uri=${process.env.REACT_APP_BACKEND_URL}/auth/oauth`,
       `response_type=code`,
       `scope=openid profile email`,
     ].join("&");
