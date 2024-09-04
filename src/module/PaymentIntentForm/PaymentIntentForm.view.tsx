@@ -11,14 +11,11 @@ import { Container, Form } from "./PaymentIntentForm.style";
 
 import Button from "../../component/Button";
 import Loading from "../../component/Loading";
-import { useAddSetupIntentMutation } from "../../slice/stripeApiSlice";
 
 const PaymentIntentFormComponent = (
   props: PaymentIntentFormProps
 ): JSX.Element => {
   const { onSubmit } = props;
-
-  const [addSetupIntent] = useAddSetupIntentMutation();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -46,7 +43,7 @@ const PaymentIntentFormComponent = (
           elements,
           redirect: "if_required",
           confirmParams: {
-            return_url: "http://localhost:3000/",
+            return_url: process.env.REACT_APP_FRONTEND_URL + "/",
           },
         });
 

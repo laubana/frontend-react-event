@@ -49,7 +49,7 @@ const PaymentMethodFormComponent = (
           clientSecret: addSetupIntentData.data.client_secret,
           redirect: "if_required",
           confirmParams: {
-            return_url: "http://localhost:3000/",
+            return_url: process.env.REACT_APP_FRONTEND_URL + "/",
           },
         });
 

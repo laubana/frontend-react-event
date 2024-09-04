@@ -50,7 +50,7 @@ export const InputContainer = styled.div<{
   ${({ sizing }) => paddingSizes[sizing]};
 
   :focus-within {
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   }
 `;
 
