@@ -2,17 +2,17 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Form } from "./Create.props";
 import CreateView from "./Create.view";
 
 import { uploadImage } from "../../../service/s3";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
-import { useAddEventMutation } from "../../../slice/eventApiSlice";
+import { useAddGroupMutation } from "../../../slice/groupApiSlice";
 import {
   useAddPaymentIntentMutation,
   useGetPaymentMethodsQuery,
 } from "../../../slice/stripeApiSlice";
 import { useAddTransactionMutation } from "../../../slice/transactionApiSlice";
+import { GroupForm } from "../../../type/GroupForm";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC as string);
 
@@ -23,13 +23,13 @@ const Create = () => {
     useGetCategorysQuery();
   const { data: paymentMethods = { message: "", data: [] } } =
     useGetPaymentMethodsQuery();
-  const [addEvent] = useAddEventMutation();
+  const [addGroup] = useAddGroupMutation();
   const [addPaymentIntent] = useAddPaymentIntentMutation();
   const [addTransaction] = useAddTransactionMutation();
 
   const [stage, setStage] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [initialValues, setInitialValues] = useState<Form>({
+  const [initialValues, setInitialValues] = useState<GroupForm>({
     address: "",
     category: undefined,
     description: "",
@@ -37,7 +37,6 @@ const Create = () => {
     latitude: undefined,
     longitude: undefined,
     name: "",
-    place: undefined,
     thumbnail: undefined,
   });
   const [clientSecret, setClientSecret] = useState<string>("");
@@ -59,7 +58,7 @@ const Create = () => {
     }
   };
 
-  const handleNext = (values: Form) => {
+  const handleNext = (values: GroupForm) => {
     setInitialValues(values);
     setStage((prevState) => ++prevState);
   };
@@ -77,12 +76,19 @@ const Create = () => {
       if (addPaymentIntentData?.data.id) {
         const paymentIntentId = addPaymentIntentData.data.id;
 
-        await addTransaction({ description: "New Event", paymentIntentId });
+        await addTransaction({ description: "New Group", paymentIntentId });
 
         const values = initialValues;
 
-        const imageUrl = await uploadImage("event", values.image);
-        const thumbnailUrl = await uploadImage("event", values.thumbnail);
+        const imageUrl =
+          typeof values.image === "object"
+            ? await uploadImage("group", values.image)
+            : values.image;
+        const thumbnailUrl =
+          typeof values.thumbnail === "object"
+            ? await uploadImage("group", values.thumbnail)
+            : values.thumbnail;
+
         if (
           values.category &&
           values.latitude &&
@@ -90,8 +96,8 @@ const Create = () => {
           thumbnailUrl &&
           imageUrl
         ) {
-          const addEventResponse = await addEvent({
-            categoryId: values.category?.value,
+          const addGroupResponse = await addGroup({
+            categoryId: values.category.value,
             thumbnailUrl: thumbnailUrl,
             imageUrl: imageUrl,
             name: values.name,
@@ -101,7 +107,7 @@ const Create = () => {
             description: values.description,
           }).unwrap();
 
-          navigate(`/event/${addEventResponse.data._id}`);
+          navigate(`/group/${addGroupResponse.data._id}`);
         }
       }
     } catch (error) {
@@ -115,12 +121,19 @@ const Create = () => {
     try {
       setIsLoading(true);
 
-      await addTransaction({ description: "New Event", paymentIntentId });
+      await addTransaction({ description: "New Group", paymentIntentId });
 
       const values = initialValues;
 
-      const imageUrl = await uploadImage("event", values.image);
-      const thumbnailUrl = await uploadImage("event", values.thumbnail);
+      const imageUrl =
+        typeof values.image === "object"
+          ? await uploadImage("group", values.image)
+          : values.image;
+      const thumbnailUrl =
+        typeof values.thumbnail === "object"
+          ? await uploadImage("group", values.thumbnail)
+          : values.thumbnail;
+
       if (
         values.category &&
         values.latitude &&
@@ -128,7 +141,7 @@ const Create = () => {
         thumbnailUrl &&
         imageUrl
       ) {
-        const addEventResponse = await addEvent({
+        const addGroupResponse = await addGroup({
           categoryId: values.category?.value,
           thumbnailUrl: thumbnailUrl,
           imageUrl: imageUrl,
@@ -139,7 +152,7 @@ const Create = () => {
           description: values.description,
         }).unwrap();
 
-        navigate(`/event/${addEventResponse.data._id}`);
+        navigate(`/group/${addGroupResponse.data._id}`);
       }
     } catch (error) {
       console.error(error);

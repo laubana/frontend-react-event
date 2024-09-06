@@ -38,6 +38,7 @@ export const InputContainer = styled.div<{ sizing: Sizing }>`
   border-radius: 8px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
+  margin: 2px;
   ${({ sizing }) => paddingSizes[sizing]}
 
   :focus-within {

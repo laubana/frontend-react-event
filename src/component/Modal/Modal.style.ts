@@ -15,6 +15,13 @@ export const BackgroundContainer = styled.div`
   z-index: 1000;
 `;
 
+export const ChildContainer = styled.div`
+  box-sizing: border-box;
+  height: 100%;
+  max-height: 75vh;
+  overflow: auto;
+`;
+
 export const ContentContainer = styled.div`
   background-color: white;
   box-sizing: border-box;

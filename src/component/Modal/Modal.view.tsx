@@ -3,6 +3,7 @@ import { FaXmark } from "react-icons/fa6";
 import { ModalProps } from "./Modal.props";
 import {
   BackgroundContainer,
+  ChildContainer,
   ContentContainer,
   IconContainer,
 } from "./Modal.style";
@@ -34,7 +35,7 @@ const ModalComponent = ({
                 style={{}}
               />
             </IconContainer>
-            {children}
+            <ChildContainer>{children}</ChildContainer>
           </ContentContainer>
         </BackgroundContainer>
       )}

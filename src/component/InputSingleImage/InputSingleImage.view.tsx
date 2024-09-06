@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { FaImage } from "react-icons/fa6";
 import ImageUploading, {
   ErrorsType,
+  ImageType,
   ImageListType,
 } from "react-images-uploading";
-import { FaImage } from "react-icons/fa6";
+
 import { InputSingleImageProps } from "./InputSingleImage.props";
 import {
   Container,
-  LabelContainer,
-  InputContainer,
-  Input,
-  Item,
-  Image,
   ErrorContainer,
+  LabelContainer,
+  Image,
+  Input,
+  InputContainer,
+  Item,
 } from "./InputSingleImage.style";
+
 import Text from "../Text";
 
 const InputSingleImageComponent = (
   props: InputSingleImageProps
 ): JSX.Element => {
-  const { label, image, setImage, error, sizing = "medium", style } = props;
+  const { error, image, label, setImage, sizing = "medium", style } = props;
 
-  const [inputValues, setInputValues] = useState<ImageListType>(
-    image ? [image] : []
-  );
+  const [inputImages, setInputImages] = useState<ImageListType>([]);
 
   const handleChange = (values: ImageListType) => {
-    setInputValues(values);
+    setInputImages(values);
     setImage(values[0]);
   };
 
@@ -41,6 +42,12 @@ const InputSingleImageComponent = (
     }
   };
 
+  useEffect(() => {
+    if (typeof image === "object") {
+      setInputImages([image]);
+    }
+  }, [image]);
+
   return (
     <Container>
       {label && (
@@ -50,22 +57,27 @@ const InputSingleImageComponent = (
       )}
       <InputContainer>
         <ImageUploading
-          value={inputValues}
+          value={inputImages}
           maxFileSize={10485760}
           onChange={handleChange}
           onError={handleError}
           dataURLKey="dataURL"
           acceptType={["jpg", "png"]}
         >
-          {({ imageList, onImageUpload, onImageUpdate, dragProps }) => (
+          {({ dragProps, onImageUpload }) => (
             <>
-              {inputValues.length === 0 && (
+              {!image && inputImages.length === 0 && (
                 <Input onClick={onImageUpload} {...dragProps} style={style}>
                   <FaImage size={48} color="grey" />
                 </Input>
               )}
-              {imageList.map((image, index) => (
-                <Item onClick={() => onImageUpdate(index)} key={index}>
+              {typeof image === "string" && inputImages.length === 0 && (
+                <Item onClick={() => onImageUpload()}>
+                  <Image src={image?.toString()} style={style} />
+                </Item>
+              )}
+              {inputImages.map((image, index) => (
+                <Item onClick={() => onImageUpload()} key={index}>
                   <Image src={image.dataURL} style={style} />
                 </Item>
               ))}

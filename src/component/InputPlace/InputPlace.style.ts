@@ -44,11 +44,11 @@ export const InputContainer = styled.div<{
   background-color: white;
   border-radius: 8px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
   display: flex;
   gap: 8px;
   justify-content: space-between;
-  ${({ sizing }) => fontSizes[sizing] + paddingSizes[sizing]}
+  margin: 2px;
+  ${({ sizing }) => paddingSizes[sizing]}
 
   :focus-within {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
@@ -76,18 +76,19 @@ export const ListContainer = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
+  margin: 0 2px;
   margin-top: 6px;
   max-height: 150px;
   overflow-y: auto;
   position: absolute;
-  width: 100%;
+  width: calc(100% - 4px);
   z-index: 5;
 `;
 
 export const Item = styled.div<{ sizing: Sizing }>`
   align-items: center;
   background-color: white;
+  cursor: pointer;
   display: flex;
   gap: 8px;
   ${({ sizing }) => paddingSizes[sizing]};

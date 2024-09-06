@@ -1,21 +1,21 @@
-import { Event } from "../../../type/Event";
-import { MapRef } from "react-map-gl";
-import { Place } from "../../../type/Place";
-import { Option } from "../../../type/Option";
-import { Category } from "../../../type/Category";
 import { RefObject } from "react";
+import { MapRef } from "react-map-gl";
+
+import { Category } from "../../../type/Category";
+import { Group } from "../../../type/Group";
+import { Option } from "../../../type/Option";
+import { Place } from "../../../type/Place";
 
 export interface HomeProps {
-  mapForwardedRef: RefObject<MapRef>;
   categorys: Category[] | undefined;
-  pagedEvents?: Event[];
-  hasMoreEvents: boolean;
-  popup?: Event;
   handleScroll: () => void;
-  setSearchCategory: (option: Option | undefined) => void;
-  setSearchPlace: (place: Place) => void;
-  setSearchDistance: (option: Option | undefined) => void;
+  hasMoreGroups: boolean;
+  isDesktopDevice: boolean;
   isMobileDevice: boolean;
   isTabletDevice: boolean;
-  isDesktopDevice: boolean;
+  mapForwardedRef: RefObject<MapRef>;
+  pagedGroups?: Group[];
+  setSearchCategory: (option: Option | undefined) => void;
+  setSearchDistance: (option: Option | undefined) => void;
+  setSearchPlace: (place: Place) => void;
 }

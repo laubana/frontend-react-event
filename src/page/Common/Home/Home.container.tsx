@@ -1,29 +1,31 @@
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { MapRef } from "react-map-gl";
+import { useMediaQuery } from "react-responsive";
+
 import { HomeProps } from "./Home.props";
 import HomeView from "./Home.view";
-import { Event } from "../../../type/Event";
+
 import { useSearchContext } from "../../../context/SearchContext";
-import { Place } from "../../../type/Place";
-import { Option } from "../../../type/Option";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
-import { useGetEventsQuery } from "../../../slice/eventApiSlice";
+import { useGetAllGroupsQuery } from "../../../slice/groupApiSlice";
+import { Group } from "../../../type/Group";
+import { Option } from "../../../type/Option";
+import { Place } from "../../../type/Place";
 
 const Home = (): JSX.Element => {
   const { data: categorys = { message: "", data: [] } } =
     useGetCategorysQuery();
-  const { data: events = { message: "", data: [] }, isSuccess } =
-    useGetEventsQuery();
+  const { data: groups = { message: "", data: [] }, isSuccess } =
+    useGetAllGroupsQuery();
 
   const mapForwardedRef = useRef<MapRef>(null);
 
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
-  const [pagedEvents, setPagedEvents] = useState<Event[]>([]);
-  const [currentEventPage, setCurrentEventPage] = useState<number>(1);
-  const [hasMoreEvents, setHasMoreEvents] = useState<boolean>(true);
+  const [filteredGroups, setFilteredGroups] = useState<Group[]>([]);
+  const [pagedGroups, setPagedGroups] = useState<Group[]>([]);
+  const [currentGroupPage, setCurrentGroupPage] = useState<number>(1);
+  const [hasMoreGroups, setHasMoreGroups] = useState<boolean>(true);
 
-  const { searchEventName } = useSearchContext();
+  const { searchName } = useSearchContext();
   const [searchCategory, setSearchCategory] = useState<Option | undefined>(
     undefined
   );
@@ -33,57 +35,56 @@ const Home = (): JSX.Element => {
     label: "50 km",
   });
 
-  const [popup, setPopup] = useState<Event>();
+  const [popup, setPopup] = useState<Group>();
 
   const isMobileDevice = useMediaQuery({ maxWidth: 767 });
   const isTabletDevice = useMediaQuery({ minWidth: 768, maxWidth: 991 });
   const isDesktopDevice = useMediaQuery({ minWidth: 992 });
 
   const handleScroll = () => {
-    setCurrentEventPage((oldValue) => oldValue + 1);
+    setCurrentGroupPage((oldValue) => oldValue + 1);
   };
 
   useEffect(() => {
-    setFilteredEvents(
-      events.data
-        .filter((event) =>
-          searchCategory ? event.category._id === searchCategory.value : true
+    setFilteredGroups(
+      groups.data
+        .filter((group) =>
+          searchCategory ? group.category._id === searchCategory.value : true
         )
-        .filter((event) =>
-          searchEventName
-            ? event.name.toUpperCase().includes(searchEventName.toUpperCase())
+        .filter((group) =>
+          searchName
+            ? group.name.toUpperCase().includes(searchName.toUpperCase())
             : true
         )
     );
-    setCurrentEventPage(1);
-  }, [isSuccess, searchCategory, searchEventName, searchPlace, searchDistance]);
+    setCurrentGroupPage(1);
+  }, [isSuccess, searchCategory, searchName, searchPlace, searchDistance]);
 
   useEffect(() => {
     const main = async () => {
-      setPagedEvents(filteredEvents.slice(0, 4 * currentEventPage));
+      setPagedGroups(filteredGroups.slice(0, 4 * currentGroupPage));
 
-      if (Math.ceil(filteredEvents.length / 4) <= currentEventPage) {
-        setHasMoreEvents(false);
+      if (Math.ceil(filteredGroups.length / 4) <= currentGroupPage) {
+        setHasMoreGroups(false);
       } else {
-        setHasMoreEvents(true);
+        setHasMoreGroups(true);
       }
     };
     main();
-  }, [filteredEvents, currentEventPage]);
+  }, [filteredGroups, currentGroupPage]);
 
   const props: HomeProps = {
-    mapForwardedRef,
     categorys: categorys.data,
-    pagedEvents,
-    hasMoreEvents,
-    popup,
     handleScroll,
-    setSearchCategory,
-    setSearchPlace,
-    setSearchDistance,
+    hasMoreGroups,
+    isDesktopDevice,
     isMobileDevice,
     isTabletDevice,
-    isDesktopDevice,
+    mapForwardedRef,
+    pagedGroups,
+    setSearchCategory,
+    setSearchDistance,
+    setSearchPlace,
   };
   return <HomeView {...props} />;
 };

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Card from "../../component/EventCard";
+import Card from "../../component/GroupCard";
 
 import "../../../src/index.css";
 

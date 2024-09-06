@@ -6,38 +6,37 @@ import { Container, MapContainer } from "./Home.style";
 
 import AutoComplete from "../../../component/AutoComplete";
 import Columns from "../../../component/Columns";
-import EventCard from "../../../component/EventCard";
 import Grid from "../../../component/Grid";
+import GroupCard from "../../../component/GroupCard";
 import Infinite from "../../../component/Infinite";
 import InputPlace from "../../../component/InputPlace";
 import Map from "../../../component/Map";
 
 const HomeView = (props: HomeProps) => {
   const {
-    mapForwardedRef,
     categorys,
-    pagedEvents,
-    hasMoreEvents,
-    popup,
     handleScroll,
-    setSearchCategory,
-    setSearchPlace,
-    setSearchDistance,
+    hasMoreGroups,
+    isDesktopDevice,
     isMobileDevice,
     isTabletDevice,
-    isDesktopDevice,
+    mapForwardedRef,
+    pagedGroups,
+    setSearchCategory,
+    setSearchDistance,
+    setSearchPlace,
   } = props;
 
   return (
     <Container>
-      {pagedEvents && categorys ? (
+      {pagedGroups && categorys ? (
         <>
           <MapContainer>
             <Map
               forwardedRef={mapForwardedRef}
-              markers={pagedEvents.map((pagedEvent) => ({
-                latitude: pagedEvent.latitude,
-                longitude: pagedEvent.longitude,
+              markers={pagedGroups.map((pagedGroup) => ({
+                latitude: pagedGroup.latitude,
+                longitude: pagedGroup.longitude,
               }))}
             />
           </MapContainer>
@@ -70,12 +69,12 @@ const HomeView = (props: HomeProps) => {
           </Grid>
           <Infinite
             columns={isDesktopDevice ? 4 : isTabletDevice ? 3 : 2}
-            items={pagedEvents.map((event, index) => (
-              <Link to={`/event/${event._id}`} key={index}>
-                <EventCard image={event.thumbnailUrl} title={event.name} />
+            items={pagedGroups.map((group, index) => (
+              <Link to={`/group/${group._id}`} key={index}>
+                <GroupCard image={group.thumbnailUrl} title={group.name} />
               </Link>
             ))}
-            hasMore={hasMoreEvents}
+            hasMore={hasMoreGroups}
             onScroll={handleScroll}
             style={{ padding: "8px" }}
           />

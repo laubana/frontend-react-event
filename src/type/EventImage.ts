@@ -1,9 +1,9 @@
 import { Event } from "./Event";
 import { User } from "./User";
 
-export type Comment = {
+export type EventImage = {
   _id: string;
   event: Event;
   user: User;
-  value: string;
+  imageUrl: string;
 };

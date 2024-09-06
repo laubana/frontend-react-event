@@ -28,19 +28,19 @@ const LayoutComponent = ({}): JSX.Element => {
   const email = useSelector(selectEmail);
 
   const dispatch = useDispatch<typeof store.dispatch>();
-  const { handleChangeEventName } = useSearchContext();
+  const { handleChangeSearchName } = useSearchContext();
   const [signOut] = useSignOutMutation();
 
   const [inputEventName, setInputEventName] = useState<string>("");
 
   const isMobileDevice = useMediaQuery({ maxWidth: 767 });
 
-  const handleChangeInputEventName = (inputEventName: string) => {
-    setInputEventName(inputEventName);
+  const handleChangeInputSearchName = (inputSearchName: string) => {
+    setInputEventName(inputSearchName);
   };
 
   const handleSearch = () => {
-    handleChangeEventName(inputEventName);
+    handleChangeSearchName(inputEventName);
     navigate("/");
   };
 
@@ -72,14 +72,14 @@ const LayoutComponent = ({}): JSX.Element => {
             }}
           >
             <Link to="/" reloadDocument={true}>
-              <Text>Event</Text>
+              <Text>Group</Text>
             </Link>
             <Flex style={{ alignItems: "center", flexGrow: 1 }}>
               <SearchContainer>
                 <InputText
                   placeholder="Search"
                   text={inputEventName}
-                  setText={handleChangeInputEventName}
+                  setText={handleChangeInputSearchName}
                 />
               </SearchContainer>
               <Button onClick={handleSearch}>Search</Button>
@@ -104,8 +104,8 @@ const LayoutComponent = ({}): JSX.Element => {
                   <Button coloring="transparent">{email}</Button>
                 </Link>
                 <Flex style={{ alignItems: "center" }}>
-                  <Link to={`/event/create`}>
-                    <Button>Create Event</Button>
+                  <Link to={`/group/create`}>
+                    <Button>Create Group</Button>
                   </Link>
                   <Button coloring="black" onClick={handleSignOut}>
                     Sign Out

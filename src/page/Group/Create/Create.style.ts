@@ -9,8 +9,3 @@ export const Container = styled.div`
   max-width: 540px;
   margin: auto;
 `;
-
-export const MapContainer = styled.div`
-  width: 100%;
-  aspect-ratio: 1;
-`;

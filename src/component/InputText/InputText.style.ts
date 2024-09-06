@@ -27,6 +27,7 @@ const paddingSizes: Record<Sizing, string> = {
 };
 
 export const Container = styled.div`
+  box-sizing: border-box;
   width: 100%;
 `;
 
@@ -41,6 +42,7 @@ export const InputContainer = styled.div<{ sizing: Sizing }>`
   box-sizing: border-box;
   display: flex;
   gap: 8px;
+  margin: 2px;
   ${({ sizing }) => paddingSizes[sizing]};
 
   :focus-within {

@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Auth from "./layout/Auth";
 import Protect from "./layout/Protect";
 import Layout from "./layout/Layout";
-import Create from "./page/Event/Create";
-import EventDetail from "./page/Event/Detail";
+import GroupCreate from "./page/Group/Create";
+import GroupDetail from "./page/Group/Detail";
 import Home from "./page/Common/Home";
 import SignIn from "./page/Auth/SignIn";
 import SignUp from "./page/Auth/SignUp";
@@ -16,11 +16,11 @@ function App() {
       <Route element={<Auth />}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="event">
+          <Route path="group">
             <Route element={<Protect allowedRoles={[]} />}>
-              <Route path="create" element={<Create />} />
+              <Route path="create" element={<GroupCreate />} />
             </Route>
-            <Route path=":eventId" element={<EventDetail />} />
+            <Route path=":groupId" element={<GroupDetail />} />
           </Route>
           <Route element={<Protect allowedRoles={[]} />}>
             <Route path="user">

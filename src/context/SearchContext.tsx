@@ -1,8 +1,8 @@
 import { FC, ReactNode, createContext, useContext, useState } from "react";
 
 interface ContextProps {
-  searchEventName?: string;
-  handleChangeEventName: (eventName: string | undefined) => void;
+  searchName?: string;
+  handleChangeSearchName: (eventName: string | undefined) => void;
 }
 
 interface ProviderProps {
@@ -12,17 +12,17 @@ interface ProviderProps {
 const SearchContext = createContext<ContextProps | undefined>(undefined);
 
 const SearchContextProvider: FC<ProviderProps> = ({ children }) => {
-  const [searchEventName, setSearchEventName] = useState<string>();
+  const [searchName, setSearchName] = useState<string>();
 
-  const handleChangeEventName = (eventName: string | undefined) => {
-    setSearchEventName(eventName);
+  const handleChangeSearchName = (inputSearchName: string | undefined) => {
+    setSearchName(inputSearchName);
   };
 
   return (
     <SearchContext.Provider
       value={{
-        searchEventName,
-        handleChangeEventName,
+        searchName,
+        handleChangeSearchName,
       }}
     >
       {children}
@@ -33,8 +33,9 @@ const SearchContextProvider: FC<ProviderProps> = ({ children }) => {
 export const useSearchContext = (): ContextProps => {
   const searchContext = useContext(SearchContext);
   if (!searchContext) {
-    throw new Error("SearchContext failed.");
+    throw new Error("Context must be called in the provider.");
   }
+
   return searchContext;
 };
 export default SearchContextProvider;

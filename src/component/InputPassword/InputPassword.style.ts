@@ -27,6 +27,7 @@ const paddingSizes: Record<Sizing, string> = {
 };
 
 export const Container = styled.div`
+  margin: 1px;
   width: 100%;
 `;
 
