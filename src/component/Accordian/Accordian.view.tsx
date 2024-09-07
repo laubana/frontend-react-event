@@ -20,10 +20,14 @@ const AccordianComponent = (props: AccordianProps): JSX.Element => {
   };
 
   return (
-    <Container>
+    <Container isVisible={isVisibile}>
       <HeaderContainer onClick={handleToggle}>
         {title}
-        {isVisibile ? <FaChevronUp /> : <FaChevronDown />}
+        {isVisibile ? (
+          <FaChevronUp color="black" />
+        ) : (
+          <FaChevronDown color="lightgrey" />
+        )}
       </HeaderContainer>
       <FooterContainer isVisible={isVisibile}>{children}</FooterContainer>
     </Container>

@@ -21,12 +21,12 @@ const Create = (props: CreateProps) => {
   const {
     categorys,
     clientSecret,
+    formValues,
     handleClickNewCard,
     handleGoBack,
     handleNext,
     handleSubmitExistingCard,
     handleSubmitNewCard,
-    initialValues,
     isLoading,
     paymentMethods,
     stage,
@@ -37,16 +37,16 @@ const Create = (props: CreateProps) => {
     <>
       {categorys ? (
         <Container>
-          <Text sizing="large">Create Group</Text>
+          <Text size="large">Create Group</Text>
           {stage === 0 ? (
             <>
               <GroupForm
                 categorys={categorys}
                 label="Next"
                 onSubmit={handleNext}
-                values={initialValues}
+                values={formValues}
               />
-              <Button coloring="black" onClick={handleGoBack} block>
+              <Button color="black" onClick={handleGoBack} block>
                 Go Back
               </Button>
             </>
@@ -111,7 +111,7 @@ const Create = (props: CreateProps) => {
                   ) : null}
                 </Accordian>
               </Grid>
-              <Button coloring="black" onClick={handleGoBack} block>
+              <Button color="black" onClick={handleGoBack} block>
                 Go Back
               </Button>
             </>

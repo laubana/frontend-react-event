@@ -11,7 +11,6 @@ import {
   useAddPaymentIntentMutation,
   useGetPaymentMethodsQuery,
 } from "../../../slice/stripeApiSlice";
-import { useAddTransactionMutation } from "../../../slice/transactionApiSlice";
 import { GroupForm } from "../../../type/GroupForm";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC as string);
@@ -25,11 +24,10 @@ const Create = () => {
     useGetPaymentMethodsQuery();
   const [addGroup] = useAddGroupMutation();
   const [addPaymentIntent] = useAddPaymentIntentMutation();
-  const [addTransaction] = useAddTransactionMutation();
 
-  const [stage, setStage] = useState<number>(0);
+  const [clientSecret, setClientSecret] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [initialValues, setInitialValues] = useState<GroupForm>({
+  const [formValues, setFormValues] = useState<GroupForm>({
     address: "",
     category: undefined,
     description: "",
@@ -39,10 +37,10 @@ const Create = () => {
     name: "",
     thumbnail: undefined,
   });
-  const [clientSecret, setClientSecret] = useState<string>("");
+  const [stage, setStage] = useState<number>(0);
 
   const handleClickNewCard = async () => {
-    const addPaymentIntentResponse = await addPaymentIntent({ amount: 100 });
+    const addPaymentIntentResponse = await addPaymentIntent({ amount: 300 });
     const addPaymentIntentData = addPaymentIntentResponse.data;
 
     if (addPaymentIntentData?.data.client_secret) {
@@ -59,7 +57,7 @@ const Create = () => {
   };
 
   const handleNext = (values: GroupForm) => {
-    setInitialValues(values);
+    setFormValues(values);
     setStage((prevState) => ++prevState);
   };
 
@@ -67,63 +65,7 @@ const Create = () => {
     try {
       setIsLoading(true);
 
-      const addPaymentIntentResponse = await addPaymentIntent({
-        amount: 300,
-        paymentMethodId,
-      });
-      const addPaymentIntentData = addPaymentIntentResponse.data;
-
-      if (addPaymentIntentData?.data.id) {
-        const paymentIntentId = addPaymentIntentData.data.id;
-
-        await addTransaction({ description: "New Group", paymentIntentId });
-
-        const values = initialValues;
-
-        const imageUrl =
-          typeof values.image === "object"
-            ? await uploadImage("group", values.image)
-            : values.image;
-        const thumbnailUrl =
-          typeof values.thumbnail === "object"
-            ? await uploadImage("group", values.thumbnail)
-            : values.thumbnail;
-
-        if (
-          values.category &&
-          values.latitude &&
-          values.longitude &&
-          thumbnailUrl &&
-          imageUrl
-        ) {
-          const addGroupResponse = await addGroup({
-            categoryId: values.category.value,
-            thumbnailUrl: thumbnailUrl,
-            imageUrl: imageUrl,
-            name: values.name,
-            address: values.address,
-            latitude: values.latitude,
-            longitude: values.longitude,
-            description: values.description,
-          }).unwrap();
-
-          navigate(`/group/${addGroupResponse.data._id}`);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSubmitNewCard = async (paymentIntentId: string) => {
-    try {
-      setIsLoading(true);
-
-      await addTransaction({ description: "New Group", paymentIntentId });
-
-      const values = initialValues;
+      const values = formValues;
 
       const imageUrl =
         typeof values.image === "object"
@@ -142,14 +84,56 @@ const Create = () => {
         imageUrl
       ) {
         const addGroupResponse = await addGroup({
-          categoryId: values.category?.value,
-          thumbnailUrl: thumbnailUrl,
-          imageUrl: imageUrl,
-          name: values.name,
           address: values.address,
+          categoryId: values.category.value,
+          description: values.description,
+          imageUrl: imageUrl,
           latitude: values.latitude,
           longitude: values.longitude,
-          description: values.description,
+          name: values.name,
+          paymentMethodId,
+          thumbnailUrl: thumbnailUrl,
+        }).unwrap();
+
+        navigate(`/group/${addGroupResponse.data._id}`);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmitNewCard = async (paymentIntentId: string) => {
+    try {
+      setIsLoading(true);
+
+      const imageUrl =
+        typeof formValues.image === "object"
+          ? await uploadImage("group", formValues.image)
+          : formValues.image;
+      const thumbnailUrl =
+        typeof formValues.thumbnail === "object"
+          ? await uploadImage("group", formValues.thumbnail)
+          : formValues.thumbnail;
+
+      if (
+        formValues.category &&
+        formValues.latitude &&
+        formValues.longitude &&
+        thumbnailUrl &&
+        imageUrl
+      ) {
+        const addGroupResponse = await addGroup({
+          address: formValues.address,
+          categoryId: formValues.category?.value,
+          description: formValues.description,
+          imageUrl: imageUrl,
+          latitude: formValues.latitude,
+          longitude: formValues.longitude,
+          name: formValues.name,
+          paymentIntentId,
+          thumbnailUrl: thumbnailUrl,
         }).unwrap();
 
         navigate(`/group/${addGroupResponse.data._id}`);
@@ -164,12 +148,12 @@ const Create = () => {
   const props = {
     categorys: categorys.data,
     clientSecret,
+    formValues,
     handleClickNewCard,
     handleGoBack,
     handleNext,
     handleSubmitExistingCard,
     handleSubmitNewCard,
-    initialValues,
     isLoading,
     paymentMethods: paymentMethods.data,
     stage,

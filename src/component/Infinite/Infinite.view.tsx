@@ -1,5 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+
 import { InfiniteProps } from "./Infinite.props";
 import { Spinner, SpinnerContainer } from "./Infinite.style";
 

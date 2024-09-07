@@ -24,14 +24,14 @@ const Component = () => {
           options={options}
           option={option}
           setOption={(option: Option | undefined) => setOption(option)}
-          sizing="small"
+          size="small"
         />
         <AutoComplete
           label="Fruits"
           options={options}
           option={option}
           setOption={(option: Option | undefined) => setOption(option)}
-          sizing="small"
+          size="small"
         />
         <Text>{option?.value}</Text>
       </div>
@@ -58,13 +58,13 @@ const Component = () => {
           options={options}
           option={option}
           setOption={(option: Option | undefined) => setOption(option)}
-          sizing="large"
+          size="large"
         />
         <AutoComplete
           label="Fruits"
           options={options}
           setOption={(option: Option | undefined) => setOption(option)}
-          sizing="large"
+          size="large"
         />
         <Text>{option?.value}</Text>
       </div>

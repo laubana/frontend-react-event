@@ -52,4 +52,8 @@ export const eventImageApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {} = eventImageApiSlice;
+export const {
+  useAddEventImageMutation,
+  useDeleteEventImageMutation,
+  useGetEventImagesQuery,
+} = eventImageApiSlice;

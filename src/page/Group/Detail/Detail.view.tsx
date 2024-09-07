@@ -100,7 +100,7 @@ const Detail = (props: DetailProps) => {
             <Grid>
               <Image src={group.imageUrl} />
               <TitleContainer>
-                <Text sizing="large">Member</Text>
+                <Text size="large">Member</Text>
               </TitleContainer>
               {0 < groupRegistrations.length && (
                 <>
@@ -124,13 +124,13 @@ const Detail = (props: DetailProps) => {
                 </>
               )}
               <TitleContainer>
-                <Text sizing="large">Event</Text>
+                <Text size="large">Event</Text>
                 {group.user._id === groupRegistration?.user._id && (
                   <Button onClick={handleOpenAddEvent}>Create</Button>
                 )}
               </TitleContainer>
               <TitleContainer>
-                <Text sizing="large">Comment</Text>
+                <Text size="large">Comment</Text>
               </TitleContainer>
               {0 < groupComments.length && (
                 <>
@@ -162,7 +162,7 @@ const Detail = (props: DetailProps) => {
                 </Columns>
               )}
               <TitleContainer>
-                <Text sizing="large">Image</Text>
+                <Text size="large">Image</Text>
                 {groupRegistration && (
                   <Button onClick={handleOpenAddGroupImage}>Upload</Button>
                 )}
@@ -189,7 +189,15 @@ const Detail = (props: DetailProps) => {
             <EventForm
               label="Confirm"
               onSubmit={handleConfirmAddEvent}
-              values={{ description: "", name: "", placesNumber: 0 }}
+              values={{
+                dateTimes: [],
+                dateTimesNumber: 0,
+                description: "",
+                fee: "",
+                name: "",
+                places: [],
+                placesNumber: 0,
+              }}
             />
           </Modal>
           <Modal

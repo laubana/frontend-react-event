@@ -1,24 +1,26 @@
 import React, { ChangeEvent, FocusEvent, useState } from "react";
-import { InputTextProps } from "./InputPassword.props";
+import { FaEye, FaEyeSlash, FaRegCircleXmark } from "react-icons/fa6";
+
+import { InputPasswordProps } from "./InputPassword.props";
 import {
+  Component,
   Container,
-  LabelContainer,
+  ErrorContainer,
   InputContainer,
   InputPassword,
-  Component,
-  ErrorContainer,
+  LabelContainer,
 } from "./InputPassword.style";
-import { FaEye, FaEyeSlash, FaRegCircleXmark } from "react-icons/fa6";
+
 import Text from "../Text";
 
 const InputPasswordComponent = ({
-  label,
-  placeholder,
-  password,
-  setPassword = () => null,
   error,
-  sizing = "medium",
-}: InputTextProps): JSX.Element => {
+  label,
+  password,
+  placeholder,
+  setPassword = () => null,
+  size = "medium",
+}: InputPasswordProps): JSX.Element => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [visibility, setVisibility] = useState<boolean>(false);
 
@@ -47,11 +49,11 @@ const InputPasswordComponent = ({
   return (
     <Container>
       {label && (
-        <LabelContainer sizing={sizing}>
+        <LabelContainer sizing={size}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
-      <InputContainer onFocus={handleFocus} onBlur={handleBlur} sizing={sizing}>
+      <InputContainer onFocus={handleFocus} onBlur={handleBlur} sizing={size}>
         {visibility ? (
           <InputPassword
             tabIndex={0}
@@ -59,7 +61,7 @@ const InputPasswordComponent = ({
             placeholder={placeholder}
             value={password}
             onChange={handleChange}
-            sizing={sizing}
+            sizing={size}
           />
         ) : (
           <InputPassword
@@ -68,27 +70,30 @@ const InputPasswordComponent = ({
             placeholder={placeholder}
             value={password}
             onChange={handleChange}
-            sizing={sizing}
+            sizing={size}
           />
         )}
         {isFocused && (
           <Component tabIndex={1} onClick={handleReset}>
-            <FaRegCircleXmark color="grey" />
+            <FaRegCircleXmark color="black" cursor="pointer" />
           </Component>
         )}
         {visibility ? (
           <Component tabIndex={1} onClick={handleToggle}>
-            <FaEye color="grey" />
+            <FaEye color={isFocused ? "black" : "lightgrey"} cursor="pointer" />
           </Component>
         ) : (
           <Component tabIndex={1} onClick={handleToggle}>
-            <FaEyeSlash color="grey" />
+            <FaEyeSlash
+              color={isFocused ? "black" : "lightgrey"}
+              cursor="pointer"
+            />
           </Component>
         )}
       </InputContainer>
       {error && (
-        <ErrorContainer sizing={sizing}>
-          <Text coloring="red">{error}</Text>
+        <ErrorContainer sizing={size}>
+          <Text color="red">{error}</Text>
         </ErrorContainer>
       )}
     </Container>

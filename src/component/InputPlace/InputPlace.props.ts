@@ -1,12 +1,11 @@
 import { Place } from "../../type/Place";
-
-export type Sizing = "small" | "medium" | "large";
+import { Size } from "../../type/Size";
 
 export interface InputPlaceProps {
+  address?: string;
+  error?: string;
   label?: string;
   placeholder?: string;
-  address?: string;
   setPlace: (place: Place) => void;
-  error?: string;
-  sizing?: Sizing;
+  size?: Size;
 }

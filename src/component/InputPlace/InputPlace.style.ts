@@ -1,64 +1,64 @@
 import styled from "@emotion/styled";
 
-import { Sizing } from "./InputPlace.props";
+import { Size } from "../../type/Size";
 
-const fontSizes: Record<Sizing, string> = {
+const fontSizes: Record<Size, string> = {
   small: `
-        font-size: 14px;
-    `,
+    font-size: 14px;
+  `,
   medium: `
-        font-size: 16px;
-    `,
+    font-size: 16px;
+  `,
   large: `
-        font-size: 18px;
-    `,
+    font-size: 18px;
+  `,
 };
 
-const paddingSizes: Record<Sizing, string> = {
+const paddingSizes: Record<Size, string> = {
   small: `
-        padding: 4px 8px;
-    `,
+    padding: 4px 8px;
+  `,
   medium: `
-        padding: 6px 12px;
-    `,
+    padding: 6px 12px;
+  `,
   large: `
-        padding: 8px 16px;
-    `,
+    padding: 8px 16px;
+  `,
 };
 
 export const Container = styled.div`
-  width: 100%;
   position: relative;
+  width: 100%;
 `;
 
-export const LabelContainer = styled.div<{ sizing: Sizing }>`
+export const LabelContainer = styled.div<{ sizing: Size }>`
   ${({ sizing }) => paddingSizes[sizing]}
 `;
 
 export const Wrapper = styled.div``;
 
 export const InputContainer = styled.div<{
-  sizing: Sizing;
+  sizing: Size;
 }>`
   align-items: center;
   background-color: white;
+  border: 1px solid lightgrey;
   border-radius: 8px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   display: flex;
   gap: 8px;
   justify-content: space-between;
-  margin: 2px;
   ${({ sizing }) => paddingSizes[sizing]}
 
   :focus-within {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid black;
   }
 `;
 
-export const Input = styled.input<{ sizing: Sizing }>`
+export const Input = styled.input<{ sizing: Size }>`
   border: none;
   font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]};
+  padding: 0;
   width: 100%;
 
   :focus {
@@ -74,20 +74,18 @@ export const Component = styled.div`
 
 export const ListContainer = styled.div`
   background-color: white;
+  border: 1px solid black;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  margin: 0 2px;
   margin-top: 6px;
   max-height: 150px;
   overflow-y: auto;
   position: absolute;
-  width: calc(100% - 4px);
+  width: 100%;
   z-index: 5;
 `;
 
-export const Item = styled.div<{ sizing: Sizing }>`
+export const Item = styled.div<{ sizing: Size }>`
   align-items: center;
-  background-color: white;
   cursor: pointer;
   display: flex;
   gap: 8px;
@@ -111,6 +109,6 @@ export const AddressContainer = styled.div`
   flex-grow: 1;
 `;
 
-export const ErrorContainer = styled.div<{ sizing: Sizing }>`
+export const ErrorContainer = styled.div<{ sizing: Size }>`
   ${({ sizing }) => paddingSizes[sizing]}
 `;

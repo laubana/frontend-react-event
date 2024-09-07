@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
 
-export type Sizing = "small" | "medium" | "large";
-export type Coloring = "black" | "white" | "red" | "transparent";
+import { Color } from "../../type/Color";
+import { Size } from "../../type/Size";
 
 export interface ButtonProps {
   block?: boolean;
   children: ReactNode | string;
-  coloring?: Coloring;
+  color?: Color;
   nopadding?: boolean;
   onClick?: () => void;
-  sizing?: Sizing;
+  size?: Size;
   type?: "button" | "submit";
 }

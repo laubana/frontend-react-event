@@ -7,12 +7,12 @@ import { PaymentMethod } from "../../../type/PaymentMethod";
 export interface CreateProps {
   categorys: Category[];
   clientSecret: string;
+  formValues: GroupForm;
   handleClickNewCard: () => void;
   handleGoBack: () => void;
   handleNext: (values: GroupForm) => void;
-  handleSubmitExistingCard: (PaymentMethodId: string) => void;
+  handleSubmitExistingCard: (paymentMethodId: string) => void;
   handleSubmitNewCard: (paymentIntentId: string) => void;
-  initialValues: GroupForm;
   isLoading: boolean;
   paymentMethods: PaymentMethod[];
   stage: number;

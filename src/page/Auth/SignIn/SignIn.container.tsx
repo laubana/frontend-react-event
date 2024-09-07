@@ -18,11 +18,11 @@ const SignIn = (): JSX.Element => {
 
   const handleSubmit = async (values: Form) => {
     try {
-      const response = await signIn({
+      const signInResponse = await signIn({
         email: values.email,
         password: values.password,
       }).unwrap();
-      dispatch(setAuth(response.data));
+      dispatch(setAuth(signInResponse.data));
       navigate("/");
     } catch (error) {
       console.error(error);

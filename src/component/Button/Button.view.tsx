@@ -1,24 +1,25 @@
 import React from "react";
+
 import { ButtonProps } from "./Button.props";
 import { Button, ChildrenContainer } from "./Button.style";
 
 const ButtonComponent = ({
   block,
   children,
-  coloring: color = "red",
+  color = "red",
   nopadding,
   onClick,
-  sizing: size = "medium",
+  size = "medium",
   type = "button",
 }: ButtonProps): JSX.Element => {
   return (
     <Button
-      type={type}
-      size={size}
-      color={color}
       block={block}
+      coloring={color}
       nopadding={nopadding}
       onClick={onClick}
+      sizing={size}
+      type={type}
     >
       <ChildrenContainer>{children}</ChildrenContainer>
     </Button>

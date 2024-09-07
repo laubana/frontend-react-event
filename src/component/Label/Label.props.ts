@@ -1,8 +1,11 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
-export type Sizing = "small" | "medium" | "large";
+import { Color } from "../../type/Color";
+import { Size } from "../../type/Size";
 
 export interface LabelProps {
   children: ReactNode;
-  sizing?: Sizing;
+  color?: Color;
+  size?: Size;
+  style?: CSSProperties;
 }

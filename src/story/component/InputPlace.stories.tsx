@@ -20,27 +20,13 @@ const Component = () => {
           placeholder="Address"
           address={currentAddress}
           setPlace={setPlace}
-          sizing="small"
+          size="small"
         />
         <InputPlace
           label="Place"
           address={currentAddress}
           setPlace={setPlace}
-          sizing="small"
-        />
-        <Text>{place?.address}</Text>
-      </div>
-      <div style={{ display: "grid", gap: "16px" }}>
-        <InputPlace
-          label="Place"
-          placeholder="Address"
-          address={currentAddress}
-          setPlace={setPlace}
-        />
-        <InputPlace
-          label="Place"
-          address={currentAddress}
-          setPlace={setPlace}
+          size="small"
         />
         <Text>{place?.address}</Text>
       </div>
@@ -50,13 +36,27 @@ const Component = () => {
           placeholder="Address"
           address={currentAddress}
           setPlace={setPlace}
-          sizing="large"
         />
         <InputPlace
           label="Place"
           address={currentAddress}
           setPlace={setPlace}
-          sizing="large"
+        />
+        <Text>{place?.address}</Text>
+      </div>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <InputPlace
+          label="Place"
+          placeholder="Address"
+          address={currentAddress}
+          setPlace={setPlace}
+          size="large"
+        />
+        <InputPlace
+          label="Place"
+          address={currentAddress}
+          setPlace={setPlace}
+          size="large"
         />
         <Text>{place?.address}</Text>
       </div>

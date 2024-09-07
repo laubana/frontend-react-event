@@ -53,4 +53,8 @@ export const eventCommentApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {} = eventCommentApiSlice;
+export const {
+  useAddEventCommentMutation,
+  useDeleteEventCommentMutation,
+  useGetEventCommentsQuery,
+} = eventCommentApiSlice;

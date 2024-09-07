@@ -68,4 +68,9 @@ export const eventRegistrationApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {} = eventRegistrationApiSlice;
+export const {
+  useAddEventRegistrationMutation,
+  useDeleteEventRegistrationMutation,
+  useGetEventRegistrationQuery,
+  useGetEventRegistrationsQuery,
+} = eventRegistrationApiSlice;

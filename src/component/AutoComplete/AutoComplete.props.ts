@@ -1,13 +1,12 @@
 import { Option } from "../../type/Option";
-
-export type Sizing = "small" | "medium" | "large";
+import { Size } from "../../type/Size";
 
 export interface AutoCompleteProps {
-  label?: string;
-  placeholder?: string;
-  options: Option[];
-  option?: Option;
-  setOption: (option: Option | undefined) => void;
   error?: string;
-  sizing?: Sizing;
+  label?: string;
+  option?: Option;
+  options: Option[];
+  placeholder?: string;
+  setOption: (option: Option | undefined) => void;
+  size?: Size;
 }

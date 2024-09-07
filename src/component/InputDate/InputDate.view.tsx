@@ -1,61 +1,41 @@
-import React, { FocusEvent, useEffect, useState } from "react";
-import { CiCalendar } from "react-icons/ci";
+import "react-datepicker/dist/react-datepicker.css";
+
+import moment from "moment";
+import React, { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import Calendar from "react-datepicker";
-import { DateFieldProps } from "./InputDate.props";
+import { CiCalendar } from "react-icons/ci";
+
+import { InputDateProps } from "./InputDate.props";
 import {
+  Component,
   Container,
   ErrorContainer,
-  Component,
-  InputDate,
   InputContainer,
+  InputDate,
   LabelContainer,
   ListContainer,
   Wrapper,
 } from "./InputDate.style";
+
 import Text from "../Text";
 
-import "react-datepicker/dist/react-datepicker.css";
+import { convertDate } from "../../helpers/date";
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
-const convertDate = (date: Date) => {
-  const MM = months[date.getMonth()];
-  const dd = date.getDate();
-  const yy = date.getFullYear();
-
-  return `${yy}-${MM}-${10 <= dd ? dd : `0${dd}`}`;
-};
-
-const DateField = (props: DateFieldProps): JSX.Element => {
+const InputDateComponent = (props: InputDateProps): JSX.Element => {
   const {
+    date,
+    error,
     label,
     placeholder,
-    date,
     setDate,
-    error,
-    sizing = "medium",
+    size = "medium",
     style,
   } = props;
 
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputText, setInputText] = useState<string>(
+    convertDate(date) || convertDate(new Date())
+  );
   const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const handleFocus = () => {
-    setIsVisible(true);
-  };
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -63,25 +43,67 @@ const DateField = (props: DateFieldProps): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    if (date) {
-      setInputValue(convertDate(date));
-      setIsVisible(false);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputText(event.target.value);
+    setIsVisible(true);
+  };
+
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setInputText("");
     }
-  }, [date]);
+    setIsVisible(true);
+  };
+
+  const handleSelect = (date: Date) => {
+    setInputText(convertDate(date));
+    setDate(date);
+    setIsVisible(false);
+  };
+
+  useEffect(() => {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!inputText.match(regex)) {
+      return;
+    }
+
+    const currentDate = new Date();
+    currentDate.setHours(0);
+    currentDate.setMinutes(0);
+    currentDate.setSeconds(0);
+    currentDate.setMilliseconds(0);
+
+    if (
+      moment([
+        inputText.split("-")[0],
+        inputText.split("-")[1],
+        inputText.split("-")[2],
+      ]).isValid() &&
+      currentDate <= new Date(`${inputText}T00:00:00`)
+    ) {
+      setDate(new Date(`${inputText}T00:00:00`));
+      setIsVisible(false);
+    } else {
+      setDate(undefined);
+    }
+  }, [inputText]);
 
   return (
     <Container style={style}>
       {label && (
-        <LabelContainer sizing={sizing}>
+        <LabelContainer sizing={size}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
       <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
-        <InputContainer sizing={sizing}>
-          <InputDate tabIndex={0} sizing={sizing}>
-            {inputValue || placeholder}{" "}
-          </InputDate>
+        <InputContainer sizing={size}>
+          <InputDate
+            onChange={handleChange}
+            placeholder={placeholder}
+            sizing={size}
+            tabIndex={0}
+            value={inputText}
+          />
           <Component tabIndex={1}>
             <CiCalendar color="grey" />
           </Component>
@@ -93,7 +115,7 @@ const DateField = (props: DateFieldProps): JSX.Element => {
               selected={date}
               onChange={(date) => {
                 if (date) {
-                  setDate(date);
+                  handleSelect(date);
                 }
               }}
               minDate={new Date()}
@@ -102,12 +124,12 @@ const DateField = (props: DateFieldProps): JSX.Element => {
         )}
       </Wrapper>
       {error && (
-        <ErrorContainer sizing={sizing}>
-          <Text coloring="red">{error}</Text>
+        <ErrorContainer sizing={size}>
+          <Text color="red">{error}</Text>
         </ErrorContainer>
       )}
     </Container>
   );
 };
 
-export default React.memo(DateField);
+export default React.memo(InputDateComponent);

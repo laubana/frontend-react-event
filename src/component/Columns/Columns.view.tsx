@@ -1,10 +1,11 @@
 import React from "react";
+
 import { ColumnsProps } from "./Columns.props";
 import { Columns } from "./Columns.style";
 
 const ColumnsComponent = ({
-  columns,
   children,
+  columns,
   style,
 }: ColumnsProps): JSX.Element => {
   return (

@@ -33,7 +33,7 @@ const DetailView = (props: DetailProps) => {
         <Container>
           <Image src={user.imageUrl} />
           <TitleContainer>
-            <Text sizing="large">Payment Method</Text>
+            <Text size="large">Payment Method</Text>
             <Button onClick={handleAddPaymentMethod}>Add</Button>
           </TitleContainer>
           {0 < paymentMethods.length && (
@@ -55,7 +55,7 @@ const DetailView = (props: DetailProps) => {
                       onClick={() =>
                         handleDeletePaymentMethod(paymentMethod.id)
                       }
-                      sizing="small"
+                      size="small"
                     >
                       Delete
                     </Button>
@@ -65,7 +65,7 @@ const DetailView = (props: DetailProps) => {
             </>
           )}
           <TitleContainer>
-            <Text sizing="large">Transaction</Text>
+            <Text size="large">Transaction</Text>
           </TitleContainer>
           {0 < transactions.length && (
             <Grid style={{ gap: "8px" }}>
@@ -87,7 +87,7 @@ const DetailView = (props: DetailProps) => {
                     {0 < transaction.amount && (
                       <Button
                         onClick={() => handleDeleteTransaction(transaction._id)}
-                        sizing="small"
+                        size="small"
                       >
                         Refund
                       </Button>
@@ -96,7 +96,7 @@ const DetailView = (props: DetailProps) => {
                       onClick={() => {
                         window.open(transaction.receiptUrl);
                       }}
-                      sizing="small"
+                      size="small"
                     >
                       Receipt
                     </Button>

@@ -87,7 +87,7 @@ const InputSingleImageComponent = (
       </InputContainer>
       {error && (
         <ErrorContainer sizing={sizing}>
-          <Text coloring="red">{error}</Text>
+          <Text color="red">{error}</Text>
         </ErrorContainer>
       )}
     </Container>

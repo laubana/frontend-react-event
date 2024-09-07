@@ -1,13 +1,13 @@
 import { CSSProperties } from "react";
 
-export type Sizing = "small" | "medium" | "large";
+import { Size } from "../../type/Size";
 
-export interface DateFieldProps {
+export interface InputDateProps {
+  date?: Date;
+  error?: string;
   label?: string;
   placeholder?: string;
-  date?: Date;
-  setDate: (date: Date) => void;
-  error?: string;
-  sizing?: Sizing;
+  setDate: (date?: Date) => void;
+  size?: Size;
   style?: CSSProperties;
 }

@@ -1,29 +1,32 @@
 import React, { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+
 import { AutoCompleteProps } from "./AutoComplete.props";
 import {
-  Container,
-  LabelContainer,
-  Wrapper,
-  InputContainer,
-  Input,
   Component,
-  ListContainer,
-  Item,
+  Container,
   ErrorContainer,
+  Input,
+  InputContainer,
+  Item,
+  LabelContainer,
+  ListContainer,
+  Wrapper,
 } from "./AutoComplete.style";
-import { Option } from "../../type/Option";
+
 import Text from "../Text";
 
-const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
+import { Option } from "../../type/Option";
+
+const AutoCompleteComponent = (props: AutoCompleteProps): JSX.Element => {
   const {
-    label,
-    placeholder,
-    options,
-    option,
-    setOption,
     error,
-    sizing = "medium",
+    label,
+    option,
+    options,
+    placeholder,
+    setOption,
+    size = "medium",
   } = props;
 
   const [inputValue, setInputValue] = useState<string>(
@@ -31,21 +34,6 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
       ""
   );
   const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const items = options
-    .filter((option) =>
-      option.label.toUpperCase().includes(inputValue?.toUpperCase() || "")
-    )
-    .map((option, index) => (
-      <Item
-        tabIndex={2}
-        sizing={sizing}
-        onClick={() => handleSelect(option)}
-        key={index}
-      >
-        <Text sizing={sizing}>{option.label}</Text>
-      </Item>
-    ));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -87,38 +75,55 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   return (
     <Container>
       {label && (
-        <LabelContainer sizing={sizing}>
+        <LabelContainer sizing={size}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
       <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
-        <InputContainer sizing={sizing}>
+        <InputContainer sizing={size}>
           <Input
             tabIndex={0}
             value={inputValue}
             placeholder={placeholder}
             onChange={handleChange}
-            sizing={sizing}
+            sizing={size}
           />
           <Component tabIndex={1}>
             {isVisible ? (
-              <FaChevronUp color="grey" />
+              <FaChevronUp color="black" cursor="pointer" />
             ) : (
-              <FaChevronDown color="grey" />
+              <FaChevronDown color="lightgrey" cursor="pointer" />
             )}
           </Component>
         </InputContainer>
-        {isVisible && 0 < items.length && (
-          <ListContainer>{items}</ListContainer>
+        {isVisible && 0 < options.length && (
+          <ListContainer>
+            {options
+              .filter((option) =>
+                option.label
+                  .toUpperCase()
+                  .includes(inputValue?.toUpperCase() || "")
+              )
+              .map((option, index) => (
+                <Item
+                  tabIndex={2}
+                  sizing={size}
+                  onClick={() => handleSelect(option)}
+                  key={index}
+                >
+                  <Text size={size}>{option.label}</Text>
+                </Item>
+              ))}
+          </ListContainer>
         )}
       </Wrapper>
       {error && (
-        <ErrorContainer sizing={sizing}>
-          <Text coloring="red">{error}</Text>
+        <ErrorContainer sizing={size}>
+          <Text color="red">{error}</Text>
         </ErrorContainer>
       )}
     </Container>
   );
 };
 
-export default React.memo(AutoComplete);
+export default React.memo(AutoCompleteComponent);

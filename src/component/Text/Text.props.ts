@@ -1,13 +1,14 @@
 import { CSSProperties, ReactNode } from "react";
 
-export type Sizing = "small" | "medium" | "large";
-export type Coloring = "black" | "white" | "red";
+import { Color } from "../../type/Color";
+import { Size } from "../../type/Size";
+
 export type Alignment = "left" | "center" | "right";
 
 export interface TextProps {
   alignment?: Alignment;
   children: ReactNode;
-  coloring?: Coloring;
-  sizing?: Sizing;
+  color?: Color;
+  size?: Size;
   style?: CSSProperties;
 }

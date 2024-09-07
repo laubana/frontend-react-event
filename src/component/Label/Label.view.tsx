@@ -7,11 +7,12 @@ import Text from "../Text";
 
 const LabelComponent = ({
   children,
-  sizing = "medium",
+  color = "black",
+  size = "medium",
 }: LabelProps): JSX.Element => {
   return (
-    <Container sizing={sizing}>
-      <Text>{children}</Text>
+    <Container sizing={size}>
+      <Text color={color}>{children}</Text>
     </Container>
   );
 };

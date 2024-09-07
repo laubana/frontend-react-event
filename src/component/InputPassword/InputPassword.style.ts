@@ -1,55 +1,53 @@
 import styled from "@emotion/styled";
 
-import { Sizing } from "./InputPassword.props";
+import { Size } from "../../type/Size";
 
-const fontSizes: Record<Sizing, string> = {
+const fontSizes: Record<Size, string> = {
   small: `
-        font-size: 14px;
-    `,
+    font-size: 14px;
+  `,
   medium: `
-        font-size: 16px;
-    `,
+    font-size: 16px;
+  `,
   large: `
-        font-size: 18px;
-    `,
+    font-size: 18px;
+  `,
 };
 
-const paddingSizes: Record<Sizing, string> = {
+const paddingSizes: Record<Size, string> = {
   small: `
-        padding: 4px 8px;
-    `,
+    padding: 4px 8px;
+  `,
   medium: `
-        padding: 6px 12px;
-    `,
+    padding: 6px 12px;
+  `,
   large: `
-        padding: 8px 16px;
-    `,
+    padding: 8px 16px;
+  `,
 };
 
 export const Container = styled.div`
-  margin: 1px;
   width: 100%;
 `;
 
-export const LabelContainer = styled.div<{ sizing: Sizing }>`
+export const LabelContainer = styled.div<{ sizing: Size }>`
   ${({ sizing }) => paddingSizes[sizing]}
 `;
 
-export const InputContainer = styled.div<{ sizing: Sizing }>`
+export const InputContainer = styled.div<{ sizing: Size }>`
   align-items: center;
+  border: 1px solid lightgrey;
   border-radius: 8px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
   display: flex;
   gap: 8px;
   ${({ sizing }) => paddingSizes[sizing]}
 
   :focus-within {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid black;
   }
 `;
 
-export const InputPassword = styled.input<{ sizing: Sizing }>`
+export const InputPassword = styled.input<{ sizing: Size }>`
   border: none;
   font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]};
@@ -66,6 +64,6 @@ export const Component = styled.div`
   display: flex;
 `;
 
-export const ErrorContainer = styled.div<{ sizing: Sizing }>`
+export const ErrorContainer = styled.div<{ sizing: Size }>`
   ${({ sizing }) => paddingSizes[sizing]}
 `;

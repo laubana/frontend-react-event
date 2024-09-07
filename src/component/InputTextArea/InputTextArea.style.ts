@@ -35,14 +35,12 @@ export const LabelContainer = styled.div<{ sizing: Sizing }>`
 `;
 
 export const InputContainer = styled.div<{ sizing: Sizing }>`
+  border: 1px solid lightgrey;
   border-radius: 8px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
-  margin: 2px;
   ${({ sizing }) => paddingSizes[sizing]}
 
   :focus-within {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid black;
   }
 `;
 
@@ -50,6 +48,7 @@ export const InputTextArea = styled.textarea<{ sizing: Sizing }>`
   border: none;
   font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]};
+  padding: 0;
   resize: none;
   width: 100%;
 

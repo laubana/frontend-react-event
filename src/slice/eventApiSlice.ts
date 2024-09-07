@@ -1,21 +1,23 @@
 import { apiSlice } from "./apiSlice";
 
 import { Event } from "../type/Event";
+import { Place } from "../type/Place";
 
-type AddEventReq = {
-  categoryId: string;
-  thumbnailUrl: string;
-  imageUrl: string;
-  name: string;
-  address: string;
-  latitude: number;
-  longitude: number;
+type AddEventPayload = {
+  dateTimes: Date[];
   description: string;
+  fee: string;
+  groupId: string;
+  name: string;
+  places: Place[];
 };
 
 export const eventApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    addEvent: builder.mutation<{ message: string; data: Event }, AddEventReq>({
+    addEvent: builder.mutation<
+      { message: string; data: Event },
+      AddEventPayload
+    >({
       query: (body) => ({
         url: `/api/event`,
         method: "POST",

@@ -12,13 +12,13 @@ const Component = () => {
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputPassword
-          sizing="small"
+          size="small"
           placeholder="Password"
           password={password}
           setPassword={(text: string) => setPassword(text)}
         />
         <InputPassword
-          sizing="small"
+          size="small"
           password={password}
           setPassword={(text: string) => setPassword(text)}
         />
@@ -38,13 +38,13 @@ const Component = () => {
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputPassword
-          sizing="large"
+          size="large"
           placeholder="Password"
           password={password}
           setPassword={(text: string) => setPassword(text)}
         />
         <InputPassword
-          sizing="large"
+          size="large"
           password={password}
           setPassword={(text: string) => setPassword(text)}
         />

@@ -6,7 +6,7 @@ import Text from "../../component/Text";
 import "../../../src/index.css";
 
 const Component = () => {
-  const [data, setDate] = useState<Date>(new Date());
+  const [data, setDate] = useState<Date | undefined>(new Date());
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
@@ -16,9 +16,9 @@ const Component = () => {
           placeholder="Date"
           date={data}
           setDate={setDate}
-          sizing="small"
+          size="small"
         />
-        <Text>{data.toString()}</Text>
+        <Text>{data?.toString()}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputDate
@@ -27,7 +27,7 @@ const Component = () => {
           date={data}
           setDate={setDate}
         />
-        <Text>{data.toString()}</Text>
+        <Text>{data?.toString()}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputDate
@@ -35,9 +35,9 @@ const Component = () => {
           placeholder="Date"
           date={data}
           setDate={setDate}
-          sizing="large"
+          size="large"
         />
-        <Text>{data.toString()}</Text>
+        <Text>{data?.toString()}</Text>
       </div>
     </div>
   );

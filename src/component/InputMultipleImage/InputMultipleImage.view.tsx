@@ -49,7 +49,7 @@ const InputMultipleImageComponent = (
     <Container>
       {label && (
         <LabelContainer sizing={sizing}>
-          <Text sizing={sizing}>{label}</Text>
+          <Text size={sizing}>{label}</Text>
         </LabelContainer>
       )}
       <InputContainer>
@@ -92,7 +92,7 @@ const InputMultipleImageComponent = (
       </InputContainer>
       {error && (
         <ErrorContainer sizing={sizing}>
-          <Text sizing={sizing} coloring="red">
+          <Text size={sizing} color="red">
             {error}
           </Text>
         </ErrorContainer>

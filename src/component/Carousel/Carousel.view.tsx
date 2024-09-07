@@ -1,15 +1,15 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import { CarouselProps } from "./Carousel.props";
-import { Container } from "./Carousel.style";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "./Carousel.css";
+import React from "react";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-const Carousel = (props: CarouselProps): JSX.Element => {
+import "./Carousel.css";
+import { CarouselProps } from "./Carousel.props";
+import { Container } from "./Carousel.style";
+
+const CarouselComponent = (props: CarouselProps): JSX.Element => {
   const { items } = props;
 
   return (
@@ -28,4 +28,4 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   );
 };
 
-export default React.memo(Carousel);
+export default React.memo(CarouselComponent);

@@ -41,7 +41,7 @@ const SignUpView = (props: SignUpProps) => {
 
   return (
     <Container>
-      <Text sizing="large">Sign Up</Text>
+      <Text size="large">Sign Up</Text>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -151,7 +151,7 @@ const SignUpView = (props: SignUpProps) => {
           </Grid>
         )}
       </Formik>
-      <Button coloring="black" onClick={handleGoBack} block>
+      <Button color="black" onClick={handleGoBack} block>
         Go Back
       </Button>
     </Container>

@@ -1,7 +1,7 @@
 import { ReactNode, CSSProperties } from "react";
 
 export interface GridProps {
-  columns?: number;
   children: ReactNode;
+  columns?: number;
   style?: CSSProperties;
 }

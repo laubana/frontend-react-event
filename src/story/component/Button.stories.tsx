@@ -6,30 +6,30 @@ import "../../../src/index.css";
 const Component = () => {
   return (
     <div>
-      <Button sizing="small" onClick={() => null}>
+      <Button size="small" onClick={() => null}>
         Button
       </Button>
       <Button>Button</Button>
-      <Button sizing="large">Button</Button>
-      <Button sizing="small" coloring="black">
+      <Button size="large">Button</Button>
+      <Button size="small" color="black">
         Button
       </Button>
-      <Button coloring="black">Button</Button>
-      <Button sizing="large" coloring="black">
+      <Button color="black">Button</Button>
+      <Button size="large" color="black">
         Button
       </Button>
-      <Button sizing="small" coloring="white">
+      <Button size="small" color="white">
         Button
       </Button>
-      <Button coloring="white">Button</Button>
-      <Button sizing="large" coloring="white">
+      <Button color="white">Button</Button>
+      <Button size="large" color="white">
         Button
       </Button>
-      <Button sizing="small" coloring="transparent">
+      <Button size="small" color="transparent">
         Button
       </Button>
-      <Button coloring="transparent">Button</Button>
-      <Button sizing="large" coloring="transparent">
+      <Button color="transparent">Button</Button>
+      <Button size="large" color="transparent">
         Button
       </Button>
     </div>

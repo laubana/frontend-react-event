@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ImageType } from "react-images-uploading";
 
@@ -8,6 +8,7 @@ import DetailView from "./Detail.view";
 import { uploadImage } from "../../../service/s3";
 import { selectAccessToken } from "../../../slice/authSlice";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
+import { useAddEventMutation } from "../../../slice/eventApiSlice";
 import {
   useGetGroupQuery,
   useUpdateGroupMutation,
@@ -28,12 +29,13 @@ import {
 } from "../../../slice/groupRegistrationApiSlice";
 import { EventForm } from "../../../type/EventForm";
 import { GroupComment } from "../../../type/GroupComment";
+import { GroupForm } from "../../../type/GroupForm";
 import { GroupImage } from "../../../type/GroupImage";
 import { GroupRegistration } from "../../../type/GroupRegistration";
-import { GroupForm } from "../../../type/GroupForm";
 
 const Detail = () => {
   const { groupId } = useParams();
+  const navigate = useNavigate();
 
   const accessToken = useSelector(selectAccessToken);
 
@@ -44,19 +46,14 @@ const Detail = () => {
     refetch: refetchGroup,
   } = useGetGroupQuery(groupId, { skip: !groupId });
   const { data: groupComments = { message: "", data: [] } } =
-    useGetGroupCommentsQuery(groupId, {
-      skip: !groupId,
-    });
+    useGetGroupCommentsQuery(groupId, { skip: !groupId });
   const { data: groupImages = { message: "", data: [] } } =
     useGetGroupImagesQuery(groupId, { skip: !groupId });
   const { data: groupRegistration = { message: "", data: undefined } } =
-    useGetGroupRegistrationQuery(groupId, {
-      skip: !groupId,
-    });
+    useGetGroupRegistrationQuery(groupId, { skip: !groupId });
   const { data: groupRegistrations = { message: "", data: [] } } =
-    useGetGroupRegistrationsQuery(groupId, {
-      skip: !groupId,
-    });
+    useGetGroupRegistrationsQuery(groupId, { skip: !groupId });
+  const [addEvent] = useAddEventMutation();
   const [addGroupComment] = useAddGroupCommentMutation();
   const [addGroupImage] = useAddGroupImageMutation();
   const [addGroupRegistration] = useAddGroupRegistrationMutation();
@@ -73,15 +70,19 @@ const Detail = () => {
     useState<boolean>(false);
   const [isVisibleUpdateGroup, setIsVisibleUpdateGroup] =
     useState<boolean>(false);
-  const [pagedGroupComments, setPagedComments] = useState<GroupComment[]>([]);
-  const [pagedGroupImages, setPagedImages] = useState<GroupImage[]>([]);
+  const [pagedGroupComments, setPagedGroupComments] = useState<GroupComment[]>(
+    []
+  );
+  const [pagedGroupImages, setPagedGroupImages] = useState<GroupImage[]>([]);
   const [pagedGroupRegistrations, setPagedGroupRegistrations] = useState<
     GroupRegistration[]
   >([]);
 
   const handleAddGroupComment = () => {
-    if (group.data && group.data._id && inputComment) {
-      addGroupComment({ groupId: group.data._id, value: inputComment });
+    if (inputComment) {
+      if (groupId) {
+        addGroupComment({ groupId, value: inputComment });
+      }
     }
   };
 
@@ -98,28 +99,51 @@ const Detail = () => {
   };
 
   const handleConfirmAddEvent = async (values: EventForm) => {
-    console.log(values);
+    try {
+      if (groupId) {
+        const addEventResponse = await addEvent({
+          dateTimes: values.dateTimes,
+          description: values.description,
+          fee: values.fee,
+          groupId: groupId,
+          name: values.name,
+          places: values.places,
+        }).unwrap();
+
+        navigate(`/event/${addEventResponse.data._id}`);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleConfirmAddGroupImage = async () => {
-    if (inputImage) {
-      const imageUrl = await uploadImage("group-image", inputImage);
-      if (group.data && group.data._id && imageUrl) {
-        await addGroupImage({
-          groupId: group.data._id,
-          imageUrl,
-        }).unwrap();
-        setIsVisibleAddGroupImage(false);
-        setInputImage(undefined);
+    try {
+      if (inputImage) {
+        setIsLoading(true);
+
+        const imageUrl = await uploadImage("group-image", inputImage);
+        if (groupId && imageUrl) {
+          await addGroupImage({
+            groupId,
+            imageUrl,
+          }).unwrap();
+          setIsVisibleAddGroupImage(false);
+          setInputImage(undefined);
+        }
       }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleConfirmUpdateGroup = async (values: GroupForm) => {
     try {
       setIsLoading(true);
-
-      console.log(values.image);
 
       const imageUrl =
         typeof values.image === "object"
@@ -160,11 +184,11 @@ const Detail = () => {
   };
 
   const handleGroupCommentPagination = (items: any[]) => {
-    setPagedComments(items);
+    setPagedGroupComments(items);
   };
 
   const handleGroupImagePagination = (items: any[]) => {
-    setPagedImages(items);
+    setPagedGroupImages(items);
   };
 
   const handleGroupRegistrationPagination = (items: any[]) => {
@@ -173,7 +197,7 @@ const Detail = () => {
 
   const handleJoin = () => {
     if (groupId) {
-      addGroupRegistration({ groupId: groupId });
+      addGroupRegistration({ groupId });
     }
   };
 

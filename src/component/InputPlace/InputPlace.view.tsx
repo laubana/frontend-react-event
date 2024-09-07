@@ -22,12 +22,12 @@ import {
 import Text from "../Text";
 
 const InputPlaceComponent = ({
+  address,
+  error,
   label,
   placeholder,
-  address,
   setPlace,
-  error,
-  sizing = "medium",
+  size = "medium",
 }: InputPlaceProps): JSX.Element => {
   const { placesService } = useGoogle({
     apiKey: process.env.REACT_APP_GOOGLE_MAPS,
@@ -47,8 +47,14 @@ const InputPlaceComponent = ({
     apiKey: process.env.REACT_APP_GOOGLE_MAPS,
   });
 
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>(address || "");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsVisible(false);
+    }
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -60,12 +66,6 @@ const InputPlaceComponent = ({
       setInputValue("");
     }
     setIsVisible(true);
-  };
-
-  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
-    if (!event.currentTarget.contains(event.relatedTarget)) {
-      setIsVisible(false);
-    }
   };
 
   const handleSelect = (placePrediction: any) => {
@@ -111,24 +111,24 @@ const InputPlaceComponent = ({
   return (
     <Container>
       {label && (
-        <LabelContainer sizing={sizing}>
+        <LabelContainer sizing={size}>
           <Text>{label}</Text>
         </LabelContainer>
       )}
       <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
-        <InputContainer sizing={sizing}>
+        <InputContainer sizing={size}>
           <Input
             tabIndex={0}
             value={inputValue}
             onChange={handleChange}
             placeholder={placeholder}
-            sizing={sizing}
+            sizing={size}
           />
           <Component tabIndex={1}>
             {isVisible ? (
-              <FaChevronUp color="grey" />
+              <FaChevronUp color="black" cursor="pointer" />
             ) : (
-              <FaChevronDown color="grey" />
+              <FaChevronDown color="lightgrey" cursor="pointer" />
             )}
           </Component>
         </InputContainer>
@@ -140,7 +140,7 @@ const InputPlaceComponent = ({
                 <Item
                   tabIndex={2}
                   onClick={() => handleSelect(placePrediction)}
-                  sizing={sizing}
+                  sizing={size}
                   key={index}
                 >
                   <ComponentContainer>
@@ -148,7 +148,7 @@ const InputPlaceComponent = ({
                   </ComponentContainer>
                   <AddressContainer>
                     <Text
-                      sizing={sizing}
+                      size={size}
                       style={{ textAlign: "start", wordBreak: "break-all" }}
                     >
                       {placePrediction.description}
@@ -160,12 +160,12 @@ const InputPlaceComponent = ({
                 <Item
                   tabIndex={2}
                   onClick={() => handleSelect(placePrediction)}
-                  sizing={sizing}
+                  sizing={size}
                   key={index}
                 >
                   <AddressContainer>
                     <Text
-                      sizing={sizing}
+                      size={size}
                       style={{ textAlign: "start", wordBreak: "break-all" }}
                     >
                       {placePrediction.description}
@@ -177,8 +177,8 @@ const InputPlaceComponent = ({
           )}
       </Wrapper>
       {error && (
-        <ErrorContainer sizing={sizing}>
-          <Text coloring="red">{error}</Text>
+        <ErrorContainer sizing={size}>
+          <Text color="red">{error}</Text>
         </ErrorContainer>
       )}
     </Container>

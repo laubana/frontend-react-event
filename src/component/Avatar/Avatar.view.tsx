@@ -1,15 +1,16 @@
 import React from "react";
+
 import { AvatarProps } from "./Avatar.props";
 import { Container, Image } from "./Avatar.style";
 
-const Avatar = (props: AvatarProps): JSX.Element => {
-  const { imageUrl, coloring = "lightgrey" } = props;
+const AvatarComponent = (props: AvatarProps): JSX.Element => {
+  const { color = "lightgrey", imageUrl } = props;
 
   return (
     <Container>
-      <Image src={imageUrl} coloring={coloring} />
+      <Image src={imageUrl} coloring={color} />
     </Container>
   );
 };
 
-export default React.memo(Avatar);
+export default React.memo(AvatarComponent);

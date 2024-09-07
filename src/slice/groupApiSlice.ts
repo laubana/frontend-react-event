@@ -2,7 +2,7 @@ import { apiSlice } from "./apiSlice";
 
 import { Group } from "../type/Group";
 
-type AddGroupReq = {
+type AddGroupPayload = {
   address: string;
   categoryId: string;
   description: string;
@@ -10,10 +10,12 @@ type AddGroupReq = {
   latitude: number;
   longitude: number;
   name: string;
+  paymentIntentId?: string;
+  paymentMethodId?: string;
   thumbnailUrl: string;
 };
 
-type UpdateGroupReq = {
+type UpdateGroupPayload = {
   address: string;
   categoryId: string;
   description: string;
@@ -27,7 +29,10 @@ type UpdateGroupReq = {
 
 export const groupApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    addGroup: builder.mutation<{ message: string; data: Group }, AddGroupReq>({
+    addGroup: builder.mutation<
+      { message: string; data: Group },
+      AddGroupPayload
+    >({
       query: (body) => ({
         url: `/api/group`,
         method: "POST",
@@ -67,7 +72,7 @@ export const groupApiSlice = apiSlice.injectEndpoints({
     }),
     updateGroup: builder.mutation<
       { message: string; data: Group },
-      UpdateGroupReq
+      UpdateGroupPayload
     >({
       query: (body) => ({
         url: `/api/group/${body.groupId}`,

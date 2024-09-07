@@ -1,7 +1,7 @@
-import { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export interface ColumnsProps {
-  columns: string;
   children: ReactNode;
+  columns: string;
   style?: CSSProperties;
 }

@@ -21,7 +21,7 @@ const SigninView = (props: SignInProps) => {
 
   return (
     <Container>
-      <Text sizing="large">Sign In</Text>
+      <Text size="large">Sign In</Text>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -67,7 +67,7 @@ const SigninView = (props: SignInProps) => {
           Sign In with Google
         </Button>
       </Grid>
-      <Button coloring="black" onClick={handleGoBack} block>
+      <Button color="black" onClick={handleGoBack} block>
         Go Back
       </Button>
     </Container>

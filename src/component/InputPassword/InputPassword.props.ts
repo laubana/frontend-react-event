@@ -1,10 +1,10 @@
-export type Sizing = "small" | "medium" | "large";
+import { Size } from "../../type/Size";
 
-export interface InputTextProps {
-  label?: string;
-  placeholder?: string;
-  password?: string;
-  setPassword?: (text: string) => void;
+export interface InputPasswordProps {
   error?: string;
-  sizing?: Sizing;
+  label?: string;
+  password?: string;
+  placeholder?: string;
+  setPassword?: (text: string) => void;
+  size?: Size;
 }

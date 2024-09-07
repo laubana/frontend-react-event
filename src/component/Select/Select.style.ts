@@ -1,16 +1,17 @@
 import styled from "@emotion/styled";
-import { Size } from "../Select/Select.props";
+
+import { Size } from "../../type/Size";
 
 const sizes: Record<Size, string> = {
   small: `
-        padding: 4px 8px;
-    `,
+    padding: 4px 8px;
+  `,
   medium: `
-        padding: 6px 12px;
-    `,
+    padding: 6px 12px;
+  `,
   large: `
-        padding: 8px 16px;
-    `,
+    padding: 8px 16px;
+  `,
 };
 
 export const Container = styled.div``;

@@ -1,72 +1,92 @@
 import styled from "@emotion/styled";
 
-import { Sizing, Coloring } from "./Button.props";
+import { Color } from "../../type/Color";
+import { Size } from "../../type/Size";
 
-const fontSizes: Record<Sizing, string> = {
+const fontSizes: Record<Size, string> = {
   small: `
-        font-size: 12px;
-    `,
+    font-size: 12px;
+  `,
   medium: `
-        font-size: 16px;
-    `,
+    font-size: 16px;
+  `,
   large: `
-        font-size: 20px;
-    `,
+    font-size: 20px;
+  `,
 };
 
-const paddingSizes: Record<Sizing, string> = {
+const paddingSizes: Record<Size, string> = {
   small: `
-        padding: 4px 8px;
-    `,
+    padding: 4px 8px;
+  `,
   medium: `
-        padding: 6px 12px;
-    `,
+    padding: 6px 12px;
+  `,
   large: `
-        padding: 8px 16px;
-    `,
+    padding: 8px 16px;
+  `,
 };
 
-const colors: Record<Coloring, string> = {
-  black: `        
-        background-color: black;
-        color: white;
-        &:hover {
-          background-color: grey;
-        }
-    `,
-  white: `        
-        background-color: white;
-        color: black;
-        &:hover {
-          background-color: white;
-          color: white;
-        }
-    `,
-  red: `        
-        background-color: crimson;
-        color: white;
-        &:hover {
-          background-color: tomato;
-        }
-    `,
-  transparent: `  
-        background-color: transparent;
-        color: black;
-    `,
+const colors: Record<Color, string> = {
+  black: `
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+
+    &:hover {
+      background-color: grey;
+      border: 1px solid grey;
+    }
+  `,
+  lightgrey: `
+    background-color: lightgrey;
+    border: 1px solid lightgrey;
+    color: white;
+
+    &:hover {
+      background-color: grey;
+      border: 1px solid grey;
+    }
+  `,
+  red: `
+    background-color: crimson;
+    border: 1px solid crimson;
+    color: white;
+
+    &:hover {
+      background-color: tomato;
+      border: 1px solid tomato;
+    }
+  `,
+  transparent: `
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: black;
+  `,
+  white: `
+    background-color: white;
+    border: 1px solid white;
+    color: black;
+
+    &:hover {
+      background-color: white;
+      border: 1px solid white;
+      color: white;
+    }
+  `,
 };
 
 export const Button = styled.button<{
-  size: Sizing;
-  color: Coloring;
+  sizing: Size;
+  coloring: Color;
   block?: boolean;
   nopadding?: boolean;
 }>`
-  ${({ size }) => paddingSizes[size]};
-  ${({ size }) => fontSizes[size]};
-  ${({ color }) => colors[color]};
+  ${({ sizing }) => paddingSizes[sizing]};
+  ${({ sizing }) => fontSizes[sizing]};
+  ${({ coloring }) => colors[coloring]};
   ${({ block }) => block && "display: block; width: 100%;"}
   ${({ nopadding }) => nopadding && "padding: 0;"}
-  border: 0;
   border-radius: 8px;
   font-family: "Montserrat", sans-serif;
   white-space: nowrap;

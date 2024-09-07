@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
-import { Coloring } from "./Avatar.props";
+
+import { Color } from "../../type/Color";
 
 export const Container = styled.div``;
 
-export const Image = styled.img<{ coloring: Coloring }>`
-  ${({ coloring }) => `border: 3px solid ${coloring};`}
-  width: 100%;
+export const Image = styled.img<{ coloring: Color }>`
   aspect-ratio: 1;
-  object-fit: cover;
+  ${({ coloring }) => `border: 3px solid ${coloring};`}
   border-radius: 50%;
+  object-fit: cover;
+  width: 100%;
 `;

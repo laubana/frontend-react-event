@@ -21,8 +21,8 @@ const ProtectComponent = (props: ProtectProps): JSX.Element => {
   useEffect((): any => {
     const main = async () => {
       try {
-        const response = await refresh().unwrap();
-        dispatch(setAuth(response.data));
+        const refreshResponse = await refresh().unwrap();
+        dispatch(setAuth(refreshResponse.data));
       } catch (error) {
       } finally {
         setIsRefreshed(true);

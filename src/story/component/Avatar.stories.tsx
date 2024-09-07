@@ -8,7 +8,7 @@ const Component = () => {
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "64px" }}>
         <Avatar imageUrl="https://picsum.photos/100" />
-        <Avatar imageUrl="https://picsum.photos/100" coloring="red" />
+        <Avatar imageUrl="https://picsum.photos/100" color="red" />
       </div>
     </div>
   );
