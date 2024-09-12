@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import Auth from "./layout/Auth";
+import EventCreate from "./page/Event/Create";
 import EventDetail from "./page/Event/Detail";
 import GroupCreate from "./page/Group/Create";
 import GroupDetail from "./page/Group/Detail";
@@ -19,7 +20,12 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="event">
-            <Route path=":eventId" element={<EventDetail />} />
+            <Route element={<Protect allowedRoles={[]} />}>
+              <Route path="create">
+                <Route path=":groupId" element={<EventCreate />} />
+              </Route>
+              <Route path=":eventId" element={<EventDetail />} />
+            </Route>
           </Route>
           <Route path="group">
             <Route element={<Protect allowedRoles={[]} />}>

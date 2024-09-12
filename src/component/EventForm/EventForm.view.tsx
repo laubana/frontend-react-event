@@ -22,6 +22,7 @@ import { convertDate, convertDateTime, convertTime } from "../../helpers/date";
 
 import { EventForm } from "../../type/EventForm";
 import { Place } from "../../type/Place";
+import Calendar from "../Calendar";
 
 const EventFormComponent = ({
   label,
@@ -30,7 +31,7 @@ const EventFormComponent = ({
 }: EventFormProps): JSX.Element => {
   const mapRef = useRef<MapRef>(null);
 
-  const [inputDate, setInputDate] = useState<Date | undefined>(undefined);
+  const [inputDates, setInputDates] = useState<Date[]>([]);
   const [inputTime, setInputTime] = useState<Date | undefined>(undefined);
   const [inputDateTimes, setInputDateTimes] = useState<Date[]>([]);
   const [inputPlaces, setInputPlaces] = useState<Place[]>([]);
@@ -79,8 +80,23 @@ const EventFormComponent = ({
               error={touched.fee ? errors.fee : ""}
             />
             <div>
+              <Label>Date & Time</Label>
               <Flex style={{ alignItems: "flex-end" }}>
-                <InputDate
+                <Calendar
+                  dates={inputDates}
+                  setDates={(dates) => {
+                    setInputDates(dates);
+                  }}
+                />
+                <InputTime
+                  label="Time"
+                  placeholder="HH:mm"
+                  setTime={(time) => {
+                    setInputTime(time);
+                  }}
+                  time={inputTime}
+                />
+                {/* <InputDate
                   date={inputDate}
                   label="Date"
                   placeholder="YYYY-MM-DD"
@@ -95,8 +111,8 @@ const EventFormComponent = ({
                     setInputTime(time);
                   }}
                   time={inputTime}
-                />
-                <Button
+                /> */}
+                {/* <Button
                   onClick={() => {
                     if (inputDate && inputTime) {
                       const date = convertDate(inputDate);
@@ -119,7 +135,7 @@ const EventFormComponent = ({
                   }}
                 >
                   Add
-                </Button>
+                </Button> */}
               </Flex>
               {touched.dateTimesNumber && errors.dateTimesNumber && (
                 <Label color="red">
@@ -129,7 +145,7 @@ const EventFormComponent = ({
             </div>
             <div>
               <Label>Date & Time</Label>
-              <Grid style={{ gap: "8px" }}>
+              {/* <Grid style={{ gap: "8px" }}>
                 {inputDateTimes.map((inputDateTime, inputDateTimeIndex) => (
                   <Flex
                     key={inputDateTimeIndex}
@@ -165,7 +181,7 @@ const EventFormComponent = ({
                     </Button>
                   </Flex>
                 ))}
-              </Grid>
+              </Grid> */}
             </div>
             <InputPlace
               label="Address"

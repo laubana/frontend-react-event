@@ -8,7 +8,6 @@ import DetailView from "./Detail.view";
 import { uploadImage } from "../../../service/s3";
 import { selectAccessToken } from "../../../slice/authSlice";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
-import { useAddEventMutation } from "../../../slice/eventApiSlice";
 import {
   useGetGroupQuery,
   useUpdateGroupMutation,
@@ -27,7 +26,6 @@ import {
   useGetGroupRegistrationQuery,
   useGetGroupRegistrationsQuery,
 } from "../../../slice/groupRegistrationApiSlice";
-import { EventForm } from "../../../type/EventForm";
 import { GroupComment } from "../../../type/GroupComment";
 import { GroupForm } from "../../../type/GroupForm";
 import { GroupImage } from "../../../type/GroupImage";
@@ -53,7 +51,6 @@ const Detail = () => {
     useGetGroupRegistrationQuery(groupId, { skip: !groupId });
   const { data: groupRegistrations = { message: "", data: [] } } =
     useGetGroupRegistrationsQuery(groupId, { skip: !groupId });
-  const [addEvent] = useAddEventMutation();
   const [addGroupComment] = useAddGroupCommentMutation();
   const [addGroupImage] = useAddGroupImageMutation();
   const [addGroupRegistration] = useAddGroupRegistrationMutation();
@@ -65,7 +62,6 @@ const Detail = () => {
     undefined
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isVisibleAddEvent, setIsVisibleAddEvent] = useState<boolean>(false);
   const [isVisibleAddGroupImage, setIsVisibleAddGroupImage] =
     useState<boolean>(false);
   const [isVisibleUpdateGroup, setIsVisibleUpdateGroup] =
@@ -78,6 +74,10 @@ const Detail = () => {
     GroupRegistration[]
   >([]);
 
+  const handleAddEvent = () => {
+    navigate(`/event/create/${groupId}`);
+  };
+
   const handleAddGroupComment = () => {
     if (inputComment) {
       if (groupId) {
@@ -86,37 +86,12 @@ const Detail = () => {
     }
   };
 
-  const handleCloseAddEvent = () => {
-    setIsVisibleAddEvent(false);
-  };
-
   const handleCloseAddGroupImage = () => {
     setIsVisibleAddGroupImage(false);
   };
 
   const handleCloseUpdateGroup = () => {
     setIsVisibleUpdateGroup(false);
-  };
-
-  const handleConfirmAddEvent = async (values: EventForm) => {
-    try {
-      if (groupId) {
-        const addEventResponse = await addEvent({
-          dateTimes: values.dateTimes,
-          description: values.description,
-          fee: values.fee,
-          groupId: groupId,
-          name: values.name,
-          places: values.places,
-        }).unwrap();
-
-        navigate(`/event/${addEventResponse.data._id}`);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const handleConfirmAddGroupImage = async () => {
@@ -209,10 +184,6 @@ const Detail = () => {
     }
   };
 
-  const handleOpenAddEvent = () => {
-    setIsVisibleAddEvent(true);
-  };
-
   const handleOpenAddGroupImage = () => {
     setIsVisibleAddGroupImage(true);
   };
@@ -229,11 +200,10 @@ const Detail = () => {
     groupImages: groupImages.data,
     groupRegistration: groupRegistration.data,
     groupRegistrations: groupRegistrations.data,
+    handleAddEvent,
     handleAddGroupComment,
-    handleCloseAddEvent,
     handleCloseAddGroupImage,
     handleCloseUpdateGroup,
-    handleConfirmAddEvent,
     handleConfirmAddGroupImage,
     handleConfirmUpdateGroup,
     handleGroupCommentPagination,
@@ -241,13 +211,11 @@ const Detail = () => {
     handleGroupRegistrationPagination,
     handleJoin,
     handleLeave,
-    handleOpenAddEvent,
     handleOpenAddGroupImage,
     handleOpenUpdateGroup,
     inputComment,
     inputImage,
     isLoading,
-    isVisibleAddEvent,
     isVisibleAddGroupImage,
     isVisibleUpdateGroup,
     pagedGroupComments,

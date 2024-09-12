@@ -112,13 +112,13 @@ const InputDateComponent = (props: InputDateProps): JSX.Element => {
           <ListContainer>
             <Calendar
               inline
-              selected={date}
+              minDate={new Date()}
               onChange={(date) => {
                 if (date) {
                   handleSelect(date);
                 }
               }}
-              minDate={new Date()}
+              selected={date}
             />
           </ListContainer>
         )}

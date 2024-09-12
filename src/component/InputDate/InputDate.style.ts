@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 import { Size } from "../../type/Size";
 
 const fontSizes: Record<Size, string> = {

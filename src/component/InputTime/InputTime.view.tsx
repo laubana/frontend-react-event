@@ -66,6 +66,8 @@ const InputTimeComponent = (props: InputTimeProps): JSX.Element => {
     }
 
     const HH = inputText.split(":")[0];
+    console.log(+inputText.split(":")[1].charAt(1) / 5);
+    console.log(Math.round(+inputText.split(":")[1].charAt(1) / 10) * 5);
     const mm = inputText.split(":")[1];
 
     if (0 <= +HH && +HH <= 23 && 0 <= +mm && +mm <= 55) {
@@ -73,6 +75,17 @@ const InputTimeComponent = (props: InputTimeProps): JSX.Element => {
       setIsVisible(false);
     }
   }, [inputText]);
+
+  const test = new Date();
+  test.setFullYear(1970);
+  test.setMonth(0);
+  test.setDate(1);
+  test.setHours(12);
+  test.setMinutes(5);
+  test.setSeconds(0);
+  test.setMilliseconds(0);
+
+  console.log(test);
 
   return (
     <Container style={style}>
@@ -99,14 +112,16 @@ const InputTimeComponent = (props: InputTimeProps): JSX.Element => {
             <ReactDatePicker
               inline
               onChange={(time) => {
-                if (time) {
-                  handleSelect(time);
-                }
+                // if (time) {
+                //   handleSelect(time);
+                // }
               }}
-              selected={time}
+              // selected={time}
+              selectsMultiple
               showTimeSelect
               showTimeSelectOnly
               timeFormat="HH:mm"
+              selectedDates={[test]}
               timeIntervals={5}
             />
           </ListContainer>

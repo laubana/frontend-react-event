@@ -9,11 +9,11 @@ import {
   Thumbnail,
   TitleContainer,
 } from "./Detail.style";
+
 import Avatar from "../../../component/Avatar";
 import Button from "../../../component/Button";
 import Columns from "../../../component/Columns";
 import Comment from "../../../module/Comment";
-import EventForm from "../../../component/EventForm";
 import Grid from "../../../component/Grid";
 import GroupForm from "../../../component/GroupForm";
 import InputSingleImage from "../../../component/InputSingleImage";
@@ -33,11 +33,10 @@ const Detail = (props: DetailProps) => {
     groupImages,
     groupRegistration,
     groupRegistrations,
+    handleAddEvent,
     handleAddGroupComment,
-    handleCloseAddEvent,
     handleCloseAddGroupImage,
     handleCloseUpdateGroup,
-    handleConfirmAddEvent,
     handleConfirmAddGroupImage,
     handleConfirmUpdateGroup,
     handleGroupCommentPagination,
@@ -45,13 +44,11 @@ const Detail = (props: DetailProps) => {
     handleGroupRegistrationPagination,
     handleJoin,
     handleLeave,
-    handleOpenAddEvent,
     handleOpenAddGroupImage,
     handleOpenUpdateGroup,
     inputComment,
     inputImage,
     isLoading,
-    isVisibleAddEvent,
     isVisibleAddGroupImage,
     isVisibleUpdateGroup,
     pagedGroupComments,
@@ -125,9 +122,9 @@ const Detail = (props: DetailProps) => {
               )}
               <TitleContainer>
                 <Text size="large">Event</Text>
-                {group.user._id === groupRegistration?.user._id && (
-                  <Button onClick={handleOpenAddEvent}>Create</Button>
-                )}
+                {/* {group.user._id === groupRegistration?.user._id && (
+                  <Button onClick={handleAddEvent}>Create</Button>
+                )} */}
               </TitleContainer>
               <TitleContainer>
                 <Text size="large">Comment</Text>
@@ -185,21 +182,6 @@ const Detail = (props: DetailProps) => {
               )}
             </Grid>
           </Columns>
-          <Modal isVisibile={isVisibleAddEvent} onClose={handleCloseAddEvent}>
-            <EventForm
-              label="Confirm"
-              onSubmit={handleConfirmAddEvent}
-              values={{
-                dateTimes: [],
-                dateTimesNumber: 0,
-                description: "",
-                fee: "",
-                name: "",
-                places: [],
-                placesNumber: 0,
-              }}
-            />
-          </Modal>
           <Modal
             isVisibile={isVisibleAddGroupImage}
             onClose={handleCloseAddGroupImage}
