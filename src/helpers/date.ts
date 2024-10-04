@@ -1,4 +1,4 @@
-export const convertDate = (date?: Date) => {
+export const convertDate = (date: Date | null) => {
   if (date) {
     const MM = date.getMonth() + 1;
     const dd = date.getDate();
@@ -10,7 +10,7 @@ export const convertDate = (date?: Date) => {
   }
 };
 
-export const convertDateTime = (date?: Date) => {
+export const convertDateTime = (date: Date | null) => {
   if (date) {
     return `${convertDate(date)}T${convertTime(date)}:00`;
   } else {
@@ -18,7 +18,7 @@ export const convertDateTime = (date?: Date) => {
   }
 };
 
-export const convertTime = (date?: Date) => {
+export const convertTime = (date: Date | null) => {
   if (date) {
     const HH = date.getHours();
     const mm = date.getMinutes();

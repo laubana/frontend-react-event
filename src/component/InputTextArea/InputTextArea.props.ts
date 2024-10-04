@@ -1,10 +1,10 @@
-export type Sizing = "small" | "medium" | "large";
+import { Size } from "../../type/Size";
 
 export interface InputTextAreaProps {
+  error?: string;
   label?: string;
   placeholder?: string;
-  text: string;
   setText: (text: string) => void;
-  error?: string;
-  sizing?: Sizing;
+  sizing?: Size;
+  text: string;
 }

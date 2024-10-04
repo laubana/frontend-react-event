@@ -15,8 +15,10 @@ const InputDateComponent = (props: CalendarProps): JSX.Element => {
     }
   };
 
-  const handleSelect = (date: Date) => {
-    onSelect(date);
+  const handleSelect = (date: Date | null) => {
+    if (date) {
+      onSelect(date);
+    }
   };
 
   return (

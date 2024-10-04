@@ -4,30 +4,20 @@ import ImageUploading, {
   ImageListType,
 } from "react-images-uploading";
 import { FaImages } from "react-icons/fa6";
+
 import { InputMultipleImageProps } from "./InputMultipleImage.props";
-import {
-  Container,
-  LabelContainer,
-  InputContainer,
-  Input,
-  Item,
-  Image,
-  ErrorContainer,
-} from "./InputMultipleImage.style";
-import Text from "../Text";
+import { Wrapper, Input, Item, Image } from "./InputMultipleImage.style";
+
+import InputBase from "../InputBase";
 
 const InputMultipleImageComponent = (
   props: InputMultipleImageProps
 ): JSX.Element => {
-  const { label, images, setImages, error, sizing = "medium" } = props;
+  const { error, images, label, setImages, size = "medium" } = props;
 
   const [inputValues, setInputValues] = useState<ImageListType>(
     images ? images : []
   );
-
-  // useEffect(() => {
-  //   setInputValues(images ? images : []);
-  // }, [images]);
 
   const handleChange = (values: ImageListType) => {
     setInputValues(values);
@@ -46,13 +36,8 @@ const InputMultipleImageComponent = (
   };
 
   return (
-    <Container>
-      {label && (
-        <LabelContainer sizing={sizing}>
-          <Text size={sizing}>{label}</Text>
-        </LabelContainer>
-      )}
-      <InputContainer>
+    <InputBase error={error} label={label} size={size}>
+      <Wrapper>
         <ImageUploading
           value={inputValues}
           maxFileSize={10485760}
@@ -89,15 +74,8 @@ const InputMultipleImageComponent = (
             </>
           )}
         </ImageUploading>
-      </InputContainer>
-      {error && (
-        <ErrorContainer sizing={sizing}>
-          <Text size={sizing} color="red">
-            {error}
-          </Text>
-        </ErrorContainer>
-      )}
-    </Container>
+      </Wrapper>
+    </InputBase>
   );
 };
 

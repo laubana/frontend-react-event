@@ -1,35 +1,27 @@
 import React, { ChangeEvent } from "react";
+
 import { InputTextAreaProps } from "./InputTextArea.props";
-import {
-  Container,
-  LabelContainer,
-  InputContainer,
-  InputTextArea,
-  ErrorContainer,
-} from "./InputTextArea.style";
-import Text from "../Text";
+import { TextArea } from "./InputTextArea.style";
+
+import InputBase from "../InputBase";
+import InputContainer from "../InputContainer";
 
 const InputTextComponent = ({
+  error,
   label,
   placeholder,
-  text,
   setText,
-  error,
   sizing = "medium",
+  text,
 }: InputTextAreaProps): JSX.Element => {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
   };
 
   return (
-    <Container>
-      {label && (
-        <LabelContainer sizing={sizing}>
-          <Text>{label}</Text>
-        </LabelContainer>
-      )}
-      <InputContainer sizing={sizing}>
-        <InputTextArea
+    <InputBase error={error} label={label} size={sizing}>
+      <InputContainer size={sizing}>
+        <TextArea
           placeholder={placeholder}
           value={text}
           onChange={handleChange}
@@ -37,12 +29,7 @@ const InputTextComponent = ({
           rows={5}
         />
       </InputContainer>
-      {error && (
-        <ErrorContainer sizing={sizing}>
-          <Text color="red">{error}</Text>
-        </ErrorContainer>
-      )}
-    </Container>
+    </InputBase>
   );
 };
 

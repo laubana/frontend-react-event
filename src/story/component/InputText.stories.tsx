@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+
 import InputText from "../../component/InputText";
 import Text from "../../component/Text";
 
@@ -10,6 +11,11 @@ const Component = () => {
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <InputText label="Text" text={text} placeholder="Text" />
+        <InputText label="Text" />
+        <Text>{text}</Text>
+      </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputText
           label="Text"

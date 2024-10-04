@@ -6,6 +6,6 @@ export interface InputPlaceProps {
   error?: string;
   label?: string;
   placeholder?: string;
-  setPlace: (place: Place) => void;
+  setPlace?: (place: Place) => void;
   size?: Size;
 }

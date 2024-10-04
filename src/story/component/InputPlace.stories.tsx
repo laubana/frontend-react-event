@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import Geocode from "react-geocode";
-import { Place } from "../../type/Place";
+
 import InputPlace from "../../component/InputPlace";
 import Text from "../../component/Text";
+import { Place } from "../../type/Place";
 
 import "../../../src/index.css";
 
@@ -14,6 +14,11 @@ const Component = () => {
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
+      <div style={{ display: "grid", gap: "16px" }}>
+        <InputPlace label="Place" placeholder="Address" />
+        <InputPlace label="Place" />
+        <Text>{place?.address}</Text>
+      </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <InputPlace
           label="Place"

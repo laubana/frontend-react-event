@@ -1,73 +1,16 @@
 import styled from "@emotion/styled";
 
+import { fontSizes, paddingSizes } from "../../theme/Size";
 import { Size } from "../../type/Size";
 
-const fontSizes: Record<Size, string> = {
-  small: `
-    font-size: 14px;
-  `,
-  medium: `
-    font-size: 16px;
-  `,
-  large: `
-    font-size: 18px;
-  `,
-};
-
-const paddingSizes: Record<Size, string> = {
-  small: `
-    padding: 4px 8px;
-  `,
-  medium: `
-    padding: 6px 12px;
-  `,
-  large: `
-    padding: 8px 16px;
-  `,
-};
-
-export const Component = styled.div`
+export const Component = styled.div<{ sizing: Size }>`
   align-items: center;
-  background-color: white;
   display: flex;
-`;
-
-export const Container = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
-export const ErrorContainer = styled.div<{ sizing: Size }>`
-  ${({ sizing }) => paddingSizes[sizing]}
+  ${({ sizing }) => fontSizes[sizing]};
 `;
 
 export const Input = styled.input<{ sizing: Size }>`
-  border: none;
-  font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]};
-  padding: 0;
-  width: 100%;
-
-  :focus {
-    outline: none;
-  }
-`;
-
-export const InputContainer = styled.div<{
-  sizing: Size;
-}>`
-  align-items: center;
-  background-color: white;
-  border: 1px solid lightgrey;
-  border-radius: 8px;
-  display: flex;
-  gap: 8px;
-  justify-content: space-between;
-  ${({ sizing }) => paddingSizes[sizing]};
-
-  :focus-within {
-    border: 1px solid black;
-  }
 `;
 
 export const Item = styled.div<{ sizing: Size }>`
@@ -84,10 +27,6 @@ export const Item = styled.div<{ sizing: Size }>`
   }
 `;
 
-export const LabelContainer = styled.div<{ sizing: Size }>`
-  ${({ sizing }) => paddingSizes[sizing]}
-`;
-
 export const ListContainer = styled.div`
   background-color: white;
   border: 1px solid black;
@@ -100,4 +39,6 @@ export const ListContainer = styled.div`
   z-index: 5;
 `;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  position: relative;
+`;

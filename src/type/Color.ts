@@ -1,1 +1,7 @@
-export type Color = "black" | "lightgrey" | "red" | "transparent" | "white";
+export type Color =
+  | "black"
+  | "grey"
+  | "lightgrey"
+  | "red"
+  | "transparent"
+  | "white";

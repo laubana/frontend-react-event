@@ -1,13 +1,12 @@
-import { CSSProperties } from "react";
-
 import { Option } from "../../type/Option";
 import { Size } from "../../type/Size";
 
 export interface SelectProps {
-  defaultValue?: number;
+  error?: string;
   label?: string;
+  option?: Option | null;
   options: Option[];
-  setOption: (option: Option) => void;
+  placeholder?: string;
+  setOption?: (option: Option | null) => void;
   size?: Size;
-  style?: CSSProperties;
 }

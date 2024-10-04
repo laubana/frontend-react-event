@@ -6,9 +6,7 @@ import "../../../src/index.css";
 const Component = () => {
   return (
     <div>
-      <Button size="small" onClick={() => null}>
-        Button
-      </Button>
+      <Button size="small">Button</Button>
       <Button>Button</Button>
       <Button size="large">Button</Button>
       <Button size="small" color="black">
@@ -16,6 +14,20 @@ const Component = () => {
       </Button>
       <Button color="black">Button</Button>
       <Button size="large" color="black">
+        Button
+      </Button>
+      <Button size="small" color="grey">
+        Button
+      </Button>
+      <Button color="grey">Button</Button>
+      <Button size="large" color="grey">
+        Button
+      </Button>
+      <Button size="small" color="lightgrey">
+        Button
+      </Button>
+      <Button color="lightgrey">Button</Button>
+      <Button size="large" color="lightgrey">
         Button
       </Button>
       <Button size="small" color="white">

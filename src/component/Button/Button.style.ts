@@ -1,31 +1,8 @@
 import styled from "@emotion/styled";
 
+import { fontSizes, paddingSizes } from "../../theme/Size";
 import { Color } from "../../type/Color";
 import { Size } from "../../type/Size";
-
-const fontSizes: Record<Size, string> = {
-  small: `
-    font-size: 12px;
-  `,
-  medium: `
-    font-size: 16px;
-  `,
-  large: `
-    font-size: 20px;
-  `,
-};
-
-const paddingSizes: Record<Size, string> = {
-  small: `
-    padding: 4px 8px;
-  `,
-  medium: `
-    padding: 6px 12px;
-  `,
-  large: `
-    padding: 8px 16px;
-  `,
-};
 
 const colors: Record<Color, string> = {
   black: `
@@ -33,9 +10,19 @@ const colors: Record<Color, string> = {
     border: 1px solid black;
     color: white;
 
-    &:hover {
+    :hover {
       background-color: grey;
       border: 1px solid grey;
+    }
+  `,
+  grey: `
+    background-color: grey;
+    border: 1px solid grey;
+    color: white;
+
+    :hover {
+      background-color: darkgrey;
+      border: 1px solid darkgrey;
     }
   `,
   lightgrey: `
@@ -43,7 +30,7 @@ const colors: Record<Color, string> = {
     border: 1px solid lightgrey;
     color: white;
 
-    &:hover {
+    :hover {
       background-color: grey;
       border: 1px solid grey;
     }
@@ -53,7 +40,7 @@ const colors: Record<Color, string> = {
     border: 1px solid crimson;
     color: white;
 
-    &:hover {
+    :hover {
       background-color: tomato;
       border: 1px solid tomato;
     }
@@ -68,7 +55,7 @@ const colors: Record<Color, string> = {
     border: 1px solid white;
     color: black;
 
-    &:hover {
+    :hover {
       background-color: white;
       border: 1px solid white;
       color: white;

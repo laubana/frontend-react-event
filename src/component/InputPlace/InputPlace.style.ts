@@ -1,87 +1,22 @@
 import styled from "@emotion/styled";
 
+import { fontSizes, paddingSizes } from "../../theme/Size";
 import { Size } from "../../type/Size";
 
-const fontSizes: Record<Size, string> = {
-  small: `
-    font-size: 14px;
-  `,
-  medium: `
-    font-size: 16px;
-  `,
-  large: `
-    font-size: 18px;
-  `,
-};
-
-const paddingSizes: Record<Size, string> = {
-  small: `
-    padding: 4px 8px;
-  `,
-  medium: `
-    padding: 6px 12px;
-  `,
-  large: `
-    padding: 8px 16px;
-  `,
-};
-
-export const Container = styled.div`
-  position: relative;
-  width: 100%;
+export const AddressContainer = styled.div`
+  flex-grow: 1;
 `;
 
-export const LabelContainer = styled.div<{ sizing: Size }>`
-  ${({ sizing }) => paddingSizes[sizing]}
-`;
-
-export const Wrapper = styled.div``;
-
-export const InputContainer = styled.div<{
+export const Component = styled.div<{
   sizing: Size;
 }>`
   align-items: center;
-  background-color: white;
-  border: 1px solid lightgrey;
-  border-radius: 8px;
   display: flex;
-  gap: 8px;
-  justify-content: space-between;
-  ${({ sizing }) => paddingSizes[sizing]}
-
-  :focus-within {
-    border: 1px solid black;
-  }
+  ${({ sizing }) => fontSizes[sizing]};
 `;
 
 export const Input = styled.input<{ sizing: Size }>`
-  border: none;
-  font-family: "Montserrat", sans-serif;
   ${({ sizing }) => fontSizes[sizing]};
-  padding: 0;
-  width: 100%;
-
-  :focus {
-    outline: none;
-  }
-`;
-
-export const Component = styled.div`
-  align-items: center;
-  background-color: white;
-  display: flex;
-`;
-
-export const ListContainer = styled.div`
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 8px;
-  margin-top: 6px;
-  max-height: 150px;
-  overflow-y: auto;
-  position: absolute;
-  width: 100%;
-  z-index: 5;
 `;
 
 export const Item = styled.div<{ sizing: Size }>`
@@ -101,14 +36,18 @@ export const Item = styled.div<{ sizing: Size }>`
   }
 `;
 
-export const ComponentContainer = styled.div`
-  width: 16px;
+export const ListContainer = styled.div`
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-top: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
 `;
 
-export const AddressContainer = styled.div`
-  flex-grow: 1;
-`;
-
-export const ErrorContainer = styled.div<{ sizing: Size }>`
-  ${({ sizing }) => paddingSizes[sizing]}
+export const Wrapper = styled.div`
+  position: relative;
 `;

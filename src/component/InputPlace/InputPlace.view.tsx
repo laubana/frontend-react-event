@@ -6,27 +6,24 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 
 import { InputPlaceProps } from "./InputPlace.props";
 import {
-  Container,
-  LabelContainer,
-  InputContainer,
-  Input,
-  Component,
-  ListContainer,
-  Item,
-  ErrorContainer,
-  ComponentContainer,
   AddressContainer,
+  Component,
+  Input,
+  Item,
+  ListContainer,
   Wrapper,
 } from "./InputPlace.style";
 
 import Text from "../Text";
+import InputBase from "../InputBase";
+import InputContainer from "../InputContainer";
 
 const InputPlaceComponent = ({
   address,
   error,
   label,
   placeholder,
-  setPlace,
+  setPlace = () => null,
   size = "medium",
 }: InputPlaceProps): JSX.Element => {
   const { placesService } = useGoogle({
@@ -48,24 +45,24 @@ const InputPlaceComponent = ({
   });
 
   const [inputValue, setInputValue] = useState<string>(address || "");
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
-      setIsVisible(false);
+      setIsFocused(false);
     }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
-    setIsVisible(true);
+    setIsFocused(true);
   };
 
   const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
       setInputValue("");
+      setIsFocused(true);
     }
-    setIsVisible(true);
   };
 
   const handleSelect = (placePrediction: any) => {
@@ -85,7 +82,7 @@ const InputPlaceComponent = ({
         });
       }
     );
-    setIsVisible(false);
+    setIsFocused(false);
   };
 
   useEffect(() => {
@@ -109,14 +106,9 @@ const InputPlaceComponent = ({
   }, [inputValue]);
 
   return (
-    <Container>
-      {label && (
-        <LabelContainer sizing={size}>
-          <Text>{label}</Text>
-        </LabelContainer>
-      )}
+    <InputBase error={error} label={label} size={size}>
       <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
-        <InputContainer sizing={size}>
+        <InputContainer size={size}>
           <Input
             tabIndex={0}
             value={inputValue}
@@ -124,15 +116,15 @@ const InputPlaceComponent = ({
             placeholder={placeholder}
             sizing={size}
           />
-          <Component tabIndex={1}>
-            {isVisible ? (
+          <Component sizing={size} tabIndex={1}>
+            {isFocused ? (
               <FaChevronUp color="black" cursor="pointer" />
             ) : (
               <FaChevronDown color="lightgrey" cursor="pointer" />
             )}
           </Component>
         </InputContainer>
-        {isVisible &&
+        {isFocused &&
           (0 < currentPlacePredictions.length ||
             0 < inputPlacePredictions.length) && (
             <ListContainer>
@@ -143,9 +135,9 @@ const InputPlaceComponent = ({
                   sizing={size}
                   key={index}
                 >
-                  <ComponentContainer>
+                  <Component sizing={size}>
                     <BiCurrentLocation color="black" />
-                  </ComponentContainer>
+                  </Component>
                   <AddressContainer>
                     <Text
                       size={size}
@@ -176,12 +168,7 @@ const InputPlaceComponent = ({
             </ListContainer>
           )}
       </Wrapper>
-      {error && (
-        <ErrorContainer sizing={size}>
-          <Text color="red">{error}</Text>
-        </ErrorContainer>
-      )}
-    </Container>
+    </InputBase>
   );
 };
 

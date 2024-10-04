@@ -1,33 +1,34 @@
 import styled from "@emotion/styled";
 
+import { fontSizes } from "../../theme/Size";
 import { Size } from "../../type/Size";
 
-const sizes: Record<Size, string> = {
-  small: `
-    padding: 4px 8px;
-  `,
-  medium: `
-    padding: 6px 12px;
-  `,
-  large: `
-    padding: 8px 16px;
-  `,
-};
+export const Component = styled.div<{
+  sizing: Size;
+}>`
+  align-items: center;
+  display: flex;
+  ${({ sizing }) => fontSizes[sizing]};
+`;
 
-export const Container = styled.div``;
+export const Input = styled.input<{ sizing: Size }>`
+  ${({ sizing }) => fontSizes[sizing]};
 
-export const Select = styled.select<{ sizing: Size }>`
-  ${({ sizing }) => sizes[sizing]};
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  border: 1px solid lightgrey;
-  border-radius: 8px;
-  background-color: white;
-
-  &:focus {
-    outline: none;
+  :disabled {
+    background-color: transparent;
   }
 `;
 
-export const Option = styled.option``;
+export const Select = styled.select`
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
+
+export const Wrapper = styled.div`
+  position: relative;
+`;

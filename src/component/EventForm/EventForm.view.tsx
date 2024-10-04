@@ -32,7 +32,7 @@ const EventFormComponent = ({
   const mapRef = useRef<MapRef>(null);
 
   const [inputDates, setInputDates] = useState<Date[]>([]);
-  const [inputTime, setInputTime] = useState<Date | undefined>(undefined);
+  const [inputTime, setInputTime] = useState<Date | null>(null);
   const [inputDateTimes, setInputDateTimes] = useState<Date[]>([]);
   const [inputPlaces, setInputPlaces] = useState<Place[]>([]);
 
@@ -80,22 +80,26 @@ const EventFormComponent = ({
               error={touched.fee ? errors.fee : ""}
             />
             <div>
-              <Label>Date & Time</Label>
-              <Flex style={{ alignItems: "flex-end" }}>
-                <Calendar
-                  dates={inputDates}
-                  setDates={(dates) => {
-                    setInputDates(dates);
-                  }}
-                />
-                <InputTime
-                  label="Time"
-                  placeholder="HH:mm"
-                  setTime={(time) => {
-                    setInputTime(time);
-                  }}
-                  time={inputTime}
-                />
+              <Flex style={{ alignItems: "flex-start" }}>
+                <div>
+                  <Label>Date</Label>
+                  <Calendar
+                    dates={inputDates}
+                    setDates={(dates) => {
+                      setInputDates(dates);
+                    }}
+                  />
+                </div>
+                <div>
+                  <InputTime
+                    label="Time"
+                    placeholder="HH:mm"
+                    setTime={(time) => {
+                      setInputTime(time);
+                    }}
+                    time={inputTime}
+                  />
+                </div>
                 {/* <InputDate
                   date={inputDate}
                   label="Date"

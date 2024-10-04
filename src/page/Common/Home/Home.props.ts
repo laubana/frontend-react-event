@@ -15,7 +15,7 @@ export interface HomeProps {
   isTabletDevice: boolean;
   mapForwardedRef: RefObject<MapRef>;
   pagedGroups?: Group[];
-  setSearchCategory: (option: Option | undefined) => void;
-  setSearchDistance: (option: Option | undefined) => void;
+  setSearchCategory: (option: Option | null) => void;
+  setSearchDistance: (option: Option | null) => void;
   setSearchPlace: (place: Place) => void;
 }

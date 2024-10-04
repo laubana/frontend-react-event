@@ -2,24 +2,16 @@ import styled from "@emotion/styled";
 
 import { Alignment } from "./Text.props";
 
+import { fontSizes } from "../../theme/Size";
 import { Color } from "../../type/Color";
 import { Size } from "../../type/Size";
-
-const fontSizes: Record<Size, string> = {
-  small: `
-    font-size: 12px;
-  `,
-  medium: `
-    font-size: 16px;
-  `,
-  large: `
-    font-size: 20px;
-  `,
-};
 
 const colors: Record<Color, string> = {
   black: `
     color: black;
+    `,
+  grey: `
+    color: grey;
   `,
   lightgrey: `
     color: lightgrey;

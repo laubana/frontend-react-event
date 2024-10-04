@@ -13,44 +13,44 @@ const Component = () => {
     { label: "Carrot", value: "carrot" },
   ];
 
-  const [option, setOption] = useState<Option | undefined>(undefined);
+  const [option, setOption] = useState<Option | null>(null);
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
         <Select
-          size="small"
           options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
+          placeholder="Fruits"
+          setOption={(option) => setOption(option)}
+          size="small"
         />
         <Select
-          size="small"
           options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
+          size="small"
         />
         <Text>{option?.value}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <Select
           options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
+          placeholder="Fruits"
+          setOption={(option) => setOption(option)}
         />
-        <Select
-          options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
-        />
+        <Select options={options} setOption={(option) => setOption(option)} />
         <Text>{option?.value}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <Select
           size="large"
           options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
+          placeholder="Fruits"
+          setOption={(option) => setOption(option)}
         />
         <Select
           size="large"
           options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
         />
         <Text>{option?.value}</Text>
       </div>

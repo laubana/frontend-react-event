@@ -4,9 +4,9 @@ import { Size } from "../../type/Size";
 export interface AutoCompleteProps {
   error?: string;
   label?: string;
-  option?: Option;
+  option?: Option | null;
   options: Option[];
   placeholder?: string;
-  setOption: (option: Option | undefined) => void;
+  setOption?: (option: Option | null) => void;
   size?: Size;
 }

@@ -6,18 +6,10 @@ import Calendar from "react-datepicker";
 import { CiCalendar } from "react-icons/ci";
 
 import { InputDateProps } from "./InputDate.props";
-import {
-  Component,
-  Container,
-  ErrorContainer,
-  InputContainer,
-  InputDate,
-  LabelContainer,
-  ListContainer,
-  Wrapper,
-} from "./InputDate.style";
+import { Component, Input, ListContainer, Wrapper } from "./InputDate.style";
 
-import Text from "../Text";
+import InputBase from "../InputBase";
+import InputContainer from "../InputContainer";
 
 import { convertDate } from "../../helpers/date";
 
@@ -27,43 +19,39 @@ const InputDateComponent = (props: InputDateProps): JSX.Element => {
     error,
     label,
     placeholder,
-    setDate,
+    setDate = () => null,
     size = "medium",
-    style,
   } = props;
-
-  const [inputText, setInputText] = useState<string>(
-    convertDate(date) || convertDate(new Date())
+  const [inputValue, setInputValue] = useState<string>(
+    convertDate(date ?? null) || convertDate(new Date())
   );
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
-      setIsVisible(false);
+      setIsFocused(false);
     }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
-    setIsVisible(true);
+    setInputValue(event.target.value);
   };
 
   const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
-      setInputText("");
+      setInputValue("");
+      setIsFocused(true);
     }
-    setIsVisible(true);
   };
 
   const handleSelect = (date: Date) => {
-    setInputText(convertDate(date));
+    setInputValue(convertDate(date));
     setDate(date);
-    setIsVisible(false);
   };
 
   useEffect(() => {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!inputText.match(regex)) {
+    if (!inputValue.match(regex)) {
       return;
     }
 
@@ -75,40 +63,35 @@ const InputDateComponent = (props: InputDateProps): JSX.Element => {
 
     if (
       moment([
-        inputText.split("-")[0],
-        inputText.split("-")[1],
-        inputText.split("-")[2],
+        inputValue.split("-")[0],
+        inputValue.split("-")[1],
+        inputValue.split("-")[2],
       ]).isValid() &&
-      currentDate <= new Date(`${inputText}T00:00:00`)
+      currentDate <= new Date(`${inputValue}T00:00:00`)
     ) {
-      setDate(new Date(`${inputText}T00:00:00`));
-      setIsVisible(false);
+      setDate(new Date(`${inputValue}T00:00:00`));
+      setIsFocused(false);
     } else {
-      setDate(undefined);
+      setDate(null);
     }
-  }, [inputText]);
+  }, [inputValue]);
 
   return (
-    <Container style={style}>
-      {label && (
-        <LabelContainer sizing={size}>
-          <Text>{label}</Text>
-        </LabelContainer>
-      )}
+    <InputBase error={error} label={label} size={size}>
       <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
-        <InputContainer sizing={size}>
-          <InputDate
+        <InputContainer size={size}>
+          <Input
             onChange={handleChange}
             placeholder={placeholder}
             sizing={size}
             tabIndex={0}
-            value={inputText}
+            value={inputValue}
           />
-          <Component tabIndex={1}>
-            <CiCalendar color="grey" />
+          <Component sizing={size} tabIndex={1}>
+            <CiCalendar color={isFocused ? "black" : "lightgrey"} />
           </Component>
         </InputContainer>
-        {isVisible && (
+        {isFocused && (
           <ListContainer>
             <Calendar
               inline
@@ -123,12 +106,7 @@ const InputDateComponent = (props: InputDateProps): JSX.Element => {
           </ListContainer>
         )}
       </Wrapper>
-      {error && (
-        <ErrorContainer sizing={size}>
-          <Text color="red">{error}</Text>
-        </ErrorContainer>
-      )}
-    </Container>
+    </InputBase>
   );
 };
 

@@ -13,24 +13,29 @@ const Component = () => {
     { label: "Carrot", value: "carrot" },
   ];
 
-  const [option, setOption] = useState<Option | undefined>(undefined);
+  const [option, setOption] = useState<Option | null>(null);
 
   return (
     <div style={{ display: "flex", gap: "16px" }}>
       <div style={{ display: "grid", gap: "16px" }}>
+        <AutoComplete label="Fruits" placeholder="Frults" options={options} />
+        <AutoComplete label="Fruits" options={options} />
+        <Text>{option?.value}</Text>
+      </div>
+      <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
           label="Fruits"
-          placeholder="Frults"
+          placeholder="Fruits"
           options={options}
           option={option}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
           size="small"
         />
         <AutoComplete
           label="Fruits"
           options={options}
           option={option}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
           size="small"
         />
         <Text>{option?.value}</Text>
@@ -38,32 +43,32 @@ const Component = () => {
       <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
           label="Fruits"
-          placeholder="Frults"
+          placeholder="Fruits"
           options={options}
           option={option}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
         />
         <AutoComplete
           label="Fruits"
           options={options}
           option={option}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
         />
         <Text>{option?.value}</Text>
       </div>
       <div style={{ display: "grid", gap: "16px" }}>
         <AutoComplete
           label="Fruits"
-          placeholder="Frults"
+          placeholder="Fruits"
           options={options}
           option={option}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
           size="large"
         />
         <AutoComplete
           label="Fruits"
           options={options}
-          setOption={(option: Option | undefined) => setOption(option)}
+          setOption={(option) => setOption(option)}
           size="large"
         />
         <Text>{option?.value}</Text>

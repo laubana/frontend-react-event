@@ -20,17 +20,15 @@ const Home = (): JSX.Element => {
 
   const mapForwardedRef = useRef<MapRef>(null);
 
-  const [filteredGroups, setFilteredGroups] = useState<Group[]>([]);
-  const [pagedGroups, setPagedGroups] = useState<Group[]>([]);
   const [currentGroupPage, setCurrentGroupPage] = useState<number>(1);
+  const [filteredGroups, setFilteredGroups] = useState<Group[]>([]);
   const [hasMoreGroups, setHasMoreGroups] = useState<boolean>(true);
+  const [pagedGroups, setPagedGroups] = useState<Group[]>([]);
 
   const { searchName } = useSearchContext();
-  const [searchCategory, setSearchCategory] = useState<Option | undefined>(
-    undefined
-  );
-  const [searchPlace, setSearchPlace] = useState<Place | undefined>(undefined);
-  const [searchDistance, setSearchDistance] = useState<Option | undefined>({
+  const [searchCategory, setSearchCategory] = useState<Option | null>(null);
+  const [searchPlace, setSearchPlace] = useState<Place | null>(null);
+  const [searchDistance, setSearchDistance] = useState<Option | null>({
     value: "50",
     label: "50 km",
   });

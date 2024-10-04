@@ -4,16 +4,14 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { AutoCompleteProps } from "./AutoComplete.props";
 import {
   Component,
-  Container,
-  ErrorContainer,
   Input,
-  InputContainer,
   Item,
-  LabelContainer,
   ListContainer,
   Wrapper,
 } from "./AutoComplete.style";
 
+import InputBase from "../InputBase";
+import InputContainer from "../InputContainer";
 import Text from "../Text";
 
 import { Option } from "../../type/Option";
@@ -25,27 +23,14 @@ const AutoCompleteComponent = (props: AutoCompleteProps): JSX.Element => {
     option,
     options,
     placeholder,
-    setOption,
+    setOption = () => null,
     size = "medium",
   } = props;
-
-  const [inputValue, setInputValue] = useState<string>(
+  const [inputText, setInputText] = useState<string>(
     options.find((optionItem) => optionItem.value === option?.value)?.label ||
       ""
   );
   const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    setIsVisible(true);
-  };
-
-  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
-    if (!event.currentTarget.contains(event.relatedTarget)) {
-      setInputValue("");
-    }
-    setIsVisible(true);
-  };
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -53,42 +38,49 @@ const AutoCompleteComponent = (props: AutoCompleteProps): JSX.Element => {
     }
   };
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputText(event.target.value);
+    setIsVisible(true);
+  };
+
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setInputText("");
+    }
+    setIsVisible(true);
+  };
+
   const handleSelect = (option: Option) => {
-    setInputValue(option.label);
+    setInputText(option.label);
     setIsVisible(false);
     setOption(option);
   };
 
   useEffect(() => {
     const option = options.find(
-      (option) => option.label.toUpperCase() === inputValue.toUpperCase()
+      (option) => option.label.toUpperCase() === inputText.toUpperCase()
     );
 
     if (option) {
       setOption(option);
-      setInputValue(option.label);
+      setInputText(option.label);
     } else {
-      setOption(undefined);
+      setOption(null);
     }
-  }, [inputValue]);
+  }, [inputText]);
 
   return (
-    <Container>
-      {label && (
-        <LabelContainer sizing={size}>
-          <Text>{label}</Text>
-        </LabelContainer>
-      )}
+    <InputBase error={error} label={label} size={size}>
       <Wrapper onFocus={handleFocus} onBlur={handleBlur}>
-        <InputContainer sizing={size}>
+        <InputContainer size={size}>
           <Input
             tabIndex={0}
-            value={inputValue}
+            value={inputText}
             placeholder={placeholder}
             onChange={handleChange}
             sizing={size}
           />
-          <Component tabIndex={1}>
+          <Component sizing={size} tabIndex={1}>
             {isVisible ? (
               <FaChevronUp color="black" cursor="pointer" />
             ) : (
@@ -102,7 +94,7 @@ const AutoCompleteComponent = (props: AutoCompleteProps): JSX.Element => {
               .filter((option) =>
                 option.label
                   .toUpperCase()
-                  .includes(inputValue?.toUpperCase() || "")
+                  .includes(inputText?.toUpperCase() || "")
               )
               .map((option, index) => (
                 <Item
@@ -117,12 +109,7 @@ const AutoCompleteComponent = (props: AutoCompleteProps): JSX.Element => {
           </ListContainer>
         )}
       </Wrapper>
-      {error && (
-        <ErrorContainer sizing={size}>
-          <Text color="red">{error}</Text>
-        </ErrorContainer>
-      )}
-    </Container>
+    </InputBase>
   );
 };
 
