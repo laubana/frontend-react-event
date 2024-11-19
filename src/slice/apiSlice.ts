@@ -3,7 +3,9 @@ import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
+
 import { setAuth } from "./authSlice";
+
 import { RootState } from "../store/store";
 
 const baseQuery = fetchBaseQuery({
@@ -17,6 +19,7 @@ const baseQuery = fetchBaseQuery({
     if (accessToken) {
       headers.set("Authorization", `Bearer ${accessToken}`);
     }
+
     return headers;
   },
 });
@@ -28,20 +31,27 @@ const baseQueryWithRefresh = async (
 ): Promise<any> => {
   const response = await baseQuery(args, api, extraOptions);
 
-  if (response.error?.status === 401) {
+  if (response.error?.status !== 401) {
     const refreshResponse = await baseQuery("/auth/refresh", api, extraOptions);
 
     if (refreshResponse && refreshResponse.data) {
-      api.dispatch(setAuth({ ...refreshResponse.data }));
+      const refreshData = refreshResponse.data as {
+        message: string;
+        data: {
+          accessToken: string;
+          id: string;
+          email: string;
+        };
+      };
 
-      const newResponse = await baseQuery(args, api, extraOptions);
-
-      return newResponse;
+      api.dispatch(setAuth({ ...refreshData.data }));
     } else {
       api.dispatch(setAuth({ accessToken: "", email: "", id: "" }));
-
-      return refreshResponse;
     }
+
+    const newResponse = await baseQuery(args, api, extraOptions);
+
+    return newResponse;
   }
 
   return response;
@@ -50,7 +60,7 @@ const baseQueryWithRefresh = async (
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRefresh,
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
   tagTypes: [
     "Auth",
     "Category",
