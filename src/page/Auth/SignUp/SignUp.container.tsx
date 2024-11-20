@@ -12,16 +12,16 @@ const SignUp = (): JSX.Element => {
   const [uploadImage] = useUploadImageMutation();
 
   const initialValues: Form = {
-    email: "e@t.c",
-    password: "123123",
-    confirmPassword: "123123",
+    email: "",
+    password: "",
+    confirmPassword: "",
     image: undefined,
-    name: "test",
+    name: "",
     place: undefined,
-    address: "test",
+    address: "",
     latitude: undefined,
     longitude: undefined,
-    description: "test",
+    description: "",
   };
 
   const handleSubmit = async (values: Form) => {
