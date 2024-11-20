@@ -120,12 +120,12 @@ const Detail = (props: DetailProps) => {
                   </PaginationContainer>{" "}
                 </>
               )}
-              <TitleContainer>
+              {/* <TitleContainer>
                 <Text size="large">Event</Text>
                 {group.user._id === groupRegistration?.user._id && (
                   <Button onClick={handleAddEvent}>Create</Button>
                 )}
-              </TitleContainer>
+              </TitleContainer> */}
               <TitleContainer>
                 <Text size="large">Comment</Text>
               </TitleContainer>

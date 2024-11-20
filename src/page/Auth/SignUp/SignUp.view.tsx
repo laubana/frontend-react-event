@@ -1,20 +1,21 @@
-import { useRef } from "react";
-import * as Yup from "yup";
+import "mapbox-gl/dist/mapbox-gl.css";
 import { Formik } from "formik";
+import { useRef } from "react";
 import { MapRef } from "react-map-gl";
+import * as Yup from "yup";
+
 import { SignUpProps } from "./SignUp.props";
 import { Container, MapContainer } from "./SignUp.style";
+
+import Button from "../../../component/Button";
 import Grid from "../../../component/Grid";
+import Map from "../../../component/Map";
+import InputPassword from "../../../component/InputPassword";
+import InputPlace from "../../../component/InputPlace";
+import InputSingleImage from "../../../component/InputSingleImage";
 import Text from "../../../component/Text";
 import InputText from "../../../component/InputText";
-import InputPassword from "../../../component/InputPassword";
-import InputSingleImage from "../../../component/InputSingleImage";
-import InputPlace from "../../../component/InputPlace";
 import InputTextArea from "../../../component/InputTextArea";
-import Button from "../../../component/Button";
-import Map from "../../../component/Map";
-
-import "mapbox-gl/dist/mapbox-gl.css";
 
 const SignUpView = (props: SignUpProps) => {
   const { initialValues, handleSubmit, handleGoBack } = props;

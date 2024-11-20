@@ -5,7 +5,6 @@ import { ImageType } from "react-images-uploading";
 
 import DetailView from "./Detail.view";
 
-import { uploadImage } from "../../../service/s3";
 import { selectAccessToken } from "../../../slice/authSlice";
 import { useGetEventQuery } from "../../../slice/eventApiSlice";
 import {
@@ -23,6 +22,7 @@ import {
   useGetEventRegistrationsQuery,
 } from "../../../slice/eventRegistrationApiSlice";
 import { useUpdateGroupMutation } from "../../../slice/groupApiSlice";
+import { useUploadImageMutation } from "../../../slice/s3ApiSlice";
 import { EventComment } from "../../../type/EventComment";
 import { EventForm } from "../../../type/EventForm";
 import { EventImage } from "../../../type/EventImage";
@@ -57,6 +57,7 @@ const Detail = () => {
   const [addEventRegistration] = useAddEventRegistrationMutation();
   const [deleteEventRegistration] = useDeleteEventRegistrationMutation();
   const [updateGroup] = useUpdateGroupMutation();
+  const [uploadImage] = useUploadImageMutation();
 
   const [inputComment, setInputComment] = useState<string>("");
   const [inputImage, setInputImage] = useState<ImageType | undefined>(
@@ -93,18 +94,23 @@ const Detail = () => {
 
   const handleConfirmAddEventImage = async () => {
     try {
-      if (inputImage) {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        const imageUrl = await uploadImage("event-image", inputImage);
-        if (eventId && imageUrl) {
-          await addEventImage({
-            eventId,
-            imageUrl,
-          }).unwrap();
-          setIsVisibleAddEventImage(false);
-          setInputImage(undefined);
-        }
+      if (eventId && inputImage && inputImage.file) {
+        const formData = new FormData();
+        formData.append("directory", "images/events");
+        formData.append("file", inputImage.file);
+
+        const uploadImageResponse = await uploadImage(formData).unwrap();
+
+        const imageUrl = uploadImageResponse.data;
+
+        await addEventImage({
+          eventId,
+          imageUrl,
+        }).unwrap();
+        setIsVisibleAddEventImage(false);
+        setInputImage(undefined);
       }
     } catch (error) {
       console.error(error);

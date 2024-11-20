@@ -29,9 +29,9 @@ const baseQueryWithRefresh = async (
   api: BaseQueryApi,
   extraOptions: any
 ): Promise<any> => {
-  const response = await baseQuery(args, api, extraOptions);
+  const oldResponse = await baseQuery(args, api, extraOptions);
 
-  if (response.error?.status !== 401) {
+  if (oldResponse.error?.status === 401) {
     const refreshResponse = await baseQuery("/auth/refresh", api, extraOptions);
 
     if (refreshResponse && refreshResponse.data) {
@@ -45,16 +45,18 @@ const baseQueryWithRefresh = async (
       };
 
       api.dispatch(setAuth({ ...refreshData.data }));
+
+      const newResponse = await baseQuery(args, api, extraOptions);
+
+      return newResponse;
     } else {
       api.dispatch(setAuth({ accessToken: "", email: "", id: "" }));
+
+      return oldResponse;
     }
-
-    const newResponse = await baseQuery(args, api, extraOptions);
-
-    return newResponse;
   }
 
-  return response;
+  return oldResponse;
 };
 
 export const apiSlice = createApi({

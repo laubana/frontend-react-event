@@ -1,30 +1,45 @@
 import { useNavigate } from "react-router-dom";
+
 import { Form } from "./SignUp.props";
 import SignUpView from "./SignUp.view";
+
 import { useSignUpMutation } from "../../../slice/authApiSlice";
-import { uploadImage } from "../../../service/s3";
+import { useUploadImageMutation } from "../../../slice/s3ApiSlice";
 
 const SignUp = (): JSX.Element => {
   const navigate = useNavigate();
   const [signUp] = useSignUpMutation();
+  const [uploadImage] = useUploadImageMutation();
 
   const initialValues: Form = {
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: "e@t.c",
+    password: "123123",
+    confirmPassword: "123123",
     image: undefined,
-    name: "",
+    name: "test",
     place: undefined,
-    address: "",
+    address: "test",
     latitude: undefined,
     longitude: undefined,
-    description: "",
+    description: "test",
   };
 
   const handleSubmit = async (values: Form) => {
     try {
-      const imageUrl = await uploadImage("user", values.image);
-      if (values.latitude && values.longitude && imageUrl) {
+      if (
+        values.latitude &&
+        values.longitude &&
+        values.image &&
+        values.image.file
+      ) {
+        const formData = new FormData();
+        formData.append("directory", "images/users");
+        formData.append("file", values.image.file);
+
+        const uploadImageResponse = await uploadImage(formData).unwrap();
+
+        const imageUrl = uploadImageResponse.data;
+
         await signUp({
           email: values.email,
           password: values.password,

@@ -5,7 +5,6 @@ import { ImageType } from "react-images-uploading";
 
 import DetailView from "./Detail.view";
 
-import { uploadImage } from "../../../service/s3";
 import { selectAccessToken } from "../../../slice/authSlice";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
 import {
@@ -26,6 +25,7 @@ import {
   useGetGroupRegistrationQuery,
   useGetGroupRegistrationsQuery,
 } from "../../../slice/groupRegistrationApiSlice";
+import { useUploadImageMutation } from "../../../slice/s3ApiSlice";
 import { GroupComment } from "../../../type/GroupComment";
 import { GroupForm } from "../../../type/GroupForm";
 import { GroupImage } from "../../../type/GroupImage";
@@ -56,6 +56,7 @@ const Detail = () => {
   const [addGroupRegistration] = useAddGroupRegistrationMutation();
   const [deleteGroupRegistration] = useDeleteGroupRegistrationMutation();
   const [updateGroup] = useUpdateGroupMutation();
+  const [uploadImage] = useUploadImageMutation();
 
   const [inputComment, setInputComment] = useState<string>("");
   const [inputImage, setInputImage] = useState<ImageType | undefined>(
@@ -96,18 +97,23 @@ const Detail = () => {
 
   const handleConfirmAddGroupImage = async () => {
     try {
-      if (inputImage) {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        const imageUrl = await uploadImage("group-image", inputImage);
-        if (groupId && imageUrl) {
-          await addGroupImage({
-            groupId,
-            imageUrl,
-          }).unwrap();
-          setIsVisibleAddGroupImage(false);
-          setInputImage(undefined);
-        }
+      if (groupId && inputImage && inputImage.file) {
+        const formData = new FormData();
+        formData.append("directory", "images/groups");
+        formData.append("file", inputImage.file);
+
+        const uploadImageResponse = await uploadImage(formData).unwrap();
+
+        const imageUrl = uploadImageResponse.data;
+
+        await addGroupImage({
+          groupId,
+          imageUrl,
+        }).unwrap();
+        setIsVisibleAddGroupImage(false);
+        setInputImage(undefined);
       }
     } catch (error) {
       console.error(error);
@@ -120,23 +126,58 @@ const Detail = () => {
     try {
       setIsLoading(true);
 
-      const imageUrl =
-        typeof values.image === "object"
-          ? await uploadImage("group", values.image)
-          : values.image;
-      const thumbnailUrl =
-        typeof values.thumbnail === "object"
-          ? await uploadImage("group", values.thumbnail)
-          : values.thumbnail;
-
       if (
         groupId &&
-        imageUrl &&
         values.category &&
+        ((typeof values.image === "string" && values.image) ||
+          (typeof values.image !== "string" &&
+            values.image &&
+            values.image.file)) &&
         values.latitude &&
         values.longitude &&
-        thumbnailUrl
+        ((typeof values.thumbnail === "string" && values.thumbnail) ||
+          (typeof values.thumbnail !== "string" &&
+            values.thumbnail &&
+            values.thumbnail.file))
       ) {
+        let imageUrl;
+        if (typeof values.image === "string" && values.image) {
+          imageUrl = values.image;
+        } else if (
+          typeof values.image !== "string" &&
+          values.image &&
+          values.image.file
+        ) {
+          const formData = new FormData();
+          formData.append("directory", "images/groups");
+          formData.append("file", values.image.file);
+
+          const uploadImageResponse = await uploadImage(formData).unwrap();
+
+          imageUrl = uploadImageResponse.data;
+        } else {
+          return;
+        }
+
+        let thumbnailUrl;
+        if (typeof values.thumbnail === "string" && values.thumbnail) {
+          thumbnailUrl = values.thumbnail;
+        } else if (
+          typeof values.thumbnail !== "string" &&
+          values.thumbnail &&
+          values.thumbnail.file
+        ) {
+          const formData = new FormData();
+          formData.append("directory", "images/groups");
+          formData.append("file", values.thumbnail.file);
+
+          const uploadImageResponse = await uploadImage(formData).unwrap();
+
+          thumbnailUrl = uploadImageResponse.data;
+        } else {
+          return;
+        }
+
         await updateGroup({
           address: values.address,
           categoryId: values.category.value,

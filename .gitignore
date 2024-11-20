@@ -4,5 +4,6 @@
 /yarn.lock
 !.env.template
 
+/.vscode
 /build
 /node_modules

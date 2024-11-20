@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import CreateView from "./Create.view";
 
-import { uploadImage } from "../../../service/s3";
 import { useGetCategorysQuery } from "../../../slice/categoryApiSlice";
 import { useAddGroupMutation } from "../../../slice/groupApiSlice";
+import { useUploadImageMutation } from "../../../slice/s3ApiSlice";
 import {
   useAddPaymentIntentMutation,
   useGetPaymentMethodsQuery,
@@ -24,6 +24,7 @@ const Create = () => {
     useGetPaymentMethodsQuery();
   const [addGroup] = useAddGroupMutation();
   const [addPaymentIntent] = useAddPaymentIntentMutation();
+  const [uploadImage] = useUploadImageMutation();
 
   const [clientSecret, setClientSecret] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -67,22 +68,57 @@ const Create = () => {
 
       const values = formValues;
 
-      const imageUrl =
-        typeof values.image === "object"
-          ? await uploadImage("group", values.image)
-          : values.image;
-      const thumbnailUrl =
-        typeof values.thumbnail === "object"
-          ? await uploadImage("group", values.thumbnail)
-          : values.thumbnail;
-
       if (
         values.category &&
+        ((typeof values.image === "string" && values.image) ||
+          (typeof values.image !== "string" &&
+            values.image &&
+            values.image.file)) &&
         values.latitude &&
         values.longitude &&
-        thumbnailUrl &&
-        imageUrl
+        ((typeof values.thumbnail === "string" && values.thumbnail) ||
+          (typeof values.thumbnail !== "string" &&
+            values.thumbnail &&
+            values.thumbnail.file))
       ) {
+        let imageUrl;
+        if (typeof values.image === "string" && values.image) {
+          imageUrl = values.image;
+        } else if (
+          typeof values.image !== "string" &&
+          values.image &&
+          values.image.file
+        ) {
+          const formData = new FormData();
+          formData.append("directory", "images/groups");
+          formData.append("file", values.image.file);
+
+          const uploadImageResponse = await uploadImage(formData).unwrap();
+
+          imageUrl = uploadImageResponse.data;
+        } else {
+          return;
+        }
+
+        let thumbnailUrl;
+        if (typeof values.thumbnail === "string" && values.thumbnail) {
+          thumbnailUrl = values.thumbnail;
+        } else if (
+          typeof values.thumbnail !== "string" &&
+          values.thumbnail &&
+          values.thumbnail.file
+        ) {
+          const formData = new FormData();
+          formData.append("directory", "images/groups");
+          formData.append("file", values.thumbnail.file);
+
+          const uploadImageResponse = await uploadImage(formData).unwrap();
+
+          thumbnailUrl = uploadImageResponse.data;
+        } else {
+          return;
+        }
+
         const addGroupResponse = await addGroup({
           address: values.address,
           categoryId: values.category.value,
@@ -108,30 +144,67 @@ const Create = () => {
     try {
       setIsLoading(true);
 
-      const imageUrl =
-        typeof formValues.image === "object"
-          ? await uploadImage("group", formValues.image)
-          : formValues.image;
-      const thumbnailUrl =
-        typeof formValues.thumbnail === "object"
-          ? await uploadImage("group", formValues.thumbnail)
-          : formValues.thumbnail;
+      const values = formValues;
 
       if (
-        formValues.category &&
-        formValues.latitude &&
-        formValues.longitude &&
-        thumbnailUrl &&
-        imageUrl
+        values.category &&
+        ((typeof values.image === "string" && values.image) ||
+          (typeof values.image !== "string" &&
+            values.image &&
+            values.image.file)) &&
+        values.latitude &&
+        values.longitude &&
+        ((typeof values.thumbnail === "string" && values.thumbnail) ||
+          (typeof values.thumbnail !== "string" &&
+            values.thumbnail &&
+            values.thumbnail.file))
       ) {
+        let imageUrl;
+        if (typeof values.image === "string" && values.image) {
+          imageUrl = values.image;
+        } else if (
+          typeof values.image !== "string" &&
+          values.image &&
+          values.image.file
+        ) {
+          const formData = new FormData();
+          formData.append("directory", "images/groups");
+          formData.append("file", values.image.file);
+
+          const uploadImageResponse = await uploadImage(formData).unwrap();
+
+          imageUrl = uploadImageResponse.data;
+        } else {
+          return;
+        }
+
+        let thumbnailUrl;
+        if (typeof values.thumbnail === "string" && values.thumbnail) {
+          thumbnailUrl = values.thumbnail;
+        } else if (
+          typeof values.thumbnail !== "string" &&
+          values.thumbnail &&
+          values.thumbnail.file
+        ) {
+          const formData = new FormData();
+          formData.append("directory", "images/groups");
+          formData.append("file", values.thumbnail.file);
+
+          const uploadImageResponse = await uploadImage(formData).unwrap();
+
+          thumbnailUrl = uploadImageResponse.data;
+        } else {
+          return;
+        }
+
         const addGroupResponse = await addGroup({
-          address: formValues.address,
-          categoryId: formValues.category?.value,
-          description: formValues.description,
+          address: values.address,
+          categoryId: values.category?.value,
+          description: values.description,
           imageUrl: imageUrl,
-          latitude: formValues.latitude,
-          longitude: formValues.longitude,
-          name: formValues.name,
+          latitude: values.latitude,
+          longitude: values.longitude,
+          name: values.name,
           paymentIntentId,
           thumbnailUrl: thumbnailUrl,
         }).unwrap();
