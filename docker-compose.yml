@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    image: frontend-react-event-dev
+    image: frontend-react-group-dev
     ports:
       - 3000:3000
     volumes:
@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    image: frontend-react-event-prod
+    image: frontend-react-group-prod
     ports:
       - 3000:80
     volumes:
@@ -26,7 +26,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.storybook
-    image: frontend-react-event-storybook
+    image: frontend-react-group-storybook
     ports:
       - 6006:6006
     volumes:

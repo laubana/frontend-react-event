@@ -1,5 +1,5 @@
 {
-  "name": "frontend-react-event",
+  "name": "frontend-react-group",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -46,8 +46,8 @@
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
+    "start": "react-scripts start",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
